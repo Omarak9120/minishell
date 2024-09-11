@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../../includes/minishell.h" 
 
 // Main function to start the lexing process
 t_token *tokenize_input(char *input) {

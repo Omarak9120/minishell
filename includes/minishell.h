@@ -34,7 +34,12 @@ typedef enum e_token_type
     WORD = 1,
     PIPE,
     REDIRECT,
-    // Add more token types as needed
+	BACKGROUND,
+	REDIRECT_OUT,
+	REDIRECT_IN,
+	SEMICOLON,
+	AND,
+	OR,
     INPUT,
     TRUNC,
     HEREDOC,
@@ -85,39 +90,61 @@ void		exit_shell(t_data *data, int exit_code);
 /* ------------------------ LEXER -----------------------------------------*/
 
 // lexer.c
-t_token		*tokenize_input(char *input);
-void		free_token_list(t_token *token_list);
+t_token		*tokenize_input(char *input);  // Tokenize the input into tokens
+void		free_token_list(t_token *token_list);  // Free token list
 
 /* ------------------------ PARSER -----------------------------------------*/
 
 // parser.c
-t_command	*parse_tokens(t_token *tokens);
-void		free_command_list(t_command *cmd_list);
+t_command	*parse_tokens(t_token *tokens);  // Parse tokens into commands
+void		free_command_list(t_command *cmd_list);  // Free command list
 
 /* ------------------------ EXECUTION -------------------------------------*/
 
 // exec_cmd.c
-void		execute_commands(t_data *data);
-void		execute_builtin(t_command *cmd, t_data *data);
-int			execute_binary(t_command *cmd, t_data *data);
+void		execute_commands(t_data *data);  // Execute the commands
+void		execute_builtin(t_command *cmd, t_data *data);  // Execute built-in commands
+int			execute_binary(t_command *cmd, t_data *data);  // Execute external binaries
 
 /* ------------------------ SIGNALS ---------------------------------------*/
 
 // signals.c
-void		setup_signals(void);
+void		setup_signals(void);  // Setup signal handling
 
 /* ------------------------ BUILTINS --------------------------------------*/
 
 // cd.c
-int			builtin_cd(t_data *data, char **args);
+int			builtin_cd(t_data *data, char **args);  // Built-in 'cd' command
+
 // echo.c
-int			builtin_echo(t_data *data, char **args);
+int			builtin_echo(t_data *data, char **args);  // Built-in 'echo' command
 
 /* ------------------------ UTILS -----------------------------------------*/
 
 // error.c
-void		print_error(char *msg, int exit_code);
+void		print_error(char *msg, int exit_code);  // Print error messages
+
 // memory.c
-void		free_data(t_data *data);
+void		free_data(t_data *data);  // Free the shell data structure
+
+/* ------------------------ TOKEN MANAGEMENT ------------------------------*/
+
+// Token management functions
+int			get_token_type(char *token);    // Determine token type
+t_token		*create_token(char *str, int type);  // Create a new token
+void		add_token(t_token **token_list, t_token *new_token);  // Add token to list
+void		free_token_list(t_token *token_list);  // Free all tokens in the list
+int			validate_tokens(t_token *token_list);  // Validate tokens for syntax correctness
+
+/* ------------------------ TOKEN HELPERS ----------------------------------*/
+
+// Helpers for tokenizing input
+int			is_whitespace(char c);  // Check if character is a whitespace
+int			is_separator(char c);   // Check if character is a separator (pipe, redirect, etc.)
+int			is_double_separator(char *input, int i);  // Check for double-character separators
+
+t_token *create_separator_token(char *input, int *i);
+t_token *create_word_token(char *input, int *i);
+
 
 #endif

@@ -1,4 +1,5 @@
-#include "minishell.h"
+#include "../../includes/minishell.h" 
+
 
 // Check if character is whitespace
 int is_whitespace(char c) {
