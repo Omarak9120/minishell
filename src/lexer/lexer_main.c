@@ -4,7 +4,15 @@
 // A simple test function to tokenize input, validate, and print tokens
 int main(void)
 {
-    char input[] = "echo \"hello world\" > file";  // Modifiable string for tokenization
+    // Modifiable string for tokenization
+    // char input[] = "echo \"hello world\" > file";
+    // char input[] = "echo \"hello \\\"world\\\"\"";
+    // char input[] = "echo \"hello world\" > output.txt";
+    // char input[] = "ls | grep txt | sort";
+    char input[] = "echo \"file contents\" > output.txt";
+
+
+
     // char input[] = "echo 'hello world' > file";
     // char *token;
     // t_token_type token_type;
@@ -206,8 +214,14 @@ t_token *create_quoted_token(char *input, int *i, char quote_type) {
 
     // Read characters until the closing quote is found
     while (input[*i] && input[*i] != quote_type) {
-        quoted_str[j++] = input[*i];
-        (*i)++;
+        // Handle escaped characters (e.g., \")
+        if (input[*i] == '\\' && input[*i + 1] == quote_type) {
+            quoted_str[j++] = input[*i + 1];  // Add the escaped character
+            (*i) += 2;  // Skip the backslash and the escaped character
+        } else {
+            quoted_str[j++] = input[*i];  // Add the regular character
+            (*i)++;
+        }
     }
 
     quoted_str[j] = '\0';  // Null-terminate the string
@@ -217,6 +231,7 @@ t_token *create_quoted_token(char *input, int *i, char quote_type) {
     // Return a single token containing the entire quoted string
     return create_token(quoted_str, WORD);
 }
+
 
 // Handle escape sequences (e.g., "\ ")
 t_token *create_escape_sequence(char *input, int *i) {
