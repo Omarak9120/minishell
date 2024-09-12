@@ -135,6 +135,10 @@ t_token		*create_token(char *str, int type);  // Create a new token
 void		add_token(t_token **token_list, t_token *new_token);  // Add token to list
 void		free_token_list(t_token *token_list);  // Free all tokens in the list
 int			validate_tokens(t_token *token_list);  // Validate tokens for syntax correctness
+t_token *create_separator_token(char *input, int *i);
+t_token *create_word_token(char *input, int *i);
+t_token *create_quoted_token(char *input, int *i, char quote_type);
+t_token *create_escape_sequence(char *input, int *i);
 
 /* ------------------------ TOKEN HELPERS ----------------------------------*/
 
@@ -143,8 +147,6 @@ int			is_whitespace(char c);  // Check if character is a whitespace
 int			is_separator(char c);   // Check if character is a separator (pipe, redirect, etc.)
 int			is_double_separator(char *input, int i);  // Check for double-character separators
 
-t_token *create_separator_token(char *input, int *i);
-t_token *create_word_token(char *input, int *i);
 
 
 #endif
