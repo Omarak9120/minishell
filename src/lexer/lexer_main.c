@@ -4,7 +4,8 @@
 // A simple test function to tokenize input, validate, and print tokens
 int main(void)
 {
-    char input[] = "cat | ls > file";  // Modifiable string for tokenization
+    char input[] = "echo \"hello world\" > file";  // Modifiable string for tokenization
+    // char input[] = "echo 'hello world' > file";
     // char *token;
     // t_token_type token_type;
     // t_token *token_list = NULL;  // Initialize the token list (linked list)
@@ -62,14 +63,6 @@ int get_token_type(char *str) {
         return APPEND;        // Append redirection
     else if (strcmp(str, "<<") == 0)
         return HEREDOC;       // Heredoc redirection
-    else if (strcmp(str, "&") == 0)
-        return BACKGROUND;    // Background process
-    else if (strcmp(str, ";") == 0)
-        return SEMICOLON;     // Command separator
-    else if (strcmp(str, "&&") == 0)
-        return AND;           // Logical AND
-    else if (strcmp(str, "||") == 0)
-        return OR;            // Logical OR
     else
         return WORD;          // Default type for commands/words
 }
@@ -143,13 +136,7 @@ int validate_tokens(t_token *token_list) {
                 return FAILURE;
             }
         }
-        else if (current->type == SEMICOLON) {
-            // Ensure no consecutive semicolons or pipes after a semicolon
-            if (current->next && (current->next->type == SEMICOLON || current->next->type == PIPE)) {
-                printf("Syntax error: unexpected token '%s' after semicolon ';'\n", current->next->str);
-                return FAILURE;
-            }
-        }
+
 
         // Move to the next token
         current = current->next;
@@ -168,22 +155,32 @@ t_token *tokenize_input(char *input) {
         if (is_whitespace(input[i])) {
             i++;  // Skip whitespaces
         }
+        else if (input[i] == '"') {
+            // Handle double quoted strings
+            add_token(&token_list, create_quoted_token(input, &i, '"'));
+        }
+        else if (input[i] == '\'') {
+            // Handle single quoted strings
+            add_token(&token_list, create_quoted_token(input, &i, '\''));
+        }
         else if (is_double_separator(input, i)) {
-            // Add the double separator token
             add_token(&token_list, create_separator_token(input, &i));
             i++;  // Skip the second character of the double separator
         }
         else if (is_separator(input[i])) {
-            // Add the single separator token
             add_token(&token_list, create_separator_token(input, &i));
         }
+        else if (input[i] == '\\') {
+            // Handle escape sequences
+            add_token(&token_list, create_escape_sequence(input, &i));
+        }
         else {
-            // Add the word token
             add_token(&token_list, create_word_token(input, &i));
         }
     }
     return token_list;
 }
+
 t_token *create_word_token(char *input, int *i) {
     char word[256];  // Temporary buffer to hold the word
     int j = 0;
@@ -200,13 +197,43 @@ t_token *create_word_token(char *input, int *i) {
 }
 
 
+// Create a token for quoted strings (everything between quotes)
+t_token *create_quoted_token(char *input, int *i, char quote_type) {
+    char quoted_str[256];  // Buffer to store the quoted string
+    int j = 0;
+
+    (*i)++;  // Skip the opening quote
+
+    // Read characters until the closing quote is found
+    while (input[*i] && input[*i] != quote_type) {
+        quoted_str[j++] = input[*i];
+        (*i)++;
+    }
+
+    quoted_str[j] = '\0';  // Null-terminate the string
+
+    (*i)++;  // Skip the closing quote
+
+    // Return a single token containing the entire quoted string
+    return create_token(quoted_str, WORD);
+}
+
+// Handle escape sequences (e.g., "\ ")
+t_token *create_escape_sequence(char *input, int *i) {
+    char escaped_str[3];
+    
+    // Only process the next character after backslash
+    escaped_str[0] = input[*i + 1];
+    escaped_str[1] = '\0';  // Null-terminate
+    (*i) += 2;  // Skip the backslash and the next character
+
+    return create_token(escaped_str, WORD);  // Treat escape sequences as WORD tokens
+}
 
 /// Check if the next two characters form a double-character separator
 int is_double_separator(char *input, int i) {
     return ((input[i] == '>' && input[i+1] == '>') ||
-            (input[i] == '<' && input[i+1] == '<') ||
-            (input[i] == '&' && input[i+1] == '&') ||
-            (input[i] == '|' && input[i+1] == '|'));
+            (input[i] == '<' && input[i+1] == '<'));
 }
 
 
@@ -234,5 +261,5 @@ int is_whitespace(char c) {
 
 // Check if character is a shell separator (pipe, redirect, etc.)
 int is_separator(char c) {
-    return (c == '|' || c == '>' || c == '<' || c == ';' || c == '&' || c == '(' || c == ')');
+    return (c == '|' || c == '>' || c == '<' || c == '&' || c == '(' || c == ')');
 }
