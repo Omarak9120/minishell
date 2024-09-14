@@ -32,18 +32,18 @@
 typedef enum e_token_type
 {
     WORD = 1,
-    PIPE,
+    PIPE = 2,
     REDIRECT,
 	BACKGROUND,
-	REDIRECT_OUT,
-	REDIRECT_IN,
+	REDIRECT_OUT = 3,
+	REDIRECT_IN = 4,
 	SEMICOLON,
 	AND,
 	OR,
     INPUT,
     TRUNC,
-    HEREDOC,
-    APPEND,
+    HEREDOC = 6,
+    APPEND = 5,
     END
 } t_token_type;
 
@@ -112,12 +112,28 @@ int			execute_binary(t_command *cmd, t_data *data);  // Execute external binarie
 void		setup_signals(void);  // Setup signal handling
 
 /* ------------------------ BUILTINS --------------------------------------*/
+// Function prototypes for built-ins
 
 // cd.c
 int			builtin_cd(t_data *data, char **args);  // Built-in 'cd' command
 
 // echo.c
-int			builtin_echo(t_data *data, char **args);  // Built-in 'echo' command
+//int		builtin_echo(t_data *data, char **args);  // Built-in 'echo' command
+
+// pwd.c
+int			builtin_pwd(void);
+
+// env.c
+int			builtin_env(t_data *data);
+
+// export.c
+int			builtin_export(t_data *data, char **args);
+
+// unset.c
+int			builtin_unset(t_data *data, char **args);
+
+// exit.c
+int			builtin_exit(t_data *data, char **args);
 
 /* ------------------------ UTILS -----------------------------------------*/
 
