@@ -5,34 +5,17 @@
 int main(void)
 {
     // Modifiable string for tokenization
-    // char input[] = "echo \"hello world\" > file";
+    // char input[] = "echo \"hello world\" >> file";
     // char input[] = "echo \"hello \\\"world\\\"\"";
     // char input[] = "echo \"hello world\" > output.txt";
     // char input[] = "ls | grep txt | sort";
-    char input[] = "echo \"file contents\" > output.txt";
+    // char input[] = "echo \"file contents\" > output.txt";
+    // char input[] = " cat << output ???"
+    // char input[] = "echo Hello\\ World";
+    char input[] = "echo \"Hello World\"";
+    // char input[] = "echo 'Unmatched quote";
 
 
-
-    // char input[] = "echo 'hello world' > file";
-    // char *token;
-    // t_token_type token_type;
-    // t_token *token_list = NULL;  // Initialize the token list (linked list)
-
-    // // Tokenize input using strtok (or another custom tokenizer)
-    // token = strtok(input, " ");  // Tokenize by spaces
-
-    // while (token != NULL)
-    // {
-    //     // Determine token type
-    //     token_type = get_token_type(token);
-
-    //     // Create a new token and add it to the linked list
-    //     t_token *new_token = create_token(token, token_type);
-    //     add_token(&token_list, new_token);
-
-    //     // Get the next token
-    //     token = strtok(NULL, " ");
-    // }
 
     t_token *token_list = tokenize_input(input);
 
@@ -53,7 +36,6 @@ int main(void)
 
     // Free the token list after use
     free_token_list(token_list);
-
     return 0;
 }
 
@@ -64,15 +46,17 @@ int get_token_type(char *str) {
     if (strcmp(str, "|") == 0)
         return PIPE;
     else if (strcmp(str, ">") == 0)
-        return REDIRECT_OUT;  // Output redirection
-    else if (strcmp(str, "<") == 0)
-        return REDIRECT_IN;   // Input redirection
+        return REDIRECT_OUT;  
     else if (strcmp(str, ">>") == 0)
-        return APPEND;        // Append redirection
+        return APPEND;
+    else if (strcmp(str, "<") == 0)
+        return REDIRECT_IN;
     else if (strcmp(str, "<<") == 0)
-        return HEREDOC;       // Heredoc redirection
+        return HEREDOC;
+    else if (is_valid_word(str))  // A function to check valid words (commands, filenames)
+        return WORD;
     else
-        return WORD;          // Default type for commands/words
+        return INVALID;  // Anything else is considered invalid
 }
 
 
@@ -113,6 +97,17 @@ void free_token_list(t_token *token_list) {
     }
 }
 
+int is_valid_word(char *str) {
+    // Allow all characters except separators and whitespaces
+    for (int i = 0; str[i]; i++) {
+        if (is_separator(str[i]) || is_whitespace(str[i])) {
+            return 0;  // Not a valid word
+        }
+    }
+    return 1;  // Valid word
+}
+
+
 // Validate the token list for correct shell syntax
 int validate_tokens(t_token *token_list) {
     t_token *current = token_list;
@@ -145,6 +140,11 @@ int validate_tokens(t_token *token_list) {
             }
         }
 
+        else if (current->type == INVALID) {
+            // Handle invalid tokens
+            printf("Syntax error: Invalid token '%s'\n", current->str);
+            return FAILURE;
+        }
 
         // Move to the next token
         current = current->next;
@@ -155,6 +155,7 @@ int validate_tokens(t_token *token_list) {
 }
 
 // Main function to start the lexing process
+// Adjusted tokenize_input function
 t_token *tokenize_input(char *input) {
     t_token *token_list = NULL;
     int i = 0;
@@ -164,44 +165,135 @@ t_token *tokenize_input(char *input) {
             i++;  // Skip whitespaces
         }
         else if (input[i] == '"') {
-            // Handle double quoted strings
             add_token(&token_list, create_quoted_token(input, &i, '"'));
         }
         else if (input[i] == '\'') {
-            // Handle single quoted strings
             add_token(&token_list, create_quoted_token(input, &i, '\''));
         }
-        else if (is_double_separator(input, i)) {
-            add_token(&token_list, create_separator_token(input, &i));
-            i++;  // Skip the second character of the double separator
-        }
-        else if (is_separator(input[i])) {
-            add_token(&token_list, create_separator_token(input, &i));
-        }
-        else if (input[i] == '\\') {
-            // Handle escape sequences
-            add_token(&token_list, create_escape_sequence(input, &i));
-        }
         else {
-            add_token(&token_list, create_word_token(input, &i));
+            add_token(&token_list, create_general_token(input, &i));
         }
     }
     return token_list;
 }
 
-t_token *create_word_token(char *input, int *i) {
-    char word[256];  // Temporary buffer to hold the word
+t_token *create_general_token(char *input, int *i) {
+    char *token_str = NULL;
+    int capacity = 256;
     int j = 0;
 
-    // Loop through the input until we hit a separator or whitespace
+    token_str = malloc(capacity * sizeof(char));
+    if (!token_str) return NULL; // Handle allocation failure
+
+    while (input[*i] && !is_whitespace(input[*i])) {
+        if (is_separator(input[*i])) {
+            // If we have accumulated characters, break to create a WORD token
+            if (j > 0) break;
+
+            // Handle operator token
+            int separator_length = is_double_separator(input, *i) ? 2 : 1;
+            for (int k = 0; k < separator_length; k++) {
+                token_str[j++] = input[*i];
+                (*i)++;
+            }
+            token_str[j] = '\0';
+            int token_type = get_token_type(token_str);
+            t_token *token = create_token(token_str, token_type);
+            free(token_str);
+            return token;
+        }
+        else if (input[*i] == '\\' && input[*i + 1]) {
+            (*i)++;  // Skip the backslash
+            token_str[j++] = input[*i];  // Add the escaped character
+            (*i)++;
+        } else {
+            token_str[j++] = input[*i];
+            (*i)++;
+        }
+
+        // Resize buffer if necessary
+        if (j >= capacity) {
+            capacity *= 2;
+            char *new_str = realloc(token_str, capacity * sizeof(char));
+            if (!new_str) {
+                free(token_str);
+                return NULL; // Handle allocation failure
+            }
+            token_str = new_str;
+        }
+    }
+    token_str[j] = '\0';
+
+    t_token *token = create_token(token_str, WORD);
+    free(token_str);
+    return token;
+}
+
+
+// New function to create a word token that includes the separator
+t_token *create_word_with_separator(char *input, int *i) {
+    char word[256];
+    int j = 0;
+
+    // Collect the separator first
+    if (is_double_separator(input, *i)) {
+        word[j++] = input[*i];
+        word[j++] = input[*i + 1];
+        *i += 2;
+    } else {
+        word[j++] = input[*i];
+        (*i)++;
+    }
+
+    // Now collect the word that follows
     while (input[*i] && !is_whitespace(input[*i]) && !is_separator(input[*i])) {
         word[j++] = input[*i];
         (*i)++;
     }
+
     word[j] = '\0';  // Null-terminate the word string
 
     // Create and return a new token with the word string
     return create_token(word, WORD);
+}
+
+
+// Adjusted create_word_token function
+t_token *create_word_token(char *input, int *i) {
+    char *word = NULL;      // Use dynamic memory allocation
+    int capacity = 256;
+    int j = 0;
+
+    word = malloc(capacity * sizeof(char));
+    if (!word) return NULL; // Handle allocation failure
+
+    while (input[*i] && !is_whitespace(input[*i])) {
+        if (input[*i] == '\\' && input[*i + 1]) {
+            (*i)++;  // Skip the backslash
+            word[j++] = input[*i];  // Add the escaped character
+            (*i)++;
+        } else {
+            word[j++] = input[*i];
+            (*i)++;
+        }
+
+        // Resize buffer if necessary
+        if (j >= capacity) {
+            capacity *= 2;
+            char *new_word = realloc(word, capacity * sizeof(char));
+            if (!new_word) {
+                free(word);
+                return NULL; // Handle allocation failure
+            }
+            word = new_word;
+        }
+    }
+    word[j] = '\0';  // Null-terminate the word string
+
+    // Create and return a new token with the word string
+    t_token *token = create_token(word, WORD);
+    free(word);  // Free the temporary buffer
+    return token;
 }
 
 
@@ -267,7 +359,9 @@ t_token *create_separator_token(char *input, int *i) {
         (*i)++;  // Move the index past the single separator
     }
 
-    return create_token(separator, PIPE);  // You may change PIPE to the correct type as needed
+    int token_type = get_token_type(separator);
+
+     return create_token(separator, token_type);  // 7asab el type
 }
 // Check if character is whitespace
 int is_whitespace(char c) {

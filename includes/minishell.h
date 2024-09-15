@@ -34,16 +34,18 @@ typedef enum e_token_type
     WORD = 1,
     PIPE = 2,
     REDIRECT,
-	BACKGROUND,
 	REDIRECT_OUT = 3,
 	REDIRECT_IN = 4,
 	SEMICOLON,
+    APPEND = 5,
+    HEREDOC = 6,
+	INVALID = 7,
+	BUILTIN = 8,
+	BACKGROUND,
 	AND,
 	OR,
     INPUT,
     TRUNC,
-    HEREDOC = 6,
-    APPEND = 5,
     END
 } t_token_type;
 
@@ -155,6 +157,10 @@ t_token *create_separator_token(char *input, int *i);
 t_token *create_word_token(char *input, int *i);
 t_token *create_quoted_token(char *input, int *i, char quote_type);
 t_token *create_escape_sequence(char *input, int *i);
+int is_valid_word(char *str);
+int is_builtin(char *str);
+t_token *create_word_with_separator(char *input, int *i);
+t_token *create_general_token(char *input, int *i);
 
 /* ------------------------ TOKEN HELPERS ----------------------------------*/
 
