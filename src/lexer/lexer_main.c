@@ -12,7 +12,9 @@ int main(void)
     // char input[] = "echo \"file contents\" > output.txt";
     // char input[] = " cat << output ???";
     // char input[] = "echo Hello\\ World";
-    char input[] = "echo \"Hello World";
+    // char input[] = "echo \"Hello World";
+    char input[] = "cat|cat|ls";
+
     // char input[] = "echo \"Unmatched quote";
     
 
