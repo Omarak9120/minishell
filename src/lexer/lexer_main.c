@@ -8,12 +8,13 @@ int main(void)
     // char input[] = "echo \"hello world\" >> file";
     // char input[] = "echo \"hello \\\"world\\\"\"";
     // char input[] = "echo \"hello world\" > output.txt";
-    // char input[] = "ls | grep txt | sort";
+    // char input[] = " | grep txt || sort echo omar";
     // char input[] = "echo \"file contents\" > output.txt";
-    // char input[] = " cat << output ???"
+    // char input[] = " cat << output ???";
     // char input[] = "echo Hello\\ World";
-    char input[] = "echo \"Hello World\"";
-    // char input[] = "echo 'Unmatched quote";
+    char input[] = "echo \"Hello World";
+    // char input[] = "echo \"Unmatched quote";
+    
 
 
 
@@ -297,6 +298,9 @@ t_token *create_word_token(char *input, int *i) {
 }
 
 
+
+
+
 // Create a token for quoted strings (everything between quotes)
 t_token *create_quoted_token(char *input, int *i, char quote_type) {
     char quoted_str[256];  // Buffer to store the quoted string
@@ -318,11 +322,18 @@ t_token *create_quoted_token(char *input, int *i, char quote_type) {
 
     quoted_str[j] = '\0';  // Null-terminate the string
 
-    (*i)++;  // Skip the closing quote
+    // Check if the closing quote is missing
+    if (input[*i] != quote_type) {
+        printf("Syntax error: unmatched %c quote\n", quote_type);
+        return NULL;  // Indicate an error by returning NULL
+    } else {
+        (*i)++;  // Skip the closing quote
+    }
 
     // Return a single token containing the entire quoted string
     return create_token(quoted_str, WORD);
 }
+
 
 
 // Handle escape sequences (e.g., "\ ")
