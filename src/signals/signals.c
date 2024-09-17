@@ -37,32 +37,32 @@ void handle_sigint(int sig) {
     rl_redisplay();          // Redisplay the prompt
 }
 
-int main() {
-    char *input;
+// int main() {
+//     char *input;
 
-    // Set signal handlers
-    signal(SIGINT, handle_sigint);   // Ctrl + C
-    signal(SIGQUIT, SIG_IGN);        // Ignore Ctrl + \
+//     // Set signal handlers
+//     signal(SIGINT, handle_sigint);   // Ctrl + C
+//     signal(SIGQUIT, SIG_IGN);        // Ignore Ctrl + \
 
-    while (1) {
-        // Display the prompt and read user input
-        input = readline("minishell> ");  // Correctly set the prompt here
+//     while (1) {
+//         // Display the prompt and read user input
+//         input = readline("minishell> ");  // Correctly set the prompt here
         
-        // Handle EOF (Ctrl + D)
-        if (!input) {
-            write(1, "exit\n", 5);
-            break;
-        }
+//         // Handle EOF (Ctrl + D)
+//         if (!input) {
+//             write(1, "exit\n", 5);
+//             break;
+//         }
 
-        if (input[0] != '\0') {
-            // Add non-empty input to history
-            add_history(input);
-        }
+//         if (input[0] != '\0') {
+//             // Add non-empty input to history
+//             add_history(input);
+//         }
 
-        // Your command processing logic here
+//         // Your command processing logic here
 
-        free(input);  // Free the input buffer allocated by readline
-    }
+//         free(input);  // Free the input buffer allocated by readline
+//     }
 
-    return 0;
-}
+//     return 0;
+// }

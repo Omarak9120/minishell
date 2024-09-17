@@ -110,6 +110,7 @@ int         execute_binary(t_command *cmd, t_data *data);  // Execute external b
 /* ------------------------ SIGNALS ---------------------------------------*/
 
 // signals.c
+void        handle_sigint(int sig);
 void        setup_signals(void);  // Setup signal handling
 
 /* ------------------------ BUILTINS --------------------------------------*/

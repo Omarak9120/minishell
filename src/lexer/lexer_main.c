@@ -1,3 +1,5 @@
+/*
+
 #include "../../includes/minishell.h"  // Ensure your token types are defined here
 #include <string.h>  // Include for strdup if not using ft_strdup
 
@@ -383,3 +385,5 @@ int is_whitespace(char c) {
 int is_separator(char c) {
     return (c == '|' || c == '>' || c == '<' || c == '&' || c == '(' || c == ')');
 }
+
+*/

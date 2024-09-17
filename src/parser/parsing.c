@@ -6,7 +6,7 @@
 /*   By: ksayour <ksayour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:56:28 by oabdelka          #+#    #+#             */
-/*   Updated: 2024/09/16 17:09:26 by ksayour          ###   ########.fr       */
+/*   Updated: 2024/09/16 22:08:23 by ksayour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,41 +108,41 @@ void free_command_list(t_command *cmd_list)
     }
 }
 
-// Example of how to use the parser
-int main()
-{
-    char    *str = "hello \"world\"";
-    // Create a sample token linked list: "ls | grep txt | sort"
-    t_token token1 = {"echo", WORD, NULL};
-    t_token token2 = {str, WORD, NULL};
-    // t_token token2 = {"|", PIPE, NULL};
-    // t_token token3 = {"|", PIPE, NULL};
-    // t_token token5 = {"|", PIPE, NULL};
-    // t_token token6 = {"sort", WORD, NULL};
+// // Example of how to use the parser
+// int main()
+// {
+//     char    *str = "hello \"world\"";
+//     // Create a sample token linked list: "ls | grep txt | sort"
+//     t_token token1 = {"echo", WORD, NULL};
+//     t_token token2 = {str, WORD, NULL};
+//     // t_token token2 = {"|", PIPE, NULL};
+//     // t_token token3 = {"|", PIPE, NULL};
+//     // t_token token5 = {"|", PIPE, NULL};
+//     // t_token token6 = {"sort", WORD, NULL};
 
-    token1.next = &token2;
-    // token2.next = &token3;
-    // token3.next = &token4;
-    // token4.next = &token5;
-    // token5.next = &token6;
+//     token1.next = &token2;
+//     // token2.next = &token3;
+//     // token3.next = &token4;
+//     // token4.next = &token5;
+//     // token5.next = &token6;
 
-    // Parse the tokens into commands
-    t_command *cmd_list = parse_tokens(&token1);
+//     // Parse the tokens into commands
+//     t_command *cmd_list = parse_tokens(&token1);
 
-    // Print the parsed commands (for testing)
-    t_command *cur_cmd = cmd_list;
-    while (cur_cmd)
-    {
-        printf("Command: %s\n", cur_cmd->command);
-        for (int i = 0; cur_cmd->args[i]; i++)
-            printf("  Arg[%d]: %s\n", i, cur_cmd->args[i]);
+//     // Print the parsed commands (for testing)
+//     t_command *cur_cmd = cmd_list;
+//     while (cur_cmd)
+//     {
+//         printf("Command: %s\n", cur_cmd->command);
+//         for (int i = 0; cur_cmd->args[i]; i++)
+//             printf("  Arg[%d]: %s\n", i, cur_cmd->args[i]);
 
-        printf("  in_fd: %d, out_fd: %d\n", cur_cmd->in_fd, cur_cmd->out_fd);
-        cur_cmd = cur_cmd->next;
-    }
+//         printf("  in_fd: %d, out_fd: %d\n", cur_cmd->in_fd, cur_cmd->out_fd);
+//         cur_cmd = cur_cmd->next;
+//     }
 
-    // Free the command list
-    free_command_list(cmd_list);
+//     // Free the command list
+//     free_command_list(cmd_list);
 
-    return 0;
-}
+//     return 0;
+// }

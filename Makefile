@@ -1,29 +1,47 @@
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra -Iincludes -Ilibft
 LIBFT = libft/libft.a
-SRC = src/minishell.c \
-      src/lexer/lexer_main.c \
-      src/lexer/lexer_utils.c \
-      src/lexer/lexer.c \
-      src/lexer/test_lexer.c \
-      src/lexer/token.c \
-      src/lexer/token_types.c \
-      src/lexer/token_utils.c \
-      src/lexer/token_validation.c \
-      # Add other files from `src/parser`, `src/redirection`, etc. as needed
 
-OBJ = $(SRC:.c=.o)
+SRC = src/minishell.c \
+      $(wildcard src/lexer/*.c) \
+      $(wildcard src/parser/*.c) \
+      $(wildcard src/signals/*.c)
+
+# Change to store object files in obj/ while keeping their directory structure
+OBJ = $(SRC:src/%.c=obj/%.o)
 NAME = minishell
+
+# Create build directory structure
+OBJDIRS = $(sort $(dir $(OBJ)))
 
 all: $(NAME)
 
+# Link the executable
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) -lreadline
 
+# Pattern rule to compile .o files from .c files in subdirectories
+obj/%.o: src/%.c | $(OBJDIRS)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Special rule for minishell.c in the root of src/
+obj/minishell.o: src/minishell.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Ensure object directories are created
+$(OBJDIRS):
+	mkdir -p $(OBJDIRS)
+
+# Clean only object files and intermediate directories (not the executable)
 clean:
 	rm -f $(OBJ)
+	rm -rf obj/
 
+# Full clean, including the executable
 fclean: clean
 	rm -f $(NAME)
 
+# Rebuild everything from scratch
 re: fclean all
