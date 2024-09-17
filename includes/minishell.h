@@ -14,6 +14,7 @@
     # include <readline/readline.h>
     # include <readline/history.h>
     # include <stdbool.h>
+    # include <limits.h>
 
     /******************************************************************************
     *                               MACROS                                         *

@@ -1,9 +1,5 @@
 #include "../../includes/minishell.h"
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
-# include <stdbool.h>
+
 
 bool is_n_flag(const char *arg)
 {
@@ -21,44 +17,48 @@ bool is_n_flag(const char *arg)
 
 void echo(const char *message, bool no_newline)
 {
-    
     printf("%s", message);
     if (!no_newline)
         printf("\n");
 }
 
-int         builtin_echo(t_data *data, char **args)
+int builtin_echo(t_data *data, char **args)
 {
-    (void)data;
-    (void)args;
-    printf("hello world!");
-    return (0);
-}
-// int main(int argc, char *argv[])
-// {
-//     if (argc > 1 && strcmp(argv[1], "echo") == 0)
-//     {
-//         bool no_newline = false;
-//         int i = 2;
-//         while (i < argc && is_n_flag(argv[i]))
-//         {
-//             no_newline = true;
-//             i++;
-//         }
-//         char message[1024] = "";
-//         bool first_word = true;
-//         while (i < argc)
-//         {
-//             if (!first_word)
-//                 strcat(message, " ");
-//             strcat(message, argv[i]);
-//             first_word = false;
-//             i++;
-//         }
-//         echo(message, no_newline);
-//     }
-//     else
-//         write(1, "\n", 1);
+    (void)data;  // Unused for now, but you can use it if needed later
 
-//     return 0;
-// }
+    if (args[0] && strcmp(args[0], "echo") == 0)
+    {
+        bool no_newline = false;
+        int i = 1;  // Start from 1 to skip the "echo" command itself
+
+        // Check for -n flags
+        while (args[i] && is_n_flag(args[i]))
+        {
+            no_newline = true;
+            i++;
+        }
+
+        char message[1024] = "";  // Buffer for the final message
+        bool first_word = true;
+
+        // Build the message by concatenating arguments
+        while (args[i])
+        {
+            if (!first_word)
+                strcat(message, " ");
+            strcat(message, args[i]);
+            first_word = false;
+            i++;
+        }
+
+        // Print the final message
+        echo(message, no_newline);
+    }
+    else
+    {
+        // If no valid command is found, print a newline
+        write(1, "\n", 1);
+    }
+
+    return 0;
+}

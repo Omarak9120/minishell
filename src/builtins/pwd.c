@@ -1,29 +1,18 @@
 #include "../../includes/minishell.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <limits.h>
-#include <stdlib.h>
 
-int         builtin_pwd(t_data *data, char **args)
+int builtin_pwd(t_data *data, char **args)
 {
-    (void)data;
-    (void)args;
-    return (0);
-//     char *cwd = malloc(9999);
-//     if (cwd == NULL)
-//     {
-//         perror("minishell");
-//         return;
-//     }
-//     if (getcwd(cwd, 9999) != NULL)
-//         printf("%s\n", cwd);
-//     else
-//         perror("minishell");
-//     free(cwd);
-}
+    (void)args;  // args is unused in the pwd command
+    (void)data;  // data is unused, but might be needed for other functionality
 
-// int main(int argc, char *argv[])
-// {
-//     ft_pwd();
-//     return 0;
-// }
+    char cwd[PATH_MAX];  // Buffer to store the current working directory
+    
+    // Get the current working directory
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        printf("%s\n", cwd);  // Print the current working directory
+        return 0;  // Success
+    } else {
+        perror("pwd");  // If an error occurs, print the error message
+        return 1;  // Return error code
+    }
+}

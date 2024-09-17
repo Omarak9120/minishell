@@ -16,31 +16,58 @@
 
 extern char **environ;
 
-int         builtin_export(t_data *data, char **args)
+int parse_key_value(const char *arg, char *key, char *value)
 {
-    (void)data;
-    (void)args;
-    return (0);
-    // if (var == NULL || value == NULL) {
-    //     printf("Usage: export VAR=value\n");
-    //     return;
-    // }
+    char *equal_sign = strchr(arg, '=');
 
-    // // Create the variable in the format "VAR=value"
-    // char *env_var = malloc(strlen(var) + strlen(value) + 2); // +2 for '=' and '\0'
-    // if (env_var == NULL) {
-    //     perror("malloc");
-    //     return;
-    // }
-    
-    // sprintf(env_var, "%s=%s", var, value);
-    
-    // // Use putenv or setenv to export the variable
-    // if (putenv(env_var) != 0) {
-    //     perror("putenv");
-    // } else {
-    //     printf("Exported: %s\n", env_var);
-    // }
-    
-    // No need to free env_var because putenv uses it directly
+    // If no equal sign is found, this is not a valid export argument
+    if (!equal_sign)
+        return 0;
+
+    // Copy the key (part before the equal sign)
+    strncpy(key, arg, equal_sign - arg);
+    key[equal_sign - arg] = '\0';  // Null-terminate the key
+
+    // Copy the value (part after the equal sign)
+    strcpy(value, equal_sign + 1);
+    return 1;
+}
+
+int builtin_export(t_data *data, char **args)
+{
+    (void)data;  // Currently unused, but can be used for shell state
+
+    if (args[1] == NULL)
+    {
+        // If no arguments, print all environment variables
+        extern char **environ;
+        for (char **env = environ; *env != NULL; env++)
+        {
+            printf("declare -x %s\n", *env);
+        }
+        return 0;
+    }
+
+    // Process all the provided arguments
+    for (int i = 1; args[i]; i++)
+    {
+        char key[1024] = {0};
+        char value[1024] = {0};
+
+        // Parse the argument into a key=value pair
+        if (!parse_key_value(args[i], key, value))
+        {
+            fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", args[i]);
+            continue;
+        }
+
+        // Set the environment variable
+        if (setenv(key, value, 1) == -1)
+        {
+            perror("minishell: export");
+            return 1;
+        }
+    }
+
+    return 0;
 }
