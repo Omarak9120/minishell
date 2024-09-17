@@ -1,68 +1,47 @@
-#include <signal.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "../includes/minishell.h"
 
-void	ft_putchar_fd(char c, int fd)
+int g_signal_exit_status = 0; 
+
+void	ft_sigint_handler_beforecmd(int sig)
 {
-	write (fd, &c, 1);
+	g_signal_exit_status = sig;
+	rl_replace_line("", 0);
+	ft_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_sigint_handler_incmd(int sig)
 {
-	int	i;
+	g_signal_exit_status = sig;
+	rl_replace_line("", 1);
+	ft_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_done = 1;
+}
 
-	i = 0;
-	while (s[i])
+void	ft_signal_incmd(void)
+{
+	signal(SIGINT, ft_sigint_handler_incmd);
+	signal(SIGQUIT, ft_sigint_handler_incmd);
+}
+
+void	ft_reset_signal(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+void	ft_check_signal(t_data *data)
+{
+	if (g_signal_exit_status == SIGINT)
 	{
-		ft_putchar_fd (s[i], fd);
-		i++;
+		data->exit_status = 130;
+		g_signal_exit_status = 0;
+	}
+	else if (g_signal_exit_status == SIGQUIT)
+	{
+		data->exit_status = 131;
+		g_signal_exit_status = 0;
 	}
 }
-
-void	ft_putendl_fd(char *s, int fd)
-{
-	ft_putstr_fd (s, fd);
-	ft_putchar_fd ('\n', fd);
-}
-// Handler for SIGINT (Ctrl + C)
-void handle_sigint(int sig) {
-    (void)sig;
-    // Move to a new line, clear the current input, and redisplay the prompt
-    ft_putendl_fd("", 0);
-    rl_replace_line("", 0);  // Clear the line buffer
-    rl_on_new_line();        // Handle the new line
-    rl_redisplay();          // Redisplay the prompt
-}
-
-// int main() {
-//     char *input;
-
-//     // Set signal handlers
-//     signal(SIGINT, handle_sigint);   // Ctrl + C
-//     signal(SIGQUIT, SIG_IGN);        // Ignore Ctrl + \
-
-//     while (1) {
-//         // Display the prompt and read user input
-//         input = readline("minishell> ");  // Correctly set the prompt here
-        
-//         // Handle EOF (Ctrl + D)
-//         if (!input) {
-//             write(1, "exit\n", 5);
-//             break;
-//         }
-
-//         if (input[0] != '\0') {
-//             // Add non-empty input to history
-//             add_history(input);
-//         }
-
-//         // Your command processing logic here
-
-//         free(input);  // Free the input buffer allocated by readline
-//     }
-
-//     return 0;
-// }
