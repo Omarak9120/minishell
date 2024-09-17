@@ -3,6 +3,7 @@
 int main() {
     char *input;
 
+    art();
     signal(SIGINT, handle_sigint);   // Ctrl + C
     signal(SIGQUIT, SIG_IGN);        // Ignore Ctrl + backslash
 

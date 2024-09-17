@@ -3,6 +3,7 @@ CFLAGS = -Wall -Werror -Wextra -Iincludes -Ilibft
 LIBFT = libft/libft.a
 
 SRC = src/minishell.c \
+	  src/heder.c \
       $(wildcard src/lexer/*.c) \
       $(wildcard src/parser/*.c) \
       $(wildcard src/signals/*.c)
@@ -19,6 +20,13 @@ all: $(NAME)
 # Link the executable
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME) -lreadline
+	@echo "\033[31m███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     \033[0m"
+	@echo "\033[31m████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     \033[0m"
+	@echo "\033[31m██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     \033[0m"
+	@echo "\033[31m██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     \033[0m"
+	@echo "\033[31m██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗\033[0m"
+	@echo "\033[31m╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\033[0m"
+	@echo "\033[0m" 
 
 # Pattern rule to compile .o files from .c files in subdirectories
 obj/%.o: src/%.c | $(OBJDIRS)

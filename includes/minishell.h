@@ -87,7 +87,7 @@ typedef struct s_data
 void        init_shell(t_data *data, char **env);
 void        run_shell(t_data *data);
 void        exit_shell(t_data *data, int exit_code);
-
+void        art(void);
 /* ------------------------ LEXER -----------------------------------------*/
 
 // lexer.c

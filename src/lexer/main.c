@@ -13,20 +13,20 @@
 //     // char input[] = "echo \"Hello World";
 //     // char input[] = "echo \"Unmatched quote";
 
-int main(void)
-{
-    // Modifiable string for tokenization
-    // char input[] = "echo \"hello world\" >> file";
-    char input[] = "cat|cat|ls";
-    // char input[] = "echo \"hello \\\"world\\\"\"";
-    // char input[] = "echo \"hello world\" > output.txt";
-    // char input[] = " | grep txt || sort echo omar";
-    // char input[] = "echo \"file contents\" > output.txt";
-    // char input[] = " cat << output ???";
-    // char input[] = "echo Hello\\ World";
-    // char input[] = "echo \"Hello World";
-    // char input[] = "echo \"Unmatched quote";
-
+// int main(void)
+// {
+//     // Modifiable string for tokenization
+//     // char input[] = "echo \"hello world\" >> file";
+//     char input[] = "cat|cat|ls";
+//     // char input[] = "echo \"hello \\\"world\\\"\"";
+//     // char input[] = "echo \"hello world\" > output.txt";
+//     // char input[] = " | grep txt || sort echo omar";
+//     // char input[] = "echo \"file contents\" > output.txt";
+//     // char input[] = " cat << output ???";
+//     // char input[] = "echo Hello\\ World";
+//     // char input[] = "echo \"Hello World";
+//     // char input[] = "echo \"Unmatched quote";
+// }
 //     t_token *token_list = tokenize_input(input);
     
 //     if (!token_list) {
