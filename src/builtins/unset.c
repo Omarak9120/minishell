@@ -10,19 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../includes/minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-void my_unset(const char *var) {
-    if (var == NULL) {
-        printf("Usage: unset VAR\n");
-        return;
-    }
-
-    // Use unsetenv to remove the variable from the environment
-    if (unsetenv(var) != 0) {
-        perror("unsetenv");
-    } else {
-        printf("Unset: %s\n", var);
-    }
+int         builtin_unset(t_data *data, char **args)
+{
+    (void)data;
+    (void)args;
+    return (0);
 }
+//     if (var == NULL) {
+//         printf("Usage: unset VAR\n");
+//         return;
+//     }
+
+//     // Use unsetenv to remove the variable from the environment
+//     if (unsetenv(var) != 0) {
+//         perror("unsetenv");
+//     } else {
+//         printf("Unset: %s\n", var);
+//     }
+// }

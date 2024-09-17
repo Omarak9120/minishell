@@ -3,9 +3,12 @@ CFLAGS = -Wall -Werror -Wextra -Iincludes -Ilibft
 LIBFT = libft/libft.a
 
 SRC = src/minishell.c \
+	  $(wildcard src/builtins/*.c) \
+	  $(wildcard src/utils/*.c) \
 	  src/heder.c \
       $(wildcard src/lexer/*.c) \
       $(wildcard src/parser/*.c) \
+	  $(wildcard src/execution/*.c) \
       $(wildcard src/signals/*.c)
 
 # Change to store object files in obj/ while keeping their directory structure

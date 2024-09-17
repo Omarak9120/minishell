@@ -33,27 +33,19 @@ typedef enum e_token_type
 {
     WORD = 1,
     PIPE = 2,
-    REDIRECT,
     REDIRECT_OUT = 3,
     REDIRECT_IN = 4,
-    SEMICOLON,
     APPEND = 5,
     HEREDOC = 6,
     INVALID = 7,
     BUILTIN = 8,
-    BACKGROUND,
-    AND,
-    OR,
-    INPUT,
-    TRUNC,
-    END
 } t_token_type;
 
 // Token structure for storing parsed tokens (could be words, symbols, etc.)
 typedef struct s_token
 {
     char            *str;
-    int             type;           // WORD, PIPE, REDIRECT, etc.
+    t_token_type    type;           // WORD, PIPE, REDIRECT, etc.
     struct s_token  *next;
 }                   t_token;
 
@@ -104,7 +96,7 @@ void        free_command_list(t_command *cmd_list);  // Free command list
 
 // exec_cmd.c
 void        execute_commands(t_data *data);  // Execute the commands
-void        execute_builtin(t_command *cmd, t_data *data);  // Execute built-in commands
+int        execute_builtin(t_command *cmd, t_data *data);  // Execute built-in commands
 int         execute_binary(t_command *cmd, t_data *data);  // Execute external binaries
 
 /* ------------------------ SIGNALS ---------------------------------------*/
@@ -118,30 +110,28 @@ void        setup_signals(void);  // Setup signal handling
 
 // cd.c
 int         builtin_cd(t_data *data, char **args);  // Built-in 'cd' command
-
 // pwd.c
-int         builtin_pwd(void);
-
+int         builtin_pwd(t_data *data, char **args);
 // env.c
-int         builtin_env(t_data *data);
-
+int         builtin_env(t_data *data, char **args);
 // export.c
 int         builtin_export(t_data *data, char **args);
-
 // unset.c
 int         builtin_unset(t_data *data, char **args);
-
 // exit.c
 int         builtin_exit(t_data *data, char **args);
+// echo.c
+int         builtin_echo(t_data *data, char **args);
 
 /* ------------------------ UTILS -----------------------------------------*/
-
+// Declare the setup and cleanup functions
+// shell_setup.c
+void        setup_shell(t_data *data);     // Initialize environment, signals, etc.
+void        cleanup_shell(t_data *data);   // Clean up shell resources on exit
 // error.c
 void        print_error(char *msg, int exit_code);  // Print error messages
-
 // memory.c
 void        free_data(t_data *data);  // Free the shell data structure
-
 /* ------------------------ TOKEN MANAGEMENT ------------------------------*/
 
 // Token management functions
@@ -155,7 +145,6 @@ t_token     *create_word_token(char *input, int *i);
 t_token     *create_quoted_token(char *input, int *i, char quote_type);
 t_token     *create_escape_sequence(char *input, int *i);
 int         is_valid_word(char *str);
-int         is_builtin(char *str);
 t_token     *create_word_with_separator(char *input, int *i);
 t_token     *create_general_token(char *input, int *i);
 

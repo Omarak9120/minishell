@@ -1,13 +1,13 @@
-
+#include "../../includes/minishell.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
 # include <stdbool.h>
 
-int cd_command(char **args)
+int         builtin_cd(t_data *data, char **args)  // Built-in 'cd' command
 {
-    
+    (void)data;
     if (args[1] == NULL)
     {
         char *home = getenv("HOME");
