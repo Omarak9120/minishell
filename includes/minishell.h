@@ -15,6 +15,7 @@
     # include <readline/history.h>
     # include <stdbool.h>
     # include <limits.h>
+    # include "../libft/libft.h"
 
     /******************************************************************************
     *                               MACROS                                         *
