@@ -6,7 +6,7 @@
 /*   By: ksayour <ksayour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 14:26:55 by ksayour           #+#    #+#             */
-/*   Updated: 2024/09/17 14:28:56 by ksayour          ###   ########.fr       */
+/*   Updated: 2024/09/18 17:12:16 by ksayour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void free_environment(char **env) {
 void setup_shell(t_data *data) {
     // Set up the environment variables
     data->env = copy_environment();  // A function that duplicates the current env
-    
-    // Initialize signals
-    signal(SIGINT, handle_sigint);   // Handle Ctrl+C
-    signal(SIGQUIT, SIG_IGN);        // Ignore Ctrl+\ (SIGQUIT)
+    ft_signal_incmd();
+    // // Initialize signals
+    // signal(SIGINT, handle_sigint);   // Handle Ctrl+C
+    // signal(SIGQUIT, SIG_IGN);        // Ignore Ctrl+\ (SIGQUIT)
 }
 
 // Function to clean up resources before exiting

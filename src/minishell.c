@@ -8,9 +8,9 @@ int main() {
     setup_shell(&data);  // Initialize environment, signals, etc.
 
     art();  // Display shell art if necessary
-    signal(SIGINT, handle_sigint);   // Handle Ctrl + C
-    signal(SIGQUIT, SIG_IGN);        // Ignore Ctrl + backslash (SIGQUIT)
-
+    // signal(SIGINT, handle_sigint);   // Handle Ctrl + C
+    // signal(SIGQUIT, SIG_IGN);        // Ignore Ctrl + backslash (SIGQUIT)
+    ft_signal_incmd();
     while (1) {
         input = readline("minishell> ");
         if (!input) {

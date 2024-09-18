@@ -105,6 +105,7 @@
     /* ------------------------ SIGNALS ---------------------------------------*/
 
     // signals.c
+    void	    ft_signal_incmd(void);
     void        handle_sigint(int sig);
     void        setup_signals(void);  // Setup signal handling
 
