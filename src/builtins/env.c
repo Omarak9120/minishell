@@ -13,25 +13,21 @@
 
 int builtin_env(t_data *data, char **args)
 {
-    // Check if there are any extra arguments
-    if (args[1] != NULL) {
+    if (args[1] != NULL)
+    {
         fprintf(stderr, "env: '%s': No such file or directory\n", args[1]);
-        return (127); // Standard error code for command not found
+        return (127);
     }
-
-    // Check if data or environment is null
-    if (data == NULL || data->env == NULL) {
+    if (data == NULL || data->env == NULL)
+    {
         printf("Error: No environment context available.\n");
-        return (1); // Error code for failure
+        return (1);
     }
-
-    // Use the environment variables from the struct
     char **env = data->env;
-
-    // Iterate through the environment variables and print each one
-    while (*env) {
+    while (*env)
+    {
         printf("%s\n", *env);
         env++;
     }
-    return (0); // Success
+    return (0);
 }

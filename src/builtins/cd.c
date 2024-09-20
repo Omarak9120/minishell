@@ -1,14 +1,14 @@
 #include "../../includes/minishell.h"
 
-int builtin_cd(t_data *data, char **args) // Built-in 'cd' command
+int builtin_cd(t_data *data, char **args)
 {
-    static char *prev_dir = NULL; // To store the previous directory
+    static char *prev_dir = NULL;
     char *home;
     char cwd[1024];
 
-    (void)data; // Unused parameter for now
+    (void)data;
 
-    if (getcwd(cwd, sizeof(cwd)) == NULL) // Get current directory
+    if (getcwd(cwd, sizeof(cwd)) == NULL)
     {
         perror("getcwd");
         return 1;
@@ -40,7 +40,7 @@ int builtin_cd(t_data *data, char **args) // Built-in 'cd' command
             perror("minishell");
             return 1;
         }
-        printf("%s\n", prev_dir); // Print the previous directory
+        printf("%s\n", prev_dir);
     }
     else
     {
@@ -51,9 +51,8 @@ int builtin_cd(t_data *data, char **args) // Built-in 'cd' command
         }
     }
 
-    // Update the previous directory
     free(prev_dir);
-    prev_dir = strdup(cwd); // Save the current directory as previous
+    prev_dir = ft_strdup(cwd);
 
     return 0;
 }
