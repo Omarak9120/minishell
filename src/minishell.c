@@ -42,15 +42,7 @@ int main() {
         }
 
         // Debugging: Print parsed command details (Optional)
-        t_command *cur_cmd = cmd_list;
-        while (cur_cmd) {
-            printf("Command: %s\n", cur_cmd->command);
-            for (int i = 0; cur_cmd->args[i]; i++)
-                printf("  Arg[%d]: %s\n", i, cur_cmd->args[i]);
-
-            printf("  in_fd: %d, out_fd: %d\n", cur_cmd->in_fd, cur_cmd->out_fd);
-            cur_cmd = cur_cmd->next;
-        }
+        
 
         // Execute the commands (either with or without pipes)
         data.cmd_list = cmd_list;

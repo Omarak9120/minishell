@@ -6,8 +6,6 @@ int builtin_cd(t_data *data, char **args)
     char *home;
     char cwd[1024];
 
-    (void)data;
-
     if (getcwd(cwd, sizeof(cwd)) == NULL)
     {
         perror("getcwd");
@@ -16,7 +14,7 @@ int builtin_cd(t_data *data, char **args)
 
     if (args[1] == NULL || strcmp(args[1], "~") == 0)
     {
-        home = getenv("HOME");
+        home = my_getenv(data->env, "HOME");
         if (home == NULL)
         {
             fprintf(stderr, "minishell: cd: HOME not set\n");

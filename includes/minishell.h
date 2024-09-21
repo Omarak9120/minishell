@@ -126,6 +126,7 @@
     int         builtin_exit(t_data *data, char **args);
     // echo.c
     int         builtin_echo(t_data *data, char **args);
+    char        *my_getenv(char **env, const char *name);
 
     /* ------------------------ UTILS -----------------------------------------*/
     // Declare the setup and cleanup functions

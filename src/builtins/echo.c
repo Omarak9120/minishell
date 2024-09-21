@@ -6,12 +6,11 @@
 /*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:17:54 by mjamil            #+#    #+#             */
-/*   Updated: 2024/09/20 19:02:10 by mjamil           ###   ########.fr       */
+/*   Updated: 2024/09/21 13:11:04 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 bool is_n_flag(const char *arg)
 {
@@ -29,7 +28,7 @@ bool is_n_flag(const char *arg)
     return false;
 }
 
-void expand_variables(char *arg, char *buffer)
+void expand_variables(t_data *data, char *arg, char *buffer)
 {
     int i = 0, j = 0;
 
@@ -94,7 +93,7 @@ void expand_variables(char *arg, char *buffer)
                 }
                 var_name[var_len] = '\0';
 
-                char *env_value = getenv(var_name);
+                char *env_value = my_getenv(data->env, var_name);
                 if (env_value)
                 {
                     strcpy(&buffer[j], env_value);
@@ -117,8 +116,6 @@ void echo(const char *message, bool no_newline)
 
 int builtin_echo(t_data *data, char **args)
 {
-    (void)data;
-
     if (args[0] && strcmp(args[0], "echo") == 0)
     {
         bool no_newline = false;
@@ -135,7 +132,7 @@ int builtin_echo(t_data *data, char **args)
             if (!first_word)
                 strcat(message, " ");
             char expanded[1024] = "";
-            expand_variables(args[i], expanded);
+            expand_variables(data, args[i], expanded);
             
             strcat(message, expanded);
             first_word = false;
