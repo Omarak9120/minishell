@@ -12,7 +12,7 @@ int builtin_cd(t_data *data, char **args)
         return 1;
     }
 
-    if (args[1] == NULL || strcmp(args[1], "~") == 0)
+    if (args[1] == NULL || my_strcmp(args[1], "~") == 0)
     {
         home = my_getenv(data->env, "HOME");
         if (home == NULL)
@@ -26,7 +26,7 @@ int builtin_cd(t_data *data, char **args)
             return 1;
         }
     }
-    else if (strcmp(args[1], "-") == 0)
+    else if (my_strcmp(args[1], "-") == 0)
     {
         if (prev_dir == NULL)
         {

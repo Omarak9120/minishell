@@ -11,24 +11,46 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-int         builtin_unset(t_data *data, char **args)
+int unset_env_variable(t_data *data, const char *var_name)
 {
-    (void)data;
-    (void)args;
-    return (0);
-}
-//     if (var == NULL) {
-//         printf("Usage: unset VAR\n");
-//         return;
-//     }
+    int i = 0;
+    int len = ft_strlen(var_name);
 
-//     // Use unsetenv to remove the variable from the environment
-//     if (unsetenv(var) != 0) {
-//         perror("unsetenv");
-//     } else {
-//         printf("Unset: %s\n", var);
-//     }
-// }
+    while (data->env[i] != NULL)
+    {
+        if (ft_strncmp(data->env[i], var_name, len) == 0 && data->env[i][len] == '=')
+        {
+            free(data->env[i]);
+
+            while (data->env[i] != NULL)
+            {
+                data->env[i] = data->env[i + 1];
+                i++;
+            }
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+
+int builtin_unset(t_data *data, char **args)
+{
+    int i = 1;
+    
+    if (args[1] == NULL)
+    {
+        fprintf(stderr, "minishell: unset: not enough arguments\n");
+        return 1;
+    }
+    while (args[i])
+    {
+        if (unset_env_variable(data, args[i]) != 0)
+            fprintf(stderr, "minishell: unset: %s: not found\n", args[i]);
+        i++;
+    }
+
+    return 0;
+}
+

@@ -6,7 +6,7 @@
 /*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:17:54 by mjamil            #+#    #+#             */
-/*   Updated: 2024/09/21 13:11:04 by mjamil           ###   ########.fr       */
+/*   Updated: 2024/09/21 13:59:27 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void expand_variables(t_data *data, char *arg, char *buffer)
             {
                 char pid_str[16];
                 snprintf(pid_str, sizeof(pid_str), "%d", getpid());
-                strcpy(&buffer[j], pid_str);
+                my_strcpy(&buffer[j], pid_str);
                 j += ft_strlen(pid_str);
                 i += 2;
             }
@@ -53,7 +53,7 @@ void expand_variables(t_data *data, char *arg, char *buffer)
             {
                 char parent_pid_str[16];
                 snprintf(parent_pid_str, sizeof(parent_pid_str), "%d", getppid());
-                strcpy(&buffer[j], parent_pid_str);
+                my_strcpy(&buffer[j], parent_pid_str);
                 j += ft_strlen(parent_pid_str);
                 i += 3;
             }
@@ -72,12 +72,12 @@ void expand_variables(t_data *data, char *arg, char *buffer)
 
                 if (num_len > 1)
                 {
-                    strcpy(&buffer[j], &num_str[1]);
+                    my_strcpy(&buffer[j], &num_str[1]);
                     j += (num_len - 1);
                 }
                 else
                 {
-                    strcpy(&buffer[j], num_str);
+                    my_strcpy(&buffer[j], num_str);
                     j += num_len;
                 }
             }
@@ -96,7 +96,7 @@ void expand_variables(t_data *data, char *arg, char *buffer)
                 char *env_value = my_getenv(data->env, var_name);
                 if (env_value)
                 {
-                    strcpy(&buffer[j], env_value);
+                    my_strcpy(&buffer[j], env_value);
                     j += ft_strlen(env_value);
                 }
             }
@@ -116,7 +116,7 @@ void echo(const char *message, bool no_newline)
 
 int builtin_echo(t_data *data, char **args)
 {
-    if (args[0] && strcmp(args[0], "echo") == 0)
+    if (args[0] && my_strcmp(args[0], "echo") == 0)
     {
         bool no_newline = false;
         int i = 1;
@@ -130,11 +130,11 @@ int builtin_echo(t_data *data, char **args)
         while (args[i])
         {
             if (!first_word)
-                strcat(message, " ");
+                my_strcat(message, " ");
             char expanded[1024] = "";
             expand_variables(data, args[i], expanded);
             
-            strcat(message, expanded);
+            my_strcat(message, expanded);
             first_word = false;
             i++;
         }

@@ -127,6 +127,10 @@
     // echo.c
     int         builtin_echo(t_data *data, char **args);
     char        *my_getenv(char **env, const char *name);
+    char        *my_strcpy(char *dest, const char *src);
+    char        *my_strcat(char *dest, const char *src);
+    char        *my_strncpy(char *dest, const char *src, size_t n);
+    int         my_strcmp(const char *s1, const char *s2);
 
     /* ------------------------ UTILS -----------------------------------------*/
     // Declare the setup and cleanup functions
