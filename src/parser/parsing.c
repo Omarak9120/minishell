@@ -6,7 +6,7 @@
 /*   By: ksayour <ksayour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:56:28 by oabdelka          #+#    #+#             */
-/*   Updated: 2024/09/16 22:08:23 by ksayour          ###   ########.fr       */
+/*   Updated: 2024/09/21 14:11:03 by ksayour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_command *parse_tokens(t_token *tokens)
             while (cur_token && cur_token->type == WORD)
             {
                 current_cmd->args[i] = strdup(cur_token->str);
-                cur_token = cur_token->next;
+                cur_token = cur_token->next; // Move to the next token
                 i++;
             }
             current_cmd->args[i] = NULL; // Null-terminate the args array
@@ -83,11 +83,16 @@ t_command *parse_tokens(t_token *tokens)
                 exit(EXIT_FAILURE);
             }
             current_cmd->out_fd = current_cmd->pipe_fd[1]; // Current command output goes to pipe
-            cur_token = cur_token->next; // Move to the next token
+            cur_token = cur_token->next; // Move to the next token after the pipe
+            continue; // Move to the next iteration, skip rest of this one
         }
 
-        // Handle redirections (input/output handling would be added here)
+        // Handle other token types (like redirection) if needed here
         // For now, we assume no redirection in this code
+
+        // Always move to the next token to avoid an infinite loop
+        if (cur_token)
+            cur_token = cur_token->next;
     }
 
     return cmd_list;

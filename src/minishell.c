@@ -10,7 +10,6 @@ int main() {
     art();  // Display shell art if necessary
     // signal(SIGINT, handle_sigint);   // Handle Ctrl + C
     // signal(SIGQUIT, SIG_IGN);        // Ignore Ctrl + backslash (SIGQUIT)
-    ft_signal_incmd();
     while (1) {
         input = readline("minishell> ");
         if (!input) {
@@ -26,7 +25,12 @@ int main() {
 
         // Tokenize the input
         t_token *token_list = tokenize_input(input);
-
+        t_token *current = token_list;
+        while (current != NULL)
+        {
+            printf("Token: %s, Type: %d\n", current->str, current->type);
+            current = current->next;
+        }
         if (!token_list) {
             free(input);  // Free the input memory
             continue;  // Skip if no valid tokens
@@ -42,8 +46,16 @@ int main() {
         }
 
         // Debugging: Print parsed command details (Optional)
-        
+        t_command *cur_cmd = cmd_list;
+        while (cur_cmd)
+        {
+            printf("Command: %s\n", cur_cmd->command);
+            for (int i = 0; cur_cmd->args[i]; i++)
+                printf("  Arg[%d]: %s\n", i, cur_cmd->args[i]);
 
+            printf("  in_fd: %d, out_fd: %d\n", cur_cmd->in_fd, cur_cmd->out_fd);
+            cur_cmd = cur_cmd->next;
+        }
         // Execute the commands (either with or without pipes)
         data.cmd_list = cmd_list;
         execute_commands(&data);

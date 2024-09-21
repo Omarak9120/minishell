@@ -87,7 +87,6 @@ t_token *create_quoted_token(char *input, int *i, char quote_type) {
 }
 
 
-
 t_token *create_general_token(char *input, int *i) {
     char *token_str = NULL;
     int capacity = 256;
@@ -97,8 +96,23 @@ t_token *create_general_token(char *input, int *i) {
     if (!token_str) return NULL; // Handle allocation failure
 
     while (input[*i] && !is_whitespace(input[*i])) {
+        // Check for special tokens
+        if (input[*i] == '>' || input[*i] == '<' || input[*i] == '|') {
+            // If we encounter a special character, create a token and return
+            char special_char[3] = {input[*i], '\0', '\0'};
+
+            // Check for double-character tokens like ">>" or "<<"
+            if ((input[*i] == '>' && input[*i + 1] == '>') || (input[*i] == '<' && input[*i + 1] == '<')) {
+                special_char[1] = input[*i + 1];
+                (*i)++;
+            }
+
+            (*i)++; // Move to the next character after the special character(s)
+            return create_token(special_char, get_token_type(special_char));
+        }
+
+        // Handle quoted content
         if (input[*i] == '\'' || input[*i] == '"') {
-            // If a quote is found, process the quoted content
             char quote_type = input[*i];
             (*i)++;  // Skip the opening quote
             while (input[*i] && input[*i] != quote_type) {
@@ -125,6 +139,7 @@ t_token *create_general_token(char *input, int *i) {
 
     token_str[j] = '\0';
 
+    // Create token for regular words
     t_token *token = create_token(token_str, WORD);
     free(token_str);
     return token;

@@ -1,0 +1,2 @@
+echo "wuyg"uwfh --> "wuyg" uwfh | withou spaces
+echo '$HOME' '$$' --> "hdf/eiuifh/ij" "pid" | "$HOME" "$$"
