@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksayour <ksayour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 14:43:38 by ksayour           #+#    #+#             */
-/*   Updated: 2024/09/17 14:53:51 by ksayour          ###   ########.fr       */
+/*   Updated: 2024/09/23 17:10:09 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,45 @@
 
 // Declaration of is_builtin before usage
 int is_builtin(t_command *cmd);
+void execute_external_command(t_data *data, t_command *cmd)
+{
+    pid_t pid = fork();
+    if (pid == 0)
+    {
+        if (cmd->in_fd != STDIN_FILENO)
+        {
+            dup2(cmd->in_fd, STDIN_FILENO);
+            close(cmd->in_fd);
+        }
+        if (cmd->out_fd != STDOUT_FILENO)
+        {
+            dup2(cmd->out_fd, STDOUT_FILENO);
+            close(cmd->out_fd);
+        }
+        if (execvp(cmd->args[0], cmd->args) == -1)
+        {
+            ft_perror("minishell");
+            exit(EXIT_FAILURE);
+        }
+    }
+    else if (pid > 0)
+    {
+        int status;
+        waitpid(pid, &status, 0);
+        data->exit_status = WEXITSTATUS(status);
+    }
+    else
+        perror("minishell: fork");
+}
 
 // Execute a single command (builtin or external)
 int execute_single_command(t_command *cmd, t_data *data) {
     if (is_builtin(cmd)) {
         return execute_builtin(cmd, data);
     } else {
-        return execute_binary(cmd, data);
+        execute_external_command(data, cmd);
     }
+    return(0);
 }
 
 // Check if the command is a built-in

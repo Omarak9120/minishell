@@ -133,7 +133,7 @@
     int         my_strcmp(const char *s1, const char *s2);
     void        ft_perror(const char *msg);
     void        *ft_realloc(void *ptr, size_t original_size, size_t new_size);
-
+void execute_external_command(t_data *data, t_command *cmd);
     /* ------------------------ UTILS -----------------------------------------*/
     // Declare the setup and cleanup functions
     // shell_setup.c
