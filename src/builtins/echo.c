@@ -6,7 +6,7 @@
 /*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:17:54 by mjamil            #+#    #+#             */
-/*   Updated: 2024/09/22 14:17:18 by mjamil           ###   ########.fr       */
+/*   Updated: 2024/09/23 14:20:03 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,7 @@ void expand_variables(t_data *data, char *arg, char *buffer)
     {
         if (arg[i] == '$')
         {
-            if (arg[i + 1] == '\0')
-            {
-                buffer[j++] = '$';
-                i++;
-            }
-            else if (arg[i + 1] == '$')
+            if (arg[i + 1] == '$')
             {
                 char pid_str[16];
                 snprintf(pid_str, sizeof(pid_str), "%d", getpid());
@@ -57,55 +52,60 @@ void expand_variables(t_data *data, char *arg, char *buffer)
                 j += ft_strlen(parent_pid_str);
                 i += 3;
             }
-            else if (ft_isdigit(arg[i + 1]))
-            {
-                i++;
-
-                char num_str[128];
-                int num_len = 0;
-
-                while (ft_isdigit(arg[i]))
-                {
-                    num_str[num_len++] = arg[i++];
-                }
-                num_str[num_len] = '\0';
-
-                if (num_len > 1)
-                {
-                    my_strcpy(&buffer[j], &num_str[1]);
-                    j += (num_len - 1);
-                }
-                else
-                {
-                    my_strcpy(&buffer[j], num_str);
-                    j += num_len;
-                }
-            }
             else
             {
+                i++;
                 char var_name[128];
                 int var_len = 0;
-                i++;
 
                 while (arg[i] != '\0' && (ft_isalnum(arg[i]) || arg[i] == '_'))
-                {
                     var_name[var_len++] = arg[i++];
-                }
                 var_name[var_len] = '\0';
+                char *default_value = NULL;
+                if (arg[i] == ':')
+                {
+                    i++;
+                    if (arg[i] == '-')
+                    {
+                        i++;
+                        char default_name[128];
+                        int def_len = 0;
+                        while (arg[i] != '\0' && (ft_isalnum(arg[i]) || arg[i] == '_'))
+                            default_name[def_len++] = arg[i++];
+                        default_name[def_len] = '\0';
+                        default_value = default_name;
+                    }
+                }
 
                 char *env_value = my_getenv(data->env, var_name);
                 if (env_value)
                 {
-                    my_strcpy(&buffer[j], env_value);
-                    j += ft_strlen(env_value);
+                    if (env_value[0] == '"' && env_value[strlen(env_value) - 1] == '"')
+                    {
+                        my_strncpy(&buffer[j], env_value + 1, strlen(env_value) - 2);
+                        j += strlen(env_value) - 2;
+                    }
+                    else
+                    {
+                        my_strcpy(&buffer[j], env_value);
+                        j += ft_strlen(env_value);
+                    }
+                }
+                else if (default_value)
+                {
+                    my_strcpy(&buffer[j], default_value);
+                    j += ft_strlen(default_value);
                 }
             }
         }
         else
+        {
             buffer[j++] = arg[i++];
+        }
     }
     buffer[j] = '\0';
 }
+
 
 void echo(const char *message, bool no_newline)
 {

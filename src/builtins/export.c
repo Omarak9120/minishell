@@ -40,18 +40,52 @@ void add_env_variable(t_data *data, const char *arg)
                 if (ft_strncmp(data->env[i], key, ft_strlen(key)) == 0 && data->env[i][ft_strlen(key)] == '=')
                 {
                     free(data->env[i]);
-                    data->env[i] = malloc(strlen(arg) + 1);
+                    data->env[i] = malloc(strlen(key) + strlen(value) + 4);
                     if (data->env[i] == NULL)
                     {
                         ft_perror("Failed to allocate memory for environment variable");
                         return;
                     }
-                    my_strcpy(data->env[i], arg);
+                    my_strcpy(data->env[i], key);
+                    my_strcat(data->env[i], "=");
+                    my_strcat(data->env[i], "\"");
+                    my_strcat(data->env[i], value);
+                    my_strcat(data->env[i], "\"");
                     return;
                 }
                 i++;
             }
-
+            size_t env_size = 0;
+            while (data->env[env_size] != NULL) 
+                env_size++;
+            data->env = ft_realloc(data->env, sizeof(char *) * env_size, sizeof(char *) * (env_size + 2));
+            if (data->env == NULL)
+            {
+                ft_perror("Failed to allocate memory");
+                return;
+            }
+            data->env[env_size] = malloc(strlen(key) + strlen(value) + 4);
+            if (data->env[env_size] == NULL)
+            {
+                ft_perror("Failed to allocate memory for environment variable");
+                return;
+            }
+            my_strcpy(data->env[env_size], key);
+            my_strcat(data->env[env_size], "=");
+            my_strcat(data->env[env_size], "\"");
+            my_strcat(data->env[env_size], value);
+            my_strcat(data->env[env_size], "\"");
+            data->env[env_size + 1] = NULL;
+        }
+        else
+        {
+            fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", key);
+        }
+    }
+    else
+    {
+        if (is_valid_identifier(arg))
+        {
             size_t env_size = 0;
             while (data->env[env_size] != NULL) 
                 env_size++;
@@ -71,14 +105,11 @@ void add_env_variable(t_data *data, const char *arg)
             data->env[env_size + 1] = NULL;
         }
         else
-            fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", key);
-    }
-    else
-    {
-        fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", arg);
+        {
+            fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", arg);
+        }
     }
 }
-
 
 int builtin_export(t_data *data, char **args)
 {
