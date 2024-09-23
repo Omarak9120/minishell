@@ -14,7 +14,7 @@ int builtin_pwd(t_data *data, char **args)
     }
     else
     {
-        perror("pwd");
+        ft_perror("pwd");
         return 1;
     }
 }

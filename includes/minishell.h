@@ -131,6 +131,8 @@
     char        *my_strcat(char *dest, const char *src);
     char        *my_strncpy(char *dest, const char *src, size_t n);
     int         my_strcmp(const char *s1, const char *s2);
+    void        ft_perror(const char *msg);
+    void        *ft_realloc(void *ptr, size_t original_size, size_t new_size);
 
     /* ------------------------ UTILS -----------------------------------------*/
     // Declare the setup and cleanup functions
