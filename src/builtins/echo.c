@@ -52,6 +52,12 @@ void expand_variables(t_data *data, char *arg, char *buffer)
                 j += ft_strlen(parent_pid_str);
                 i += 3;
             }
+            else if (arg[i + 1] == '?')
+            {
+                my_strcpy(&buffer[j], "0");
+                j += 1;
+                i += 2;
+            }
             else
             {
                 i++;
