@@ -9,7 +9,8 @@ SRC = src/minishell.c \
       $(wildcard src/lexer/*.c) \
       $(wildcard src/parser/*.c) \
 	  $(wildcard src/execution/*.c) \
-      $(wildcard src/signals/*.c)
+      $(wildcard src/signals/*.c) \
+      $(wildcard src/redirection/*.c)
 
 # Change to store object files in obj/ while keeping their directory structure
 OBJ = $(SRC:src/%.c=obj/%.o)

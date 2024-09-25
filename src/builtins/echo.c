@@ -6,7 +6,7 @@
 /*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:17:54 by mjamil            #+#    #+#             */
-/*   Updated: 2024/09/25 13:54:33 by mjamil           ###   ########.fr       */
+/*   Updated: 2024/09/23 14:20:03 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,6 @@ void expand_variables(t_data *data, char *arg, char *buffer)
                 my_strcpy(&buffer[j], parent_pid_str);
                 j += ft_strlen(parent_pid_str);
                 i += 3;
-            }
-            else if (arg[i + 1] == '?')
-            {
-                my_strcpy(&buffer[j], "0");
-                j += 1;
-                i += 2;
             }
             else
             {

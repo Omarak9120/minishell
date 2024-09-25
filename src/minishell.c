@@ -40,8 +40,14 @@ int main() {
             free(input);
             continue;
         }
-
         // Debugging: Print parsed command details (Optional)
+
+         // Handle redirection (if any) before executing the commands
+        t_command *cmd = cmd_list;
+        while (cmd) {
+            redirection_handle(cmd);  // Call to redirection handler
+            cmd = cmd->next;
+        }
         
         // Execute the commands (either with or without pipes)
         data.cmd_list = cmd_list;

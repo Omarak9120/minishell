@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksayour <ksayour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:56:28 by oabdelka          #+#    #+#             */
-/*   Updated: 2024/09/21 14:11:03 by ksayour          ###   ########.fr       */
+/*   Updated: 2024/09/25 13:46:34 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_command *parse_tokens(t_token *tokens)
 
     while (cur_token)
     {
-        // Create a new command structure when encountering a WORD token
         if (cur_token->type == WORD)
         {
             t_command *new_cmd = create_command();
@@ -59,7 +58,6 @@ t_command *parse_tokens(t_token *tokens)
                 current_cmd->next = new_cmd;
             current_cmd = new_cmd;
 
-            // Set the command and its arguments
             current_cmd->command = strdup(cur_token->str);
 
             int arg_count = count_args(cur_token);
@@ -68,10 +66,34 @@ t_command *parse_tokens(t_token *tokens)
             while (cur_token && cur_token->type == WORD)
             {
                 current_cmd->args[i] = strdup(cur_token->str);
-                cur_token = cur_token->next; // Move to the next token
+                cur_token = cur_token->next;
                 i++;
             }
-            current_cmd->args[i] = NULL; // Null-terminate the args array
+            current_cmd->args[i] = NULL;
+        }
+
+        // Handle redirection tokens (>, >>, <, <<)
+        if (cur_token && (cur_token->type == REDIRECT_OUT || cur_token->type == REDIRECT_IN || 
+                          cur_token->type == APPEND || cur_token->type == HEREDOC))
+        {
+            if (!cur_token->next || cur_token->next->type != WORD) {
+                fprintf(stderr, "minishell: syntax error near unexpected token `%s`\n", cur_token->str);
+                free_command_list(cmd_list);
+                return NULL;
+            }
+
+            // Handle redirection
+            if (cur_token->type == REDIRECT_OUT)
+                current_cmd->out_fd = open(cur_token->next->str, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            else if (cur_token->type == APPEND)
+                current_cmd->out_fd = open(cur_token->next->str, O_WRONLY | O_CREAT | O_APPEND, 0644);
+            else if (cur_token->type == REDIRECT_IN)
+                current_cmd->in_fd = open(cur_token->next->str, O_RDONLY);
+            else if (cur_token->type == HEREDOC)
+                handle_heredoc(cur_token->next->str);
+
+            cur_token = cur_token->next->next;  // Skip the redirection token and the filename
+            continue;
         }
 
         // Handle pipes
@@ -82,21 +104,18 @@ t_command *parse_tokens(t_token *tokens)
                 perror("pipe");
                 exit(EXIT_FAILURE);
             }
-            current_cmd->out_fd = current_cmd->pipe_fd[1]; // Current command output goes to pipe
-            cur_token = cur_token->next; // Move to the next token after the pipe
-            continue; // Move to the next iteration, skip rest of this one
+            current_cmd->out_fd = current_cmd->pipe_fd[1];
+            cur_token = cur_token->next;
+            continue;
         }
 
-        // Handle other token types (like redirection) if needed here
-        // For now, we assume no redirection in this code
-
-        // Always move to the next token to avoid an infinite loop
         if (cur_token)
             cur_token = cur_token->next;
     }
 
     return cmd_list;
 }
+
 
 // Helper function to free the command list
 void free_command_list(t_command *cmd_list)

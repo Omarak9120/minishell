@@ -122,10 +122,15 @@ int builtin_export(t_data *data, char **args)
 {
     if (args[1] == NULL)
     {
+        // Sort the environment variables
         int env_size = 0;
         while (data->env[env_size] != NULL)
             env_size++;
+
+        // Using qsort to sort the environment variables alphabetically
         qsort(data->env, env_size, sizeof(char *), compare_strings);
+
+        // Print sorted environment variables
         int i = 0;
         while (data->env[i] != NULL)
         {

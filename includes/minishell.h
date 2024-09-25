@@ -95,12 +95,24 @@
     t_command   *parse_tokens(t_token *tokens);  // Parse tokens into commands
     void        free_command_list(t_command *cmd_list);  // Free command list
 
+    /* ------------------------ redirection -----------------------------------------*/
+
+    int handle_redirection(t_command *cmd);
+    void handle_heredoc(char *delimiter);
+    void handle_input_redirection(char *file);
+    void handle_append_redirection(char *file);
+    void handle_output_redirection(char *file);
+    void redirection_handle(t_command *cmd);
+
+
     /* ------------------------ EXECUTION -------------------------------------*/
 
     // exec_cmd.c
     void        execute_commands(t_data *data);  // Execute the commands
     int        execute_builtin(t_command *cmd, t_data *data);  // Execute built-in commands
     int         execute_binary(t_command *cmd, t_data *data);  // Execute external binaries
+    int handle_redirection(t_command *cmd);
+
 
     /* ------------------------ SIGNALS ---------------------------------------*/
 
@@ -151,7 +163,7 @@ void execute_external_command(t_data *data, t_command *cmd);
     void        add_token(t_token **token_list, t_token *new_token);  // Add token to list
     void        free_token_list(t_token *token_list);  // Free all tokens in the list
     int         validate_tokens(t_token *token_list);  // Validate tokens for syntax correctness
-    t_token     *create_separator_token(char *input, int *i);
+    t_token     *create_separator_token(char *input, int *i, int num_chars);
     t_token     *create_word_token(char *input, int *i);
     t_token     *create_quoted_token(char *input, int *i, char quote_type);
     t_token     *create_escape_sequence(char *input, int *i);

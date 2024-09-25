@@ -26,6 +26,16 @@ t_token *tokenize_input(char *input) {
             }
             add_token(&token_list, token);
         }
+        // Check for redirection operators
+        else if (input[i] == '>' || input[i] == '<') {
+            if (input[i + 1] == input[i]) {  // Handle cases like '>>' or '<<'
+                t_token *token = create_separator_token(input, &i, 2); // Double char tokens
+                add_token(&token_list, token);
+            } else {
+                t_token *token = create_separator_token(input, &i, 1); // Single char tokens
+                add_token(&token_list, token);
+            }
+        }
         else {
             t_token *token = create_general_token(input, &i);
             if (!token) {
@@ -37,6 +47,40 @@ t_token *tokenize_input(char *input) {
     }
     return token_list;
 }
+
+t_token *create_separator_token(char *input, int *i, int num_chars) {
+    t_token *new_token = malloc(sizeof(t_token));
+    if (!new_token)
+        return NULL;
+
+    // Allocate memory for the token string based on num_chars (1 or 2)
+    new_token->str = malloc((num_chars + 1) * sizeof(char));
+    if (!new_token->str) {
+        free(new_token);
+        return NULL;
+    }
+
+    // Copy the separator characters from the input string to the token string
+    strncpy(new_token->str, &input[*i], num_chars);
+    new_token->str[num_chars] = '\0';  // Null-terminate the token string
+
+    // Set token type based on the separator
+    if (strcmp(new_token->str, ">") == 0)
+        new_token->type = REDIRECT_OUT;
+    else if (strcmp(new_token->str, ">>") == 0)
+        new_token->type = APPEND;
+    else if (strcmp(new_token->str, "<") == 0)
+        new_token->type = REDIRECT_IN;
+    else if (strcmp(new_token->str, "<<") == 0)
+        new_token->type = HEREDOC;
+    else
+        new_token->type = INVALID;  // Set an invalid type for unknown tokens
+
+    *i += num_chars;  // Move the index forward by the number of characters processed
+    new_token->next = NULL;
+    return new_token;
+}
+
 
 // Create a token for quoted strings (everything between quotes)
 t_token *create_quoted_token(char *input, int *i, char quote_type) {
