@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 14:43:38 by ksayour           #+#    #+#             */
-/*   Updated: 2024/09/26 19:22:10 by oabdelka         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:36:48 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,73 +123,87 @@ int is_builtin(t_command *cmd)
 }
 
 // Execute piped commands
-int execute_piped_commands(t_command *cmd, t_data *data) {
+#include "../../includes/minishell.h"
+
+int execute_piped_commands(t_command *cmd, t_data *data)
+{
     int pipe_fd[2];
     int prev_fd = -1;
     pid_t pid;
     int status;
+    int first_process = 1;  // Track the first process in the pipeline
 
-    while (cmd) {
-        // Create a pipe if there's another command after the current one
-        if (cmd->next) {
-            if (pipe(pipe_fd) == -1) {
+    while (cmd)
+    {
+        if (cmd->next)  // If there is a next command, create a pipe
+        {
+            if (pipe(pipe_fd) == -1)
+            {
                 perror("Pipe error");
                 return FAILURE;
             }
         }
 
-        pid = fork();
-        if (pid == 0) {  // Child process
-            // If it's not the first command, redirect input from the previous pipe
-            if (prev_fd != -1) {
+        pid = fork();  // Fork a new process
+        if (pid == 0)  // Child process
+        {
+            ft_reset_signals();  // Reset signal handlers to default
+
+            if (!first_process)  // If this is not the first command, set stdin to previous pipe's output
+            {
                 dup2(prev_fd, STDIN_FILENO);
                 close(prev_fd);
             }
-            // If there's another command, redirect output to the current pipe
-            if (cmd->next) {
-                close(pipe_fd[0]);  // Close the read end of the current pipe
+
+            if (cmd->next)  // If there is a next command, set stdout to pipe's input
+            {
+                close(pipe_fd[0]);
                 dup2(pipe_fd[1], STDOUT_FILENO);
                 close(pipe_fd[1]);
             }
 
-            // Handle input/output redirection for the command
-            if (cmd->in_fd != STDIN_FILENO) {
-                dup2(cmd->in_fd, STDIN_FILENO);
-                close(cmd->in_fd);
-            }
-            if (cmd->out_fd != STDOUT_FILENO) {
-                dup2(cmd->out_fd, STDOUT_FILENO);
-                close(cmd->out_fd);
-            }
-
-            // Execute the command (builtin or binary)
-            if (is_builtin(cmd)) {
+            // Execute the command (builtin or external)
+            if (is_builtin(cmd))
+            {
                 exit(execute_builtin(cmd, data));
-            } else {
-                if (execvp(cmd->args[0], cmd->args) == -1) {
+            }
+            else
+            {
+                if (execvp(cmd->args[0], cmd->args) == -1)
+                {
                     perror("minishell");
                     exit(EXIT_FAILURE);
                 }
             }
-        } else if (pid < 0) {
+        }
+        else if (pid < 0)  // Fork error
+        {
             perror("Fork error");
             return FAILURE;
         }
 
-        // Parent process: close the write end of the current pipe and store the read end
-        if (cmd->next) {
+        // Parent process: close pipe write end, save read end for the next iteration
+        if (!first_process)
+        {
+            close(prev_fd);
+        }
+        if (cmd->next)
+        {
             close(pipe_fd[1]);
-            prev_fd = pipe_fd[0];
+            prev_fd = pipe_fd[0];  // Save the read end of the pipe for the next process
         }
 
-        // Move to the next command in the chain
+        first_process = 0;
         cmd = cmd->next;
     }
 
-    // Parent process waits for all child processes to finish
-    while (wait(&status) > 0);
+    // Wait for all child processes to finish
+    while (wait(&status) > 0)
+        ;
+
     return SUCCESS;
 }
+
 
 // Place this in exec_cmd.c or similar
 int execute_builtin(t_command *cmd, t_data *data) {

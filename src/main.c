@@ -1,8 +1,5 @@
 #include "../includes/minishell.h"
 
-// External variables for signal handling
-extern int g_signal_exit_status;
-
 int main() {
     char *input;
     t_data data;
