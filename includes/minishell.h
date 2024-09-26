@@ -120,6 +120,10 @@
     void	    ft_signal_incmd(void);
     void        handle_sigint(int sig);
     void        setup_signals(void);  // Setup signal handling
+    void ft_check_signal(t_data *data);
+    void ft_signal_setup_for_input(void);
+    void ft_reset_signals(void);
+    void ft_sigint_handler_beforecmd(int sig);
 
     /* ------------------------ BUILTINS --------------------------------------*/
     // Function prototypes for built-ins

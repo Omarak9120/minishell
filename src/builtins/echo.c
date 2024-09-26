@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:17:54 by mjamil            #+#    #+#             */
-/*   Updated: 2024/09/23 14:20:03 by mjamil           ###   ########.fr       */
+/*   Updated: 2024/09/26 18:18:16 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,20 @@ void expand_variables(t_data *data, char *arg, char *buffer)
         {
             if (arg[i + 1] == '$')
             {
+                // Replace $$ with the process ID
                 char pid_str[16];
                 snprintf(pid_str, sizeof(pid_str), "%d", getpid());
                 my_strcpy(&buffer[j], pid_str);
                 j += ft_strlen(pid_str);
                 i += 2;
             }
-            else if (arg[i + 1] == '$' && arg[i + 2] == '$')
-            {
-                char parent_pid_str[16];
-                snprintf(parent_pid_str, sizeof(parent_pid_str), "%d", getppid());
-                my_strcpy(&buffer[j], parent_pid_str);
-                j += ft_strlen(parent_pid_str);
-                i += 3;
-            }
             else if (arg[i + 1] == '?')
             {
-                my_strcpy(&buffer[j], "0");
-                j += 1;
+                // Replace $? with the last exit status
+                char exit_status_str[16];
+                snprintf(exit_status_str, sizeof(exit_status_str), "%d", data->exit_status);
+                my_strcpy(&buffer[j], exit_status_str);
+                j += ft_strlen(exit_status_str);
                 i += 2;
             }
             else
@@ -64,53 +60,31 @@ void expand_variables(t_data *data, char *arg, char *buffer)
                 char var_name[128];
                 int var_len = 0;
 
+                // Capture the variable name
                 while (arg[i] != '\0' && (ft_isalnum(arg[i]) || arg[i] == '_'))
-                    var_name[var_len++] = arg[i++];
-                var_name[var_len] = '\0';
-                char *default_value = NULL;
-                if (arg[i] == ':')
                 {
-                    i++;
-                    if (arg[i] == '-')
-                    {
-                        i++;
-                        char default_name[128];
-                        int def_len = 0;
-                        while (arg[i] != '\0' && (ft_isalnum(arg[i]) || arg[i] == '_'))
-                            default_name[def_len++] = arg[i++];
-                        default_name[def_len] = '\0';
-                        default_value = default_name;
-                    }
+                    var_name[var_len++] = arg[i++];
                 }
+                var_name[var_len] = '\0';
 
+                // Fetch the variable's value from the environment
                 char *env_value = my_getenv(data->env, var_name);
                 if (env_value)
                 {
-                    if (env_value[0] == '"' && env_value[strlen(env_value) - 1] == '"')
-                    {
-                        my_strncpy(&buffer[j], env_value + 1, strlen(env_value) - 2);
-                        j += strlen(env_value) - 2;
-                    }
-                    else
-                    {
-                        my_strcpy(&buffer[j], env_value);
-                        j += ft_strlen(env_value);
-                    }
-                }
-                else if (default_value)
-                {
-                    my_strcpy(&buffer[j], default_value);
-                    j += ft_strlen(default_value);
+                    my_strcpy(&buffer[j], env_value);
+                    j += ft_strlen(env_value);
                 }
             }
         }
         else
         {
+            // Normal characters
             buffer[j++] = arg[i++];
         }
     }
-    buffer[j] = '\0';
+    buffer[j] = '\0'; // Null-terminate the buffer
 }
+
 
 
 void echo(const char *message, bool no_newline)

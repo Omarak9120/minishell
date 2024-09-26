@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 14:43:38 by ksayour           #+#    #+#             */
-/*   Updated: 2024/09/25 14:10:48 by oabdelka         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:22:10 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,14 @@ void execute_external_command(t_data *data, t_command *cmd)
 
 // Execute a single command (builtin or external)
 int execute_single_command(t_command *cmd, t_data *data) {
-    pid_t pid = fork();
-    if (pid == 0) {
-        // Child process: Handle input/output redirection
+    pid_t pid = fork();  // Create a child process
+
+    if (pid == 0) {  // Child process
+        // Reset signal handling to default in child process
+        signal(SIGINT, SIG_DFL);   // Allow Ctrl+C to terminate the child process
+        signal(SIGQUIT, SIG_DFL);  // Allow Ctrl+\ to terminate the child process
+
+        // Handle input/output redirection (if any)
         if (cmd->in_fd != STDIN_FILENO) {
             dup2(cmd->in_fd, STDIN_FILENO);
             close(cmd->in_fd);
@@ -66,26 +71,46 @@ int execute_single_command(t_command *cmd, t_data *data) {
             close(cmd->out_fd);
         }
 
-        // Execute the command (builtin or external)
+        // Execute built-in commands or external commands
         if (is_builtin(cmd)) {
-            exit(execute_builtin(cmd, data));
+            exit(execute_builtin(cmd, data));  // Exit after running a built-in command
         } else {
             if (execvp(cmd->args[0], cmd->args) == -1) {
                 perror("minishell");
                 exit(EXIT_FAILURE);
             }
         }
-    }
-    else if (pid > 0) {
+    } 
+    else if (pid > 0) {  // Parent process
         int status;
-        waitpid(pid, &status, 0);  // Wait for child process to finish
-        data->exit_status = WEXITSTATUS(status);
-    }
+
+        // Ignore SIGINT in the parent while waiting for the child
+        signal(SIGINT, SIG_IGN);
+
+        // Wait for the child process to finish
+        waitpid(pid, &status, 0);
+
+        // Restore signal handling for SIGINT in the parent
+        signal(SIGINT, ft_sigint_handler_beforecmd);  // Restore Ctrl+C handling
+
+        // If the child was terminated by a signal (e.g., Ctrl+C)
+        if (WIFSIGNALED(status)) {
+            int sig = WTERMSIG(status);
+            if (sig == SIGINT) {
+                printf("\n");  // Print a newline when Ctrl+C is pressed
+                data->exit_status = 130;  // Set shell's exit status for Ctrl+C
+            }
+        } else if (WIFEXITED(status)) {
+            data->exit_status = WEXITSTATUS(status);
+        }
+    } 
     else {
         perror("fork");
     }
-    return (0);
+
+    return 0;
 }
+
 
 
 // Check if the command is a built-in

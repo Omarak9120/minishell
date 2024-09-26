@@ -1,19 +1,25 @@
 #include "../includes/minishell.h"
 
+// External variables for signal handling
+extern int g_signal_exit_status;
+
 int main() {
     char *input;
     t_data data;
 
     // Set up the shell environment
     setup_shell(&data);  // Initialize environment, signals, etc.
+    ft_signal_setup_for_input();  // Setup signal handling for shell input
 
-    art();  // Display shell art if necessary
-    // signal(SIGINT, handle_sigint);   // Handle Ctrl + C
-    // signal(SIGQUIT, SIG_IGN);        // Ignore Ctrl + backslash (SIGQUIT)
     while (1) {
+        // Set up signal handling for user input (e.g., Ctrl+C at the prompt)
+        ft_signal_setup_for_input();  // Ensure proper signal setup for input prompt
+
+        // Read input from the user
         input = readline("minishell> ");
+        
+        // Handle EOF (Ctrl+D)
         if (!input) {
-            // Handle EOF (Ctrl+D) or null input
             printf("exit\n");
             break;
         }
@@ -25,33 +31,35 @@ int main() {
 
         // Tokenize the input
         t_token *token_list = tokenize_input(input);
-        
-       
         if (!token_list) {
-            free(input);  // Free the input memory
+            free(input);  // Free input memory
             continue;  // Skip if no valid tokens
         }
 
         // Parse tokens into a command list
         t_command *cmd_list = parse_tokens(token_list);
-
         if (!cmd_list) {
             free_token_list(token_list);  // Free token list if parsing failed
             free(input);
             continue;
         }
-        // Debugging: Print parsed command details (Optional)
 
-         // Handle redirection (if any) before executing the commands
+        // Handle redirection (if any)
         t_command *cmd = cmd_list;
         while (cmd) {
-            redirection_handle(cmd);  // Call to redirection handler
+            redirection_handle(cmd);
             cmd = cmd->next;
         }
-        
-        // Execute the commands (either with or without pipes)
+
+        // Reset signals to default for command execution
+        ft_reset_signals();  // Signals should be reset to default before running commands
+
+        // Execute commands
         data.cmd_list = cmd_list;
         execute_commands(&data);
+
+        // Check for signals after command execution
+        ft_check_signal(&data);  // Ensure signals are correctly processed
 
         // Clean up allocated memory
         free_command_list(cmd_list);

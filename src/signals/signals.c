@@ -1,47 +1,46 @@
 #include "../../includes/minishell.h"
 
-int g_signal_exit_status = 0; 
+int g_signal_exit_status = 0;  // Global variable to track signal exit status
 
-void	ft_sigint_handler_beforecmd(int sig)
-{
-	g_signal_exit_status = sig;
-	rl_replace_line("", 0);
-	ft_putchar_fd('\n', 1);
-	rl_on_new_line();
-	rl_redisplay();
+void ft_sigint_handler_beforecmd(int sig) {
+    (void)sig;  // Ignore the actual signal argument
+    rl_replace_line("", 0);  // Clear the current line
+    ft_putchar_fd('\n', 1);  // Print newline to reset the prompt
+    rl_on_new_line();
+    rl_redisplay();
 }
 
-void	ft_sigint_handler_incmd(int sig)
+// Signal handler during command execution (Ctrl+C)
+void ft_sigint_handler_incmd(int sig)
 {
-	g_signal_exit_status = sig;
-	rl_replace_line("", 1);
-	ft_putchar_fd('\n', 1);
-	rl_on_new_line();
-	rl_done = 1;
+    g_signal_exit_status = sig;
+    write(1, "\n", 1);  // Print newline
 }
 
-void	ft_signal_incmd(void)
+// Setup signal handling for shell input (readline prompt)
+void ft_signal_setup_for_input(void)
 {
-	signal(SIGINT, ft_sigint_handler_incmd);
-	signal(SIGQUIT, ft_sigint_handler_incmd);
+    signal(SIGINT, ft_sigint_handler_beforecmd);  // Handle Ctrl+C at the prompt
+    signal(SIGQUIT, SIG_IGN);  // Ignore Ctrl+\??
 }
 
-void	ft_reset_signal(void)
+
+// Reset signal handling for child process (during command execution)
+void ft_reset_signals(void)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+    signal(SIGINT, SIG_DFL);  // Default Ctrl+C behavior (terminate the child process)
+    signal(SIGQUIT, SIG_DFL); // Default Ctrl+\ behavior
 }
 
-void	ft_check_signal(t_data *data)
+// Check and handle any caught signals after command execution
+void ft_check_signal(t_data *data)
 {
-	if (g_signal_exit_status == SIGINT)
-	{
-		data->exit_status = 130;
-		g_signal_exit_status = 0;
-	}
-	else if (g_signal_exit_status == SIGQUIT)
-	{
-		data->exit_status = 131;
-		g_signal_exit_status = 0;
-	}
+    if (g_signal_exit_status == SIGINT) {
+        data->exit_status = 130;  // Set exit status to 130 for Ctrl+C
+        g_signal_exit_status = 0;  // Reset signal status
+    } else if (g_signal_exit_status == SIGQUIT) {
+        data->exit_status = 131;  // Set exit status to 131 for Ctrl+\??
+        g_signal_exit_status = 0;  // Reset signal status
+    }
 }
+
