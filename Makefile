@@ -2,7 +2,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -Iincludes -Ilibft
 LIBFT = libft/libft.a
 
-SRC = src/minishell.c \
+SRC = src/main.c \
 	  $(wildcard src/builtins/*.c) \
 	  $(wildcard src/utils/*.c) \
 	  src/heder.c \
