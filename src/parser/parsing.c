@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:56:28 by oabdelka          #+#    #+#             */
-/*   Updated: 2024/09/25 13:46:34 by oabdelka         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:36:45 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_command *create_command()
 }
 
 // Function to parse the token linked list and create a command linked list
-t_command *parse_tokens(t_token *tokens)
+t_command *parse_tokens(t_token *tokens, t_data *data)
 {
     t_command *cmd_list = NULL;
     t_command *current_cmd = NULL;
@@ -78,8 +78,9 @@ t_command *parse_tokens(t_token *tokens)
         {
             if (!cur_token->next || cur_token->next->type != WORD) {
                 fprintf(stderr, "minishell: syntax error near unexpected token `%s`\n", cur_token->str);
+                data->exit_status = 1;  // Set the exit status to 1 for failure
                 free_command_list(cmd_list);
-                return NULL;
+                return NULL;  // Return NULL to indicate failure
             }
 
             // Handle redirection

@@ -96,8 +96,7 @@ void handle_heredoc(char *delimiter)
 }
 
 
-// Consolidated function to handle all redirection
-void redirection_handle(t_command *cmd)
+int redirection_handle(t_command *cmd)  // Single argument as before
 {
     for (int i = 0; cmd->args[i]; i++)
     {
@@ -106,13 +105,15 @@ void redirection_handle(t_command *cmd)
             if (cmd->args[i + 1])
             {
                 handle_output_redirection(cmd->args[i + 1]);
-                cmd->args[i] = NULL;  // Remove redirection from arguments
-                break;  // Stop processing further args after redirection
+                cmd->args[i] = NULL;  // Remove redirection operator
+                cmd->args[i + 1] = NULL;  // Remove filename
+                break;
             }
             else
             {
                 fprintf(stderr, "minishell: syntax error near `>`\n");
-                return;
+                fprintf(stderr, "Returning FAILURE due to missing filename.\n");
+                return FAILURE;  // Return failure (exit status can be set by the caller)
             }
         }
         else if (strcmp(cmd->args[i], ">>") == 0)  // Append redirection
@@ -120,41 +121,113 @@ void redirection_handle(t_command *cmd)
             if (cmd->args[i + 1])
             {
                 handle_append_redirection(cmd->args[i + 1]);
-                cmd->args[i] = NULL;  // Remove redirection from arguments
-                break;  // Stop processing further args after redirection
+                cmd->args[i] = NULL;  // Remove redirection operator
+                cmd->args[i + 1] = NULL;  // Remove filename
+                break;
             }
             else
             {
                 fprintf(stderr, "minishell: syntax error near `>>`\n");
-                return;
+                return FAILURE;  // Return failure
             }
         }
-        else if (strcmp(cmd->args[i], "<") == 0)
+        else if (strcmp(cmd->args[i], "<") == 0)  // Input redirection
         {
             if (cmd->args[i + 1])
             {
                 handle_input_redirection(cmd->args[i + 1]);
-                cmd->args[i] = NULL;
+                cmd->args[i] = NULL;  // Remove redirection operator
+                cmd->args[i + 1] = NULL;  // Remove filename
+                break;
             }
             else
             {
                 fprintf(stderr, "minishell: syntax error near `<`\n");
-                return;
+                return FAILURE;  // Return failure
             }
         }
-        else if (strcmp(cmd->args[i], "<<") == 0)
+        else if (strcmp(cmd->args[i], "<<") == 0)  // Heredoc redirection
         {
             if (cmd->args[i + 1])
             {
                 handle_heredoc(cmd->args[i + 1]);
-                cmd->args[i] = NULL;
+                cmd->args[i] = NULL;  // Remove redirection operator
+                cmd->args[i + 1] = NULL;  // Remove delimiter
+                break;
             }
             else
             {
                 fprintf(stderr, "minishell: syntax error near `<<`\n");
-                return;
+                return FAILURE;  // Return failure
             }
         }
     }
+    return SUCCESS;  // Return success after handling redirection
 }
+
+
+
+
+
+// // Consolidated function to handle all redirection
+// void redirection_handle(t_command *cmd)
+// {
+//     for (int i = 0; cmd->args[i]; i++)
+//     {
+//         if (strcmp(cmd->args[i], ">") == 0)  // Output redirection
+//         {
+//             if (cmd->args[i + 1])
+//             {
+//                 handle_output_redirection(cmd->args[i + 1]);
+//                 cmd->args[i] = NULL;  // Remove redirection from arguments
+//                 break;  // Stop processing further args after redirection
+//             }
+//             else
+//             {
+//                 fprintf(stderr, "minishell: syntax error near `>`\n");
+//                 return;
+//             }
+//         }
+//         else if (strcmp(cmd->args[i], ">>") == 0)  // Append redirection
+//         {
+//             if (cmd->args[i + 1])
+//             {
+//                 handle_append_redirection(cmd->args[i + 1]);
+//                 cmd->args[i] = NULL;  // Remove redirection from arguments
+//                 break;  // Stop processing further args after redirection
+//             }
+//             else
+//             {
+//                 fprintf(stderr, "minishell: syntax error near `>>`\n");
+//                 return;
+//             }
+//         }
+//         else if (strcmp(cmd->args[i], "<") == 0)
+//         {
+//             if (cmd->args[i + 1])
+//             {
+//                 handle_input_redirection(cmd->args[i + 1]);
+//                 cmd->args[i] = NULL;
+//             }
+//             else
+//             {
+//                 fprintf(stderr, "minishell: syntax error near `<`\n");
+//                 return;
+//             }
+//         }
+//         else if (strcmp(cmd->args[i], "<<") == 0)
+//         {
+//             if (cmd->args[i + 1])
+//             {
+//                 handle_heredoc(cmd->args[i + 1]);
+//                 cmd->args[i] = NULL;
+//             }
+//             else
+//             {
+//                 fprintf(stderr, "minishell: syntax error near `<<`\n");
+//                 return;
+//             }
+//         }
+//     }
+// }
 

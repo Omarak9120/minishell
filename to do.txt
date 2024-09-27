@@ -1,2 +1,6 @@
 echo "wuyg"uwfh --> "wuyg" uwfh | withou spaces
 echo '$HOME' '$$' --> "hdf/eiuifh/ij" "pid" | "$HOME" "$$"
+
+
+unlike
+127 with minishell: No such file or directory

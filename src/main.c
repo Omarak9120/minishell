@@ -13,7 +13,7 @@ int main() {
         ft_signal_setup_for_input();  // Ensure proper signal setup for input prompt
 
         // Read input from the user
-        input = readline("minishell> ");
+        input = readline("omar> ");
         
         // Handle EOF (Ctrl+D)
         if (!input) {
@@ -34,11 +34,19 @@ int main() {
         }
 
         // Parse tokens into a command list
-        t_command *cmd_list = parse_tokens(token_list);
+        t_command *cmd_list = parse_tokens(token_list, &data);
         if (!cmd_list) {
             free_token_list(token_list);  // Free token list if parsing failed
             free(input);
             continue;
+        }
+
+        // **NEW CHANGE: Check for the 'exit' command before doing anything else**
+        // If the first command is "exit", handle it directly
+        if (strcmp(cmd_list->command, "exit") == 0) {
+            builtin_exit(&data, cmd_list->args);
+            // We don't need to continue the loop if 'exit' is called, so break
+            break;
         }
 
         // Handle redirection (if any)

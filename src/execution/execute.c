@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 14:43:38 by ksayour           #+#    #+#             */
-/*   Updated: 2024/09/26 19:36:48 by oabdelka         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:16:24 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,14 @@ void execute_external_command(t_data *data, t_command *cmd)
     }
 }
 
-// Execute a single command (builtin or external)
 int execute_single_command(t_command *cmd, t_data *data) {
+    // First, handle redirection before forking the child process
+    if (redirection_handle(cmd) == FAILURE) {
+        data->exit_status = 1;  // Set exit status to 1 if redirection fails
+        printf("Setting exit status to 1 due to redirection failure.\n");
+        return FAILURE;  // Return early if redirection failed
+    }
+
     pid_t pid = fork();  // Create a child process
 
     if (pid == 0) {  // Child process
@@ -76,8 +82,9 @@ int execute_single_command(t_command *cmd, t_data *data) {
             exit(execute_builtin(cmd, data));  // Exit after running a built-in command
         } else {
             if (execvp(cmd->args[0], cmd->args) == -1) {
-                perror("minishell");
-                exit(EXIT_FAILURE);
+                 // If execvp fails, print "command not found" and exit with 127
+                fprintf(stderr, "%s: command not found\n", cmd->args[0]);
+                exit(127);  
             }
         }
     } 
@@ -106,10 +113,13 @@ int execute_single_command(t_command *cmd, t_data *data) {
     } 
     else {
         perror("fork");
+        return FAILURE;
     }
 
-    return 0;
+    return SUCCESS;
 }
+
+
 
 
 
@@ -122,8 +132,6 @@ int is_builtin(t_command *cmd)
             strcmp(cmd->command, "env") == 0);
 }
 
-// Execute piped commands
-#include "../../includes/minishell.h"
 
 int execute_piped_commands(t_command *cmd, t_data *data)
 {
@@ -243,6 +251,7 @@ int handle_redirection(t_command *cmd)
     }
     return SUCCESS;
 }
+
 
 
 // Execute commands with or without pipes

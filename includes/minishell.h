@@ -92,7 +92,7 @@
     /* ------------------------ PARSER -----------------------------------------*/
 
     // parser.c
-    t_command   *parse_tokens(t_token *tokens);  // Parse tokens into commands
+    t_command *parse_tokens(t_token *tokens, t_data *data);  // Parse tokens into commands
     void        free_command_list(t_command *cmd_list);  // Free command list
 
     /* ------------------------ redirection -----------------------------------------*/
@@ -102,7 +102,7 @@
     void handle_input_redirection(char *file);
     void handle_append_redirection(char *file);
     void handle_output_redirection(char *file);
-    void redirection_handle(t_command *cmd);
+    int redirection_handle(t_command *cmd);
 
 
     /* ------------------------ EXECUTION -------------------------------------*/
@@ -112,6 +112,7 @@
     int        execute_builtin(t_command *cmd, t_data *data);  // Execute built-in commands
     int         execute_binary(t_command *cmd, t_data *data);  // Execute external binaries
     int handle_redirection(t_command *cmd);
+    int execute_single_command(t_command *cmd, t_data *data);
 
 
     /* ------------------------ SIGNALS ---------------------------------------*/

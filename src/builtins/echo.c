@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:17:54 by mjamil            #+#    #+#             */
-/*   Updated: 2024/09/26 18:18:16 by oabdelka         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:44:34 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,63 @@ bool is_n_flag(const char *arg)
     return false;
 }
 
+// void expand_variables(t_data *data, char *arg, char *buffer)
+// {
+//     int i = 0, j = 0;
+
+//     while (arg[i] != '\0')
+//     {
+//         if (arg[i] == '$')
+//         {
+//             if (arg[i + 1] == '$')
+//             {
+//                 // Replace $$ with the process ID
+//                 char pid_str[16];
+//                 snprintf(pid_str, sizeof(pid_str), "%d", getpid());
+//                 my_strcpy(&buffer[j], pid_str);
+//                 j += ft_strlen(pid_str);
+//                 i += 2;
+//             }
+//             else if (arg[i + 1] == '?')
+//             {
+//                 // Replace $? with the last exit status
+//                 char exit_status_str[16];
+//                 snprintf(exit_status_str, sizeof(exit_status_str), "%d", data->exit_status);
+//                 my_strcpy(&buffer[j], exit_status_str);
+//                 j += ft_strlen(exit_status_str);
+//                 i += 2;
+//             }
+//             else
+//             {
+//                 i++;
+//                 char var_name[128];
+//                 int var_len = 0;
+
+//                 // Capture the variable name
+//                 while (arg[i] != '\0' && (ft_isalnum(arg[i]) || arg[i] == '_'))
+//                 {
+//                     var_name[var_len++] = arg[i++];
+//                 }
+//                 var_name[var_len] = '\0';
+
+//                 // Fetch the variable's value from the environment
+//                 char *env_value = my_getenv(data->env, var_name);
+//                 if (env_value)
+//                 {
+//                     my_strcpy(&buffer[j], env_value);
+//                     j += ft_strlen(env_value);
+//                 }
+//             }
+//         }
+//         else
+//         {
+//             // Normal characters
+//             buffer[j++] = arg[i++];
+//         }
+//     }
+//     buffer[j] = '\0'; // Null-terminate the buffer
+// }
+
 void expand_variables(t_data *data, char *arg, char *buffer)
 {
     int i = 0, j = 0;
@@ -38,7 +95,7 @@ void expand_variables(t_data *data, char *arg, char *buffer)
         {
             if (arg[i + 1] == '$')
             {
-                // Replace $$ with the process ID
+                // Handle $$
                 char pid_str[16];
                 snprintf(pid_str, sizeof(pid_str), "%d", getpid());
                 my_strcpy(&buffer[j], pid_str);
@@ -47,12 +104,18 @@ void expand_variables(t_data *data, char *arg, char *buffer)
             }
             else if (arg[i + 1] == '?')
             {
-                // Replace $? with the last exit status
+                // Handle $?
                 char exit_status_str[16];
                 snprintf(exit_status_str, sizeof(exit_status_str), "%d", data->exit_status);
                 my_strcpy(&buffer[j], exit_status_str);
                 j += ft_strlen(exit_status_str);
                 i += 2;
+            }
+            else if (arg[i + 1] == '\0' || !ft_isalnum(arg[i + 1]))
+            {
+                // Handle $ without a valid variable name (treat it as literal '$')
+                buffer[j++] = '$';
+                i++;
             }
             else
             {
@@ -73,6 +136,11 @@ void expand_variables(t_data *data, char *arg, char *buffer)
                 {
                     my_strcpy(&buffer[j], env_value);
                     j += ft_strlen(env_value);
+                }
+                else
+                {
+                    // If the variable is not found, output an empty string or handle as needed
+                    buffer[j++] = '$'; // Optionally, keep the $ in the output if the variable is not found
                 }
             }
         }
