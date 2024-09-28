@@ -10,16 +10,9 @@ t_token *tokenize_input(char *input) {
         if (is_whitespace(input[i])) {
             i++;  // Skip whitespaces
         }
-        else if (input[i] == '"') {
-            t_token *token = create_quoted_token(input, &i, '"');
-            if (!token) {
-                free_token_list(token_list);  // Free the list in case of an error
-                return NULL;  // Return NULL if there's an unmatched quote
-            }
-            add_token(&token_list, token);
-        }
-        else if (input[i] == '\'') {
-            t_token *token = create_quoted_token(input, &i, '\'');
+        // Handle quoted tokens or concatenated quotes
+        else if (input[i] == '"' || input[i] == '\'') {
+            t_token *token = create_general_token(input, &i);
             if (!token) {
                 free_token_list(token_list);  // Free the list in case of an error
                 return NULL;  // Return NULL if there's an unmatched quote
@@ -47,7 +40,6 @@ t_token *tokenize_input(char *input) {
     }
     return token_list;
 }
-
 t_token *create_separator_token(char *input, int *i, int num_chars) {
     t_token *new_token = malloc(sizeof(t_token));
     if (!new_token)
@@ -142,7 +134,8 @@ t_token *create_general_token(char *input, int *i) {
     while (input[*i] && !is_whitespace(input[*i])) {
         // Check for special tokens
         if (input[*i] == '>' || input[*i] == '<' || input[*i] == '|') {
-            // If we encounter a special character, create a token and return
+            // If we encounter a special character, stop and return the token
+            if (j > 0) break;  // Only break if we've already gathered characters
             char special_char[3] = {input[*i], '\0', '\0'};
 
             // Check for double-character tokens like ">>" or "<<"
@@ -155,7 +148,7 @@ t_token *create_general_token(char *input, int *i) {
             return create_token(special_char, get_token_type(special_char));
         }
 
-        // Handle quoted content
+        // Handle quoted content and concatenate to current token
         if (input[*i] == '\'' || input[*i] == '"') {
             char quote_type = input[*i];
             (*i)++;  // Skip the opening quote
@@ -165,6 +158,7 @@ t_token *create_general_token(char *input, int *i) {
             }
             (*i)++;  // Skip the closing quote
         } else {
+            // Handle regular characters and concatenate
             token_str[j++] = input[*i];
             (*i)++;
         }
@@ -181,9 +175,9 @@ t_token *create_general_token(char *input, int *i) {
         }
     }
 
-    token_str[j] = '\0';
+    token_str[j] = '\0';  // Null-terminate the token string
 
-    // Create token for regular words
+    // Create the final token
     t_token *token = create_token(token_str, WORD);
     free(token_str);
     return token;

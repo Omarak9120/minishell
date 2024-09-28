@@ -40,6 +40,15 @@ int main() {
             free(input);
             continue;
         }
+        // // Now we can traverse and print the token list for testing
+        t_token *current = token_list;
+        while (current != NULL) {
+            printf("Token: %s, Type: %d\n", current->str, current->type);
+            current = current->next;
+        }
+
+        printf("\n");
+
 
         // **NEW CHANGE: Check for the 'exit' command before doing anything else**
         // If the first command is "exit", handle it directly
