@@ -25,12 +25,8 @@ int builtin_cd(t_data *data, char **args)
     char cwd[1024];
 
     (void)data;
-
     if (getcwd(cwd, sizeof(cwd)) != NULL)
-    {
         update_logical_path(cwd);
-    }
-
     if (args[1] == NULL || strcmp(args[1], "~") == 0)
     {
         home = getenv("HOME");
@@ -67,16 +63,21 @@ int builtin_cd(t_data *data, char **args)
             return 1;
         }
     }
-
-    if (logical_path != NULL)
-    {
-        if (prev_dir != NULL)
-            free(prev_dir);
-        prev_dir = strdup(logical_path);
-    }
     if (getcwd(cwd, sizeof(cwd)) != NULL)
     {
         update_logical_path(cwd);
+    }
+    else
+    {
+        fprintf(stderr, "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+        if (logical_path != NULL)
+        {
+            if (prev_dir != NULL)
+                free(prev_dir);
+
+            prev_dir = strdup(logical_path);
+        }
+        return 1;
     }
 
     return 0;
