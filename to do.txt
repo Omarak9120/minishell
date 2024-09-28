@@ -1,6 +1,6 @@
-echo "wuyg"uwfh --> "wuyg" uwfh | withou spaces
-echo '$HOME' '$$' --> "hdf/eiuifh/ij" "pid" | "$HOME" "$$"
+1- pipe handeling
 
+2- herdoc
 
-unlike
+3- unlike
 127 with minishell: No such file or directory
