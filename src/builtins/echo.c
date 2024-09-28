@@ -85,17 +85,34 @@ bool is_n_flag(const char *arg)
 //     buffer[j] = '\0'; // Null-terminate the buffer
 // }
 
-void expand_variables(t_data *data, char *arg, char *buffer)
+void expand_variables(t_data *data, const char *arg, char *buffer)
 {
     int i = 0, j = 0;
+    bool in_single_quotes = false;
+    bool in_double_quotes = false;
 
     while (arg[i] != '\0')
     {
-        if (arg[i] == '$')
+        if (arg[i] == '\'' && !in_double_quotes)
         {
-            if (arg[i + 1] == '$')
+            in_single_quotes = !in_single_quotes;  // Toggle single quotes
+            i++;
+        }
+        else if (arg[i] == '"' && !in_single_quotes)
+        {
+            in_double_quotes = !in_double_quotes;  // Toggle double quotes
+            i++;
+        }
+        else if (arg[i] == '$')
+        {
+            if (in_single_quotes)
             {
-                // Handle $$
+                // If in single quotes, treat $ as literal
+                buffer[j++] = arg[i++];
+            }
+            else if (arg[i + 1] == '$')
+            {
+                // Handle $$ for process ID
                 char pid_str[16];
                 snprintf(pid_str, sizeof(pid_str), "%d", getpid());
                 my_strcpy(&buffer[j], pid_str);
@@ -104,18 +121,12 @@ void expand_variables(t_data *data, char *arg, char *buffer)
             }
             else if (arg[i + 1] == '?')
             {
-                // Handle $?
+                // Handle $? for last exit status
                 char exit_status_str[16];
                 snprintf(exit_status_str, sizeof(exit_status_str), "%d", data->exit_status);
                 my_strcpy(&buffer[j], exit_status_str);
                 j += ft_strlen(exit_status_str);
                 i += 2;
-            }
-            else if (arg[i + 1] == '\0' || !ft_isalnum(arg[i + 1]))
-            {
-                // Handle $ without a valid variable name (treat it as literal '$')
-                buffer[j++] = '$';
-                i++;
             }
             else
             {
@@ -137,11 +148,7 @@ void expand_variables(t_data *data, char *arg, char *buffer)
                     my_strcpy(&buffer[j], env_value);
                     j += ft_strlen(env_value);
                 }
-                else
-                {
-                    // If the variable is not found, output an empty string or handle as needed
-                    buffer[j++] = '$'; // Optionally, keep the $ in the output if the variable is not found
-                }
+                // Do not add anything if the variable is not found
             }
         }
         else
@@ -150,18 +157,68 @@ void expand_variables(t_data *data, char *arg, char *buffer)
             buffer[j++] = arg[i++];
         }
     }
-    buffer[j] = '\0'; // Null-terminate the buffer
+    buffer[j] = '\0';  // Null-terminate the buffer
 }
 
 
-
-void echo(const char *message, bool no_newline)
+// Function to remove quotes and expand variables where needed
+void process_echo_argument(t_data *data, const char *arg, char *buffer)
 {
-    printf("%s", message);
-    if (!no_newline)
-        printf("\n");
+    int i = 0, j = 0;
+    bool in_single_quotes = false, in_double_quotes = false;
+
+    while (arg[i] != '\0')
+    {
+        if (arg[i] == '\'' && !in_double_quotes)
+        {
+            in_single_quotes = !in_single_quotes;  // Toggle single quotes
+            i++;
+        }
+        else if (arg[i] == '"' && !in_single_quotes)
+        {
+            in_double_quotes = !in_double_quotes;  // Toggle double quotes
+            i++;
+        }
+        else if (arg[i] == '$' && in_double_quotes && !in_single_quotes)
+        {
+            // Expand environment variables within double quotes
+            char expanded[1024] = "";
+            expand_variables(data, (char *)&arg[i], expanded);
+
+            // Copy expanded variable content into buffer
+            my_strcpy(&buffer[j], expanded);
+            j += strlen(expanded);
+
+            // Skip over the variable name in the original string
+            while (arg[i + 1] && (ft_isalnum(arg[i + 1]) || arg[i + 1] == '_'))
+            {
+                i++;
+            }
+            i++;  // Skip past the variable
+
+            // Ensure no quotes are accidentally added after the variable
+            if (arg[i] == '"')
+            {
+                in_double_quotes = false;  // Close the double quote if we reach it
+                i++;
+            }
+        }
+        else
+        {
+            // Normal characters
+            buffer[j++] = arg[i++];
+        }
+    }
+    buffer[j] = '\0';  // Null-terminate the buffer
 }
 
+// Echo function to print the message
+void echo(const char *message, bool no_newline) {
+    printf("%s", message);
+    if (!no_newline) printf("\n");
+}
+
+// The main builtin echo function
 int builtin_echo(t_data *data, char **args)
 {
     if (args[0] && my_strcmp(args[0], "echo") == 0)
