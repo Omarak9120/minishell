@@ -12,13 +12,14 @@ int builtin_pwd(t_data *data, char **args)
     if (getcwd(cwd, sizeof(cwd)) != NULL)
     {
         printf("%s\n", cwd);
+        if (logical_path != NULL)
+            free(logical_path);
+        logical_path = strdup(cwd);
     }
     else
     {
         if (logical_path != NULL)
-        {
             printf("%s\n", logical_path);
-        }
         else
         {
             perror("pwd");
@@ -28,3 +29,4 @@ int builtin_pwd(t_data *data, char **args)
 
     return 0;
 }
+

@@ -25,8 +25,7 @@ int builtin_cd(t_data *data, char **args)
     char cwd[1024];
 
     (void)data;
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-        update_logical_path(cwd);
+
     if (args[1] == NULL || strcmp(args[1], "~") == 0)
     {
         home = getenv("HOME");
@@ -57,6 +56,22 @@ int builtin_cd(t_data *data, char **args)
     }
     else
     {
+        if (strcmp(args[1], "..") == 0)
+        {
+            if (logical_path != NULL)
+            {
+                char *new_logical_path = malloc(strlen(logical_path) + 4);
+                if (new_logical_path == NULL)
+                {
+                    perror("minishell: malloc");
+                    return 1;
+                }
+                strcpy(new_logical_path, logical_path);
+                strcat(new_logical_path, "/..");
+                free(logical_path);
+                logical_path = new_logical_path;
+            }
+        }
         if (chdir(args[1]) != 0)
         {
             perror("minishell");
@@ -64,21 +79,9 @@ int builtin_cd(t_data *data, char **args)
         }
     }
     if (getcwd(cwd, sizeof(cwd)) != NULL)
-    {
         update_logical_path(cwd);
-    }
     else
-    {
         fprintf(stderr, "cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
-        if (logical_path != NULL)
-        {
-            if (prev_dir != NULL)
-                free(prev_dir);
-
-            prev_dir = strdup(logical_path);
-        }
-        return 1;
-    }
 
     return 0;
 }
