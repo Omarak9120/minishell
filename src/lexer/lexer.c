@@ -74,7 +74,7 @@ t_token *create_separator_token(char *input, int *i, int num_chars) {
 }
 
 
-// Create a token for quoted strings (everything between quotes)
+// Create a token for quoted strings (including quotes)
 t_token *create_quoted_token(char *input, int *i, char quote_type) {
     char *quoted_str = NULL;
     int capacity = 256;
@@ -83,11 +83,14 @@ t_token *create_quoted_token(char *input, int *i, char quote_type) {
     quoted_str = malloc(capacity * sizeof(char));
     if (!quoted_str) return NULL;
 
+    // Add the opening quote to the token
+    quoted_str[j++] = input[*i];
     (*i)++;  // Skip the opening quote
 
     // Read characters until the closing quote is found
     while (input[*i]) {
         if (input[*i] == quote_type) {
+            quoted_str[j++] = input[*i];  // Include the closing quote
             (*i)++;  // Skip the closing quote
             break;
         }
@@ -116,12 +119,11 @@ t_token *create_quoted_token(char *input, int *i, char quote_type) {
 
     quoted_str[j] = '\0';  // Null-terminate the string
 
-    // Return a single token containing the entire quoted string
+    // Return a single token containing the quoted string
     t_token *token = create_token(quoted_str, WORD);
     free(quoted_str);
     return token;
 }
-
 
 t_token *create_general_token(char *input, int *i) {
     char *token_str = NULL;
@@ -134,7 +136,6 @@ t_token *create_general_token(char *input, int *i) {
     while (input[*i] && !is_whitespace(input[*i])) {
         // Check for special tokens
         if (input[*i] == '>' || input[*i] == '<' || input[*i] == '|') {
-            // If we encounter a special character, stop and return the token
             if (j > 0) break;  // Only break if we've already gathered characters
             char special_char[3] = {input[*i], '\0', '\0'};
 
@@ -148,15 +149,17 @@ t_token *create_general_token(char *input, int *i) {
             return create_token(special_char, get_token_type(special_char));
         }
 
-        // Handle quoted content and concatenate to current token
+        // Handle quoted content and concatenate to the current token (with quotes)
         if (input[*i] == '\'' || input[*i] == '"') {
             char quote_type = input[*i];
-            (*i)++;  // Skip the opening quote
+            token_str[j++] = input[*i];  // Include opening quote
+            (*i)++;
             while (input[*i] && input[*i] != quote_type) {
                 token_str[j++] = input[*i];
                 (*i)++;
             }
-            (*i)++;  // Skip the closing quote
+            token_str[j++] = input[*i];  // Include closing quote
+            (*i)++;
         } else {
             // Handle regular characters and concatenate
             token_str[j++] = input[*i];
