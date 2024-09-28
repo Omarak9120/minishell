@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 14:43:38 by ksayour           #+#    #+#             */
-/*   Updated: 2024/09/27 16:16:24 by oabdelka         ###   ########.fr       */
+/*   Updated: 2024/09/28 17:05:26 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,12 @@ void execute_external_command(t_data *data, t_command *cmd)
 }
 
 int execute_single_command(t_command *cmd, t_data *data) {
-    // First, handle redirection before forking the child process
-    if (redirection_handle(cmd) == FAILURE) {
-        data->exit_status = 1;  // Set exit status to 1 if redirection fails
-        printf("Setting exit status to 1 due to redirection failure.\n");
-        return FAILURE;  // Return early if redirection failed
+    // Handle built-in commands in the current process
+    if (is_builtin(cmd)) {
+        return execute_builtin(cmd, data);  // Execute in the parent shell process
     }
 
+    // For external commands, fork a child process
     pid_t pid = fork();  // Create a child process
 
     if (pid == 0) {  // Child process
@@ -77,15 +76,11 @@ int execute_single_command(t_command *cmd, t_data *data) {
             close(cmd->out_fd);
         }
 
-        // Execute built-in commands or external commands
-        if (is_builtin(cmd)) {
-            exit(execute_builtin(cmd, data));  // Exit after running a built-in command
-        } else {
-            if (execvp(cmd->args[0], cmd->args) == -1) {
-                 // If execvp fails, print "command not found" and exit with 127
-                fprintf(stderr, "%s: command not found\n", cmd->args[0]);
-                exit(127);  
-            }
+        // Execute external commands
+        if (execvp(cmd->args[0], cmd->args) == -1) {
+            // If execvp fails, print "command not found" and exit with 127
+            fprintf(stderr, "%s: command not found\n", cmd->args[0]);
+            exit(127);  
         }
     } 
     else if (pid > 0) {  // Parent process
@@ -118,7 +113,6 @@ int execute_single_command(t_command *cmd, t_data *data) {
 
     return SUCCESS;
 }
-
 
 
 
