@@ -6,7 +6,7 @@
 /*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:17:54 by mjamil            #+#    #+#             */
-/*   Updated: 2024/09/29 18:57:35 by mjamil           ###   ########.fr       */
+/*   Updated: 2024/09/29 22:31:34 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,16 @@ void echo(const char *message, bool no_newline) {
 }
 
 // The main builtin echo function
+void strip_quotes(char *str)
+{
+    size_t len = strlen(str);
+    if (len > 1 && str[0] == '"' && str[len - 1] == '"')
+    {
+        str[len - 1] = '\0'; // Remove ending quote
+        memmove(str, str + 1, len - 1); // Remove starting quote
+    }
+}
+
 int builtin_echo(t_data *data, char **args)
 {
     if (args[0] && my_strcmp(args[0], "echo") == 0)
@@ -163,21 +173,23 @@ int builtin_echo(t_data *data, char **args)
         }
 
         char message[1024] = "";
-        bool first_word = true;  // Used to avoid adding spaces before the first word
+        bool first_word = true;
 
         while (args[i])
         {
             char expanded[1024] = "";
             expand_variables(data, args[i], expanded);
 
-            // Only add a space if this is not the first word and the expanded variable is not empty
+            // Strip quotes from the expanded variable
+            strip_quotes(expanded);
+
+            // Only add a space if this is not the first word
             if (!first_word && expanded[0] != '\0')
                 my_strcat(message, " ");
 
             // Append the expanded variable or word to the message
             my_strcat(message, expanded);
 
-            // Mark first_word as false after processing the first argument
             if (expanded[0] != '\0')
                 first_word = false;
 
@@ -194,3 +206,4 @@ int builtin_echo(t_data *data, char **args)
 
     return 0;
 }
+
