@@ -6,11 +6,9 @@
 /*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:17:54 by mjamil            #+#    #+#             */
-/*   Updated: 2024/09/29 18:50:07 by mjamil           ###   ########.fr       */
+/*   Updated: 2024/09/29 18:57:35 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../../includes/minishell.h"
 
 #include "../../includes/minishell.h"
 
@@ -63,28 +61,26 @@ void expand_variables(t_data *data, const char *arg, char *buffer) {
                     buffer[j++] = arg[i++];
                 }
             } else if (ft_isalpha(arg[i + 1])) {
-                // Handle $ followed by alphabetic string: print $ and skip the rest
-                
+                // Handle $ followed by alphabetic string: retrieve the environment variable
                 i++;  // Skip the $
-                while (ft_isalnum(arg[i]) || arg[i] == '_') {
-                    i++;  // Skip the alphabetic characters
-                }
-            } else {
-                // Handle other cases (e.g., environment variables)
-                i++;
                 char var_name[128];
                 int var_len = 0;
 
+                // Extract variable name
                 while (arg[i] != '\0' && (ft_isalnum(arg[i]) || arg[i] == '_')) {
                     var_name[var_len++] = arg[i++];
                 }
                 var_name[var_len] = '\0';
 
+                // Check for environment variable
                 char *env_value = my_getenv(data->env, var_name);
                 if (env_value) {
                     my_strcpy(&buffer[j], env_value);
                     j += ft_strlen(env_value);
                 }
+            } else {
+                buffer[j++] = '$';
+                i++;
             }
         } else {
             buffer[j++] = arg[i++];
@@ -92,6 +88,7 @@ void expand_variables(t_data *data, const char *arg, char *buffer) {
     }
     buffer[j] = '\0';  // Null-terminate the buffer
 }
+
 
 // Function to remove quotes and expand variables where needed
 void process_echo_argument(t_data *data, const char *arg, char *buffer)
