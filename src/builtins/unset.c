@@ -19,21 +19,24 @@ int unset_env_variable(t_data *data, const char *var_name)
 
     while (data->env[i] != NULL)
     {
-        if (ft_strncmp(data->env[i], var_name, len) == 0 && data->env[i][len] == '=')
+        // Check if the current environment variable starts with the var_name
+        if (ft_strncmp(data->env[i], var_name, len) == 0 && (data->env[i][len] == '=' || data->env[i][len] == '\0'))
         {
             free(data->env[i]);
 
+            // Shift remaining elements left
             while (data->env[i] != NULL)
             {
                 data->env[i] = data->env[i + 1];
                 i++;
             }
-            return 0;
+            return 0; // Successfully removed
         }
         i++;
     }
-    return 1;
+    return 1; // Variable not found
 }
+
 
 int builtin_unset(t_data *data, char **args)
 {
