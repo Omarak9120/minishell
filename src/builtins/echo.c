@@ -6,9 +6,11 @@
 /*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:17:54 by mjamil            #+#    #+#             */
-/*   Updated: 2024/09/28 17:15:10 by mjamil           ###   ########.fr       */
+/*   Updated: 2024/09/29 18:50:07 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../includes/minishell.h"
 
 #include "../../includes/minishell.h"
 
@@ -28,138 +30,68 @@ bool is_n_flag(const char *arg)
     return false;
 }
 
-// void expand_variables(t_data *data, char *arg, char *buffer)
-// {
-//     int i = 0, j = 0;
-
-//     while (arg[i] != '\0')
-//     {
-//         if (arg[i] == '$')
-//         {
-//             if (arg[i + 1] == '$')
-//             {
-//                 // Replace $$ with the process ID
-//                 char pid_str[16];
-//                 snprintf(pid_str, sizeof(pid_str), "%d", getpid());
-//                 my_strcpy(&buffer[j], pid_str);
-//                 j += ft_strlen(pid_str);
-//                 i += 2;
-//             }
-//             else if (arg[i + 1] == '?')
-//             {
-//                 // Replace $? with the last exit status
-//                 char exit_status_str[16];
-//                 snprintf(exit_status_str, sizeof(exit_status_str), "%d", data->exit_status);
-//                 my_strcpy(&buffer[j], exit_status_str);
-//                 j += ft_strlen(exit_status_str);
-//                 i += 2;
-//             }
-//             else
-//             {
-//                 i++;
-//                 char var_name[128];
-//                 int var_len = 0;
-
-//                 // Capture the variable name
-//                 while (arg[i] != '\0' && (ft_isalnum(arg[i]) || arg[i] == '_'))
-//                 {
-//                     var_name[var_len++] = arg[i++];
-//                 }
-//                 var_name[var_len] = '\0';
-
-//                 // Fetch the variable's value from the environment
-//                 char *env_value = my_getenv(data->env, var_name);
-//                 if (env_value)
-//                 {
-//                     my_strcpy(&buffer[j], env_value);
-//                     j += ft_strlen(env_value);
-//                 }
-//             }
-//         }
-//         else
-//         {
-//             // Normal characters
-//             buffer[j++] = arg[i++];
-//         }
-//     }
-//     buffer[j] = '\0'; // Null-terminate the buffer
-// }
-
-void expand_variables(t_data *data, const char *arg, char *buffer)
-{
+void expand_variables(t_data *data, const char *arg, char *buffer) {
     int i = 0, j = 0;
     bool in_single_quotes = false;
     bool in_double_quotes = false;
 
-    while (arg[i] != '\0')
-    {
-        if (arg[i] == '\'' && !in_double_quotes)
-        {
-            in_single_quotes = !in_single_quotes;  // Toggle single quotes
+    while (arg[i] != '\0') {
+        if (arg[i] == '\'' && !in_double_quotes) {
+            in_single_quotes = !in_single_quotes;
             i++;
-        }
-        else if (arg[i] == '"' && !in_single_quotes)
-        {
-            in_double_quotes = !in_double_quotes;  // Toggle double quotes
+        } else if (arg[i] == '"' && !in_single_quotes) {
+            in_double_quotes = !in_double_quotes;
             i++;
-        }
-        else if (arg[i] == '$')
-        {
-            if (in_single_quotes)
-            {
-                // If in single quotes, treat $ as literal
+        } else if (arg[i] == '$') {
+            if (in_single_quotes) {
                 buffer[j++] = arg[i++];
-            }
-            else if (arg[i + 1] == '$')
-            {
+            } else if (arg[i + 1] == '$') {
                 // Handle $$ for process ID
                 char pid_str[16];
                 snprintf(pid_str, sizeof(pid_str), "%d", getpid());
                 my_strcpy(&buffer[j], pid_str);
                 j += ft_strlen(pid_str);
                 i += 2;
-            }
-            else if (arg[i + 1] == '?')
-            {
-                // Handle $? for last exit status
-                char exit_status_str[16];
-                snprintf(exit_status_str, sizeof(exit_status_str), "%d", data->exit_status);
-                my_strcpy(&buffer[j], exit_status_str);
-                j += ft_strlen(exit_status_str);
-                i += 2;
-            }
-            else
-            {
+            } else if (arg[i + 1] == '\0' || !ft_isalnum(arg[i + 1])) {
+                buffer[j++] = '$';
+                i++;
+            } else if (ft_isdigit(arg[i + 1])) {
+                // Handle $ followed by a number: remove first digit
+                i++;  // Skip the $
+                i++;  // Skip the first digit
+                while (ft_isdigit(arg[i])) {
+                    buffer[j++] = arg[i++];
+                }
+            } else if (ft_isalpha(arg[i + 1])) {
+                // Handle $ followed by alphabetic string: print $ and skip the rest
+                
+                i++;  // Skip the $
+                while (ft_isalnum(arg[i]) || arg[i] == '_') {
+                    i++;  // Skip the alphabetic characters
+                }
+            } else {
+                // Handle other cases (e.g., environment variables)
                 i++;
                 char var_name[128];
                 int var_len = 0;
 
-                // Capture the variable name
-                while (arg[i] != '\0' && (ft_isalnum(arg[i]) || arg[i] == '_'))
-                {
+                while (arg[i] != '\0' && (ft_isalnum(arg[i]) || arg[i] == '_')) {
                     var_name[var_len++] = arg[i++];
                 }
                 var_name[var_len] = '\0';
 
-                // Fetch the variable's value from the environment
                 char *env_value = my_getenv(data->env, var_name);
-                if (env_value)
-                {
+                if (env_value) {
                     my_strcpy(&buffer[j], env_value);
                     j += ft_strlen(env_value);
                 }
-                // Do not add anything if the variable is not found
             }
-        }
-        else
-        {
-            // Normal characters
+        } else {
             buffer[j++] = arg[i++];
         }
     }
     buffer[j] = '\0';  // Null-terminate the buffer
 }
-
 
 // Function to remove quotes and expand variables where needed
 void process_echo_argument(t_data *data, const char *arg, char *buffer)
@@ -225,28 +157,43 @@ int builtin_echo(t_data *data, char **args)
     {
         bool no_newline = false;
         int i = 1;
+
+        // Check for -n flag (to avoid printing newline)
         while (args[i] && is_n_flag(args[i]))
         {
             no_newline = true;
             i++;
         }
+
         char message[1024] = "";
-        bool first_word = true;
+        bool first_word = true;  // Used to avoid adding spaces before the first word
+
         while (args[i])
         {
-            if (!first_word)
-                my_strcat(message, " ");
             char expanded[1024] = "";
             expand_variables(data, args[i], expanded);
-            
+
+            // Only add a space if this is not the first word and the expanded variable is not empty
+            if (!first_word && expanded[0] != '\0')
+                my_strcat(message, " ");
+
+            // Append the expanded variable or word to the message
             my_strcat(message, expanded);
-            first_word = false;
+
+            // Mark first_word as false after processing the first argument
+            if (expanded[0] != '\0')
+                first_word = false;
+
             i++;
         }
+
+        // Print the final message
         echo(message, no_newline);
     }
     else
+    {
         write(1, "\n", 1);
+    }
 
     return 0;
 }
