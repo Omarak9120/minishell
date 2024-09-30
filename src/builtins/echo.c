@@ -6,7 +6,7 @@
 /*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:17:54 by mjamil            #+#    #+#             */
-/*   Updated: 2024/09/29 22:31:34 by mjamil           ###   ########.fr       */
+/*   Updated: 2024/09/30 21:55:50 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ void expand_variables(t_data *data, const char *arg, char *buffer) {
                 my_strcpy(&buffer[j], pid_str);
                 j += ft_strlen(pid_str);
                 i += 2;
+            } else if (arg[i + 1] == '?') {
+                // Handle $? for last exit status
+                char status_str[16];
+                snprintf(status_str, sizeof(status_str), "%d", data->last_exit_status);
+                my_strcpy(&buffer[j], status_str);
+                j += ft_strlen(status_str);
+                i += 2; // Skip past the '?'
             } else if (arg[i + 1] == '\0' || !ft_isalnum(arg[i + 1])) {
                 buffer[j++] = '$';
                 i++;
@@ -88,6 +95,7 @@ void expand_variables(t_data *data, const char *arg, char *buffer) {
     }
     buffer[j] = '\0';  // Null-terminate the buffer
 }
+
 
 
 // Function to remove quotes and expand variables where needed
