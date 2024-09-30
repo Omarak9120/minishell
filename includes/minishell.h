@@ -72,8 +72,7 @@
         t_command       *cmd_list;      // List of commands to execute
         t_token         *token_list; 
         int		        exit_status;    // List of tokens from user input
-        char            *user_input;
-        int             last_exit_status;    // User input
+        char            *user_input;    // User input
     }                   t_data;
 
     /******************************************************************************
