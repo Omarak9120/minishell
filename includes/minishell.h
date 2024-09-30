@@ -26,6 +26,8 @@
     # define CMD_NOT_EXECUTABLE 126
     # define FAILURE 1
     # define SUCCESS 0
+    // # define PATH_MAX 10000000000
+
 
     /******************************************************************************
     *                               STRUCTS                                        *
@@ -41,6 +43,7 @@
         HEREDOC = 6,
         INVALID = 7,
         BUILTIN = 8,
+        // PATH_MAX,
     } t_token_type;
 
     // Token structure for storing parsed tokens (could be words, symbols, etc.)
