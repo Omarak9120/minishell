@@ -82,56 +82,43 @@ int builtin_cd(t_data *data, char **args)
         printf("%s\n", prev_dir);
         update_logical_path(prev_dir);
     }
+    else if (strcmp(args[1], "..") == 0)  // Handle ".." logic
+    {
+        if (chdir("..") != 0)
+        {
+            perror("minishell");
+            free(temp_dir);
+            return 1;
+        }
+        update_logical_path("..");  // Update logical path to ".."
+    }
     else
     {
-        if (strcmp(args[1], "..") == 0)
+        if (chdir(args[1]) != 0)
         {
-            if (!cwd_valid)
-            {
-                char *last_slash = strrchr(logical_path, '/');
-                if (last_slash != NULL)
-                {
-                    *last_slash = '\0';  
-                    if (chdir(logical_path) != 0)
-                    {
-                        free(temp_dir);
-                        return 1;
-                    }
-                    update_logical_path(logical_path);
-                }
-            }
-            else
-            {
-                if (chdir("..") != 0)
-                {
-                    free(temp_dir);
-                    return 1;
-                }
-                char *last_slash = strrchr(logical_path, '/');
-                if (last_slash != NULL)
-                    *last_slash = '\0';
-                update_logical_path(logical_path);
-            }
+            perror("minishell");
+            free(temp_dir);
+            return 1;
         }
-        else
-        {
-            if (chdir(args[1]) != 0)
-            {
-                perror("minishell");
-                free(temp_dir);
-                return 1;
-            }
-            if (cwd_valid)
-                update_logical_path(args[1]);
-        }
+        if (cwd_valid)
+            update_logical_path(args[1]);
     }
 
     if (prev_dir != NULL)
         free(prev_dir);
     prev_dir = temp_dir;
 
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
+    // Update OLDPWD environment variable
+    size_t cwd_length = strlen(cwd);
+    size_t olpwd_length = cwd_length + 10; // 10 for "OLDPWD=" + null terminator
+    char olpwd[olpwd_length]; // Allocate a buffer with sufficient size
 
+    if ((size_t)snprintf(olpwd, sizeof(olpwd), "OLDPWD=%s", cwd) >= sizeof(olpwd)) {
+        fprintf(stderr, "Warning: OLPWD string may be truncated\n");
+    }
+    add_env_variable(data, olpwd);
+
+    if (getcwd(cwd, sizeof(cwd)) != NULL)
         update_logical_path(cwd);
 
     return 0;

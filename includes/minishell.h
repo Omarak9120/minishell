@@ -174,6 +174,7 @@
     int         is_valid_word(char *str);
     t_token     *create_word_with_separator(char *input, int *i);
     t_token     *create_general_token(char *input, int *i);
+    void add_env_variable(t_data *data, const char *arg);
 
     /* ------------------------ TOKEN HELPERS ----------------------------------*/
 
