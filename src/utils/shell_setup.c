@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_setup.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksayour <ksayour@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 14:26:55 by ksayour           #+#    #+#             */
-/*   Updated: 2024/09/21 14:07:33 by ksayour          ###   ########.fr       */
+/*   Updated: 2024/10/03 03:28:09 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void setup_shell(t_data *data) {
     // Set up the environment variables
     data->env = copy_environment();  // A function that duplicates the current env
     //ft_signal_incmd();
+    update_shlvl(data);
     // // Initialize signals
     // signal(SIGINT, handle_sigint);   // Handle Ctrl+C
     // signal(SIGQUIT, SIG_IGN);        // Ignore Ctrl+\ (SIGQUIT)
