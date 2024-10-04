@@ -29,16 +29,19 @@ void add_env_variable(t_data *data, const char *arg)
 {
     char key[1024] = {0};
     char value[1024] = {0};
+    int has_value = parse_key_value(arg, key, value);  // Check if the arg has a value
 
-    if (parse_key_value(arg, key, value))
+    if (has_value)  // If it's a key-value pair
     {
         if (is_valid_identifier(key))
         {
             int i = 0;
             while (data->env[i] != NULL)
             {
-                if (ft_strncmp(data->env[i], key, ft_strlen(key)) == 0 && data->env[i][ft_strlen(key)] == '=')
+                if (ft_strncmp(data->env[i], key, ft_strlen(key)) == 0 && 
+                    (data->env[i][ft_strlen(key)] == '=' || data->env[i][ft_strlen(key)] == '\0'))
                 {
+                    // Update existing variable (whether it had value or not)
                     free(data->env[i]);
                     data->env[i] = malloc(strlen(key) + strlen(value) + 4);
                     if (data->env[i] == NULL)
@@ -55,6 +58,8 @@ void add_env_variable(t_data *data, const char *arg)
                 }
                 i++;
             }
+
+            // Add the new variable as key=value
             size_t env_size = 0;
             while (data->env[env_size] != NULL) 
                 env_size++;
@@ -82,10 +87,23 @@ void add_env_variable(t_data *data, const char *arg)
             fprintf(stderr, "minishell: export: `%s': not a valid identifier\n", key);
         }
     }
-    else
+    else  // When there's no `=` in the argument (just a variable name)
     {
         if (is_valid_identifier(arg))
         {
+            int i = 0;
+            while (data->env[i] != NULL)
+            {
+                // Check if the variable already exists
+                if (ft_strncmp(data->env[i], arg, ft_strlen(arg)) == 0 &&
+                    (data->env[i][ft_strlen(arg)] == '=' || data->env[i][ft_strlen(arg)] == '\0'))
+                {
+                    return;  // Variable already exists, no need to add it again
+                }
+                i++;
+            }
+
+            // Add the variable without `=` if it doesn't exist
             size_t env_size = 0;
             while (data->env[env_size] != NULL) 
                 env_size++;
@@ -95,13 +113,13 @@ void add_env_variable(t_data *data, const char *arg)
                 ft_perror("Failed to allocate memory");
                 return;
             }
-            data->env[env_size] = malloc(strlen(arg) + 1);
+            data->env[env_size] = malloc(strlen(arg) + 1);  // Allocate space for key without '='
             if (data->env[env_size] == NULL)
             {
                 ft_perror("Failed to allocate memory for environment variable");
                 return;
             }
-            my_strcpy(data->env[env_size], arg);
+            my_strcpy(data->env[env_size], arg);  // Store just the key
             data->env[env_size + 1] = NULL;
         }
         else
@@ -110,6 +128,7 @@ void add_env_variable(t_data *data, const char *arg)
         }
     }
 }
+
 
 int compare_strings(const void *a, const void *b)
 {
@@ -122,15 +141,10 @@ int builtin_export(t_data *data, char **args)
 {
     if (args[1] == NULL)
     {
-        // Sort the environment variables
         int env_size = 0;
         while (data->env[env_size] != NULL)
             env_size++;
-
-        // Using qsort to sort the environment variables alphabetically
         qsort(data->env, env_size, sizeof(char *), compare_strings);
-
-        // Print sorted environment variables
         int i = 0;
         while (data->env[i] != NULL)
         {
