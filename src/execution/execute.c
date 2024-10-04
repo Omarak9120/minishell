@@ -6,7 +6,7 @@
 /*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 14:43:38 by ksayour           #+#    #+#             */
-/*   Updated: 2024/09/28 17:05:26 by mjamil           ###   ########.fr       */
+/*   Updated: 2024/10/04 17:28:29 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,44 +18,52 @@
 int is_builtin(t_command *cmd);
 
 // Function to execute an external command using fork
-void execute_external_command(t_data *data, t_command *cmd)
-{
-    pid_t pid = fork();
-    if (pid == 0)
-    {
-        // Handling input/output redirection
-        if (cmd->in_fd != STDIN_FILENO)
-        {
-            dup2(cmd->in_fd, STDIN_FILENO);
-            close(cmd->in_fd);
-        }
-        if (cmd->out_fd != STDOUT_FILENO)
-        {
-            dup2(cmd->out_fd, STDOUT_FILENO);
-            close(cmd->out_fd);
-        }
-        if (execvp(cmd->args[0], cmd->args) == -1)
-        {
-            ft_perror("minishell");
-            exit(EXIT_FAILURE);
-        }
-    }
-    else if (pid > 0)
-    {
-        int status;
-        waitpid(pid, &status, 0);
-        data->exit_status = WEXITSTATUS(status);
-    }
-    else
-    {
-        perror("minishell: fork");
-    }
-}
+// void execute_external_command(t_data *data, t_command *cmd)
+// {
+//     pid_t pid = fork();
+//     if (pid == 0)
+//     {
+//         // Handling input/output redirection
+//         if (cmd->in_fd != STDIN_FILENO)
+//         {
+//             dup2(cmd->in_fd, STDIN_FILENO);
+//             close(cmd->in_fd);
+//         }
+//         if (cmd->out_fd != STDOUT_FILENO)
+//         {
+//             dup2(cmd->out_fd, STDOUT_FILENO);
+//             close(cmd->out_fd);
+//         }
+//         if (execvp(cmd->args[0], cmd->args) == -1)
+//         {
+//             ft_perror("minishell");
+//             exit(EXIT_FAILURE);
+//         }
+//     }
+//     else if (pid > 0)
+//     {
+//         int status;
+//         waitpid(pid, &status, 0);
+//         data->exit_status = WEXITSTATUS(status);
+//     }
+//     else
+//     {
+//         perror("minishell: fork");
+//     }
+// }
 
 int execute_single_command(t_command *cmd, t_data *data) {
     // Handle built-in commands in the current process
     if (is_builtin(cmd)) {
         return execute_builtin(cmd, data);  // Execute in the parent shell process
+    }
+
+    // Check if PATH is set
+    char *path = my_getenv(data->env , "PATH");
+    if (path == NULL || strlen(path) == 0) {
+        fprintf(stderr, "%s: No such file or directory\n", cmd->args[0]);
+        data->exit_status = 127;  // Set exit status for command not found
+        return FAILURE;
     }
 
     // For external commands, fork a child process
@@ -76,7 +84,7 @@ int execute_single_command(t_command *cmd, t_data *data) {
             close(cmd->out_fd);
         }
 
-        // Execute external commands
+        // Check if the command can be found
         if (execvp(cmd->args[0], cmd->args) == -1) {
             // If execvp fails, print "command not found" and exit with 127
             fprintf(stderr, "%s: command not found\n", cmd->args[0]);
@@ -113,8 +121,6 @@ int execute_single_command(t_command *cmd, t_data *data) {
 
     return SUCCESS;
 }
-
-
 
 
 // Check if the command is a built-in
