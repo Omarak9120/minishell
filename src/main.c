@@ -3,6 +3,7 @@
 int main() {
     char *input;
     t_data data;
+    data.exit_status = 0;
 
     // Set up the shell environment
     setup_shell(&data);  // Initialize environment, signals, etc.
