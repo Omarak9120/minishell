@@ -51,8 +51,9 @@ int builtin_cd(t_data *data, char **args) {
         }
         update_logical_path(home);
     } else if (strcmp(args[1], "-") == 0) {
-        if (prev_dir == NULL) {
-            fprintf(stderr, "minishell: cd: OLDPWD not set\n");
+        char *oldpwd = my_getenv(data->env, "OLDPWD");
+        if (oldpwd == NULL) {
+            fprintf(stderr, "\n");
             free(temp_dir);
             data->exit_status = 1;
             return 1;
