@@ -29,6 +29,7 @@ int builtin_cd(t_data *data, char **args) {
         temp_dir = strdup(cwd);  // Store current directory into temp_dir
         if (temp_dir == NULL) {
             perror("minishell: strdup");
+            data->exit_status = 1;
             return 1;
         }
     }
@@ -39,11 +40,13 @@ int builtin_cd(t_data *data, char **args) {
         if (home == NULL) {
             fprintf(stderr, "minishell: cd: HOME not set\n");
             free(temp_dir);
+            data->exit_status = 1;
             return 1;
         }
         if (chdir(home) != 0) {
             perror("minishell");
             free(temp_dir);
+            data->exit_status = 1;
             return 1;
         }
         update_logical_path(home);
@@ -51,11 +54,13 @@ int builtin_cd(t_data *data, char **args) {
         if (prev_dir == NULL) {
             fprintf(stderr, "minishell: cd: OLDPWD not set\n");
             free(temp_dir);
+            data->exit_status = 1;
             return 1;
         }
         if (chdir(prev_dir) != 0) {
             perror("minishell");
             free(temp_dir);
+            data->exit_status = 1;
             return 1;
         }
         printf("%s\n", prev_dir);
@@ -64,12 +69,14 @@ int builtin_cd(t_data *data, char **args) {
         if (chdir("..") != 0) {
             perror("minishell");
             free(temp_dir);
+            data->exit_status = 1;
             return 1;
         }
     } else {
         if (chdir(args[1]) != 0) {
             perror("minishell");
             free(temp_dir);
+            data->exit_status = 1;
             return 1;
         }
     }

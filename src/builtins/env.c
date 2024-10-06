@@ -16,11 +16,13 @@ int builtin_env(t_data *data, char **args)
     if (args[1] != NULL)
     {
         fprintf(stderr, "env: '%s': No such file or directory\n", args[1]);
+        data->exit_status = 127;
         return (127);
     }
     if (data == NULL || data->env == NULL)
     {
         printf("Error: No environment context available.\n");
+        data->exit_status = 1;
         return (1);
     }
     char **env = data->env;

@@ -6,7 +6,7 @@
 /*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 18:17:54 by mjamil            #+#    #+#             */
-/*   Updated: 2024/10/06 01:50:53 by mjamil           ###   ########.fr       */
+/*   Updated: 2024/10/06 14:52:01 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void expand_variables(t_data *data, const char *arg, char *buffer) {
                 my_strcpy(&buffer[j], status_str);
                 j += ft_strlen(status_str);
                 i += 2; // Skip past the '?'
+                data->exit_status = 0;
             } else if (arg[i + 1] == '\0' || !ft_isalnum(arg[i + 1])) {
                 buffer[j++] = '$';
                 i++;

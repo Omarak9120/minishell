@@ -45,6 +45,7 @@ int builtin_unset(t_data *data, char **args)
     if (args[1] == NULL)
     {
         fprintf(stderr, "minishell: unset: not enough arguments\n");
+        data->exit_status = 1;
         return 1;
     }
     while (args[i])
