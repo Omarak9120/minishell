@@ -5,6 +5,7 @@ int main() {
     t_data data;
     data.exit_status = 0;
 
+    art();
     // Set up the shell environment
     setup_shell(&data);  // Initialize environment, signals, etc.
     ft_signal_setup_for_input();  // Setup signal handling for shell input
@@ -14,7 +15,7 @@ int main() {
         ft_signal_setup_for_input();  // Ensure proper signal setup for input prompt
 
         // Read input from the user
-        input = readline("omar> ");
+        input = readline("Minishell>>>  ");
         
         // Handle EOF (Ctrl+D)
         if (!input) {
