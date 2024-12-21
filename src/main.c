@@ -16,6 +16,9 @@ int main() {
 
         // Read input from the user
         input = readline("Minishell>>>  ");
+
+        // Check if Ctrl+C was pressed during readline
+        ft_check_signal(&data);
         
         // Handle EOF (Ctrl+D)
         if (!input) {
@@ -63,6 +66,8 @@ int main() {
         // Reset signals to default for command execution
         ft_reset_signals();  // Signals should be reset to default before running commands
 
+        // Reset signals for command execution
+        ft_signal_setup_for_execution();
         // Execute commands
         data.cmd_list = cmd_list;
         execute_commands(&data);

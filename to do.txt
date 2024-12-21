@@ -4,3 +4,8 @@
 
 3- unlike
 127 with minishell: No such file or directory
+
+--
+exit a  => error message correct but must not exit
+Handle MAX-LLong & MIN_LLONG should give error numeric arg + exit stats = 2
+

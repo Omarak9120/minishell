@@ -128,6 +128,7 @@
     void ft_signal_setup_for_input(void);
     void ft_reset_signals(void);
     void ft_sigint_handler_beforecmd(int sig);
+    void ft_signal_setup_for_execution(void);
 
     /* ------------------------ BUILTINS --------------------------------------*/
     // Function prototypes for built-ins
