@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zmourtab <zakariamourtaban@gmail.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 00:00:34 by zmourtab          #+#    #+#             */
-/*   Updated: 2024/12/26 11:31:09 by oabdelka         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:00:11 by zmourtab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,10 @@ char	*getinfo(t_data *data)
 	info = ft_strjoingnl(info, BLUE_BRIGHT);
 	info = ft_strjoingnl(info, pwd);
 	info = ft_strjoingnl(info, RESET);
-	info = ft_strjoingnl(info, " >> ");
 	info = ft_strjoingnl(info, BG_RED_BRIGHT);
 	info = ft_strjoingnl(info, sig);
 	info = ft_strjoingnl(info, RESET);
-	info = ft_strjoingnl(info," >> " RESET);
+	info = ft_strjoingnl(info, GREEN "⫤ " RESET);
 	if (sig)
 		free(sig);
 	if (pwd != NULL)

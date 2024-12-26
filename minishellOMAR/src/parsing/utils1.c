@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksayour <ksayour@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:55:39 by odib              #+#    #+#             */
-/*   Updated: 2024/12/26 15:36:32 by oabdelka         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:10:18 by ksayour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
+/*bte5od char w bta3mel create la arg node that will be appended to the args list in the cmd node*/
 t_arg	*create_arg_node(char *arg)
 {
 	t_arg	*new_arg;
@@ -23,7 +23,7 @@ t_arg	*create_arg_node(char *arg)
 	new_arg->next = NULL;
 	return (new_arg);
 }
-
+/*take a command and a arg node and append the arg node to the arg list in the command*/
 void	add_argument(t_command *cmd, char *arg)
 {
 	t_arg	*new_arg;
@@ -44,8 +44,14 @@ void	add_argument(t_command *cmd, char *arg)
 		temp->next = new_arg;
 	}
 }
+/*when we encounter a command or a node we creade a command node that's null inorder to fill it later with the handle word command*/
+t_command	*create_command_node(void)
+{
+	t_command	*new_cmd;
 
-t_command	*createTOKEN_IN_FILE = 2,L);
+	new_cmd = (t_command *)malloc(sizeof(t_command));
+	if (!new_cmd)
+		return (NULL);
 	new_cmd->args = NULL;
 	new_cmd->infile = STDIN_FILENO;
 	new_cmd->outfile = STDOUT_FILENO;
@@ -53,7 +59,7 @@ t_command	*createTOKEN_IN_FILE = 2,L);
 	new_cmd->error = 0;
 	return (new_cmd);
 }
-
+/*append the command node to the command list, this is done while parsing the tokens list*/
 void	append_command_node(t_command **cmd_list, t_command *new_cmd)
 {
 	t_command	*temp;
@@ -72,7 +78,7 @@ void	append_command_node(t_command **cmd_list, t_command *new_cmd)
 		temp->next = new_cmd;
 	}
 }
-
+/*see if the command is valid*/
 int	hasaccess(t_tokens *token, t_data *data)
 {
 	if (!ft_strcmp(token->content, "/"))

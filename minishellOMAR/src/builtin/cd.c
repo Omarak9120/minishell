@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: odib <odib@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 11:18:31 by odib              #+#    #+#             */
-/*   Updated: 2024/12/26 14:25:04 by oabdelka         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:41:24 by odib             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	change_dir(t_arg *args, t_env *env_list)
 	t_arg	*current;
 
 	current = args->next;
-	if (current == NULL || current->arg[0] == '~')
+	if (current == NULL)
 	{
 		return (cd_to_home(env_list));
 	}

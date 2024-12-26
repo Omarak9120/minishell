@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: odib <odib@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 12:07:54 by odib              #+#    #+#             */
-/*   Updated: 2024/12/26 14:27:57 by oabdelka         ###   ########.fr       */
+/*   Updated: 2024/09/04 13:43:20 by odib             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ int	convert_and_validate_exit_status(char *arg)
 
 int	handle_too_many_args_error(void)
 {
-	printf("exit\n");
 	printf("exit: too many arguments\n");
-
 	return (1);
 }
 
