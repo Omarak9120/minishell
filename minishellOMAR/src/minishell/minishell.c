@@ -98,6 +98,7 @@ int	main(int ac, char **av, char **env)
 	t_data	data;
 
 	init(&data, env);
+	signal(SIGTSTP, SIG_IGN);
 	while (1)
 	{
 		if (data.env != NULL)

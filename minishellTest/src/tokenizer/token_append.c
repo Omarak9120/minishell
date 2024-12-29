@@ -21,7 +21,7 @@ void	append2(t_tokens **tmp, char *data, int type)
 		return ; //for double space
 	if (((*tmp)->id == TOKEN_COMMAND || (*tmp)->id == TOKEN_WORD)
 		&& (type == TOKEN_WORD || type == TOKEN_COMMAND))
-		(*tmp)->content = ft_strjoingnl((*tmp)->content, data);
+		(*tmp)->content = ft_strjoingnl((*tmp)->content, data); //Merge if same type
 	else if ((type != TOKEN_SPACE && (type == TOKEN_WORD
 				|| type == TOKEN_COMMAND) && (*tmp)->id != TOKEN_SPACE))
 	{

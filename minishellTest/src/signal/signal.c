@@ -41,7 +41,6 @@ void	interactivemode(t_data *data, char **input)
 
 	signal(SIGINT, interactivehandle_sigint);
 	signal(SIGQUIT, interactivehandle_sigquit);
-	signal(SIGTSTP, SIG_IGN);
 	while (1)
 	{
 		info = getinfo(data);
@@ -66,7 +65,6 @@ void	noninteractivemode(t_data *data, char **input)
 {
 	signal(SIGINT, noninteractivehandle_sigint);
 	signal(SIGQUIT, noninteractivehandle_sigint);
-	signal(SIGTSTP, SIG_IGN);
 	while (data->cmd.running == 1 && g_signalint != 130)
 	{
 		if (g_signalint == 130)
