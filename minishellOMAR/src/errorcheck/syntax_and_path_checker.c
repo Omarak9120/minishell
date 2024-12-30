@@ -17,6 +17,16 @@ int	check_path(t_tokens *token, t_data *data)
 	struct stat	statbuf;
 	char		*str;
 
+	if (strcmp(token->content, "..") == 0)
+	{
+		printerrnocmd(token, data);
+		return (1);
+	}
+	if (strcmp(token->content, ".") == 0)
+	{
+		printf("bash: .: filename argument required\n");
+		return (1);
+	}
 	if (is_builtin_command(token->content))
 		return (0);
 	str = get_path((char *)token->content, data->env_list);
