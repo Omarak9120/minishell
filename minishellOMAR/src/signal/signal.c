@@ -20,20 +20,33 @@ char	*getinfo(t_data *data)
 
 	pwd = get_env(data->env_list, "PWD");
 	sig = ft_itoa(data->cmd.status);
+
+	// Start with an empty string
 	info = ft_strdup("");
-	info = ft_strjoingnl(info, BLUE_BRIGHT);
-	info = ft_strjoingnl(info, pwd);
-	info = ft_strjoingnl(info, RESET);
-	info = ft_strjoingnl(info, BG_RED_BRIGHT);
+	if (!info)
+		return (NULL);
+
+	// Example palette:
+	//   [ /path : 0 ] ⫤ 
+	//  - Brackets in CYAN
+	//  - Status in bold YELLOW
+	//  - Final arrow in GREEN
+	
+	info = ft_strjoingnl(info, CYAN "[ " RESET);
+	info = ft_strjoingnl(info, RED_BRIGHT);
+	info = ft_strjoingnl(info, (pwd ? pwd : "(no PWD)"));
+	info = ft_strjoingnl(info, CYAN " : " RESET);
+	info = ft_strjoingnl(info, YELLOW_BRIGHT);
 	info = ft_strjoingnl(info, sig);
 	info = ft_strjoingnl(info, RESET);
-	info = ft_strjoingnl(info, GREEN "⫤ " RESET);
-	if (sig)
-		free(sig);
-	if (pwd != NULL)
-		free(pwd);
+	info = ft_strjoingnl(info, CYAN " ] " RESET);
+	info = ft_strjoingnl(info, GREEN ">> " RESET);
+
+	free(sig);
+	free(pwd);
 	return (info);
 }
+
 
 void	interactivemode(t_data *data, char **input)
 {
