@@ -99,7 +99,7 @@ int	change_dir(t_arg *args, t_env *env_list)
 	t_arg	*current;
 
 	current = args->next;
-	if (current == NULL)
+	if (current == NULL || current->arg[0] == '~')
 	{
 		return (cd_to_home(env_list));
 	}

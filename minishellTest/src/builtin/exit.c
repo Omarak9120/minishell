@@ -40,22 +40,20 @@ int	calculate_exit_status(int status)
 //check_and_convert_exit_code
 int	convert_and_validate_exit_status(char *arg)
 {
-	int	exit_status;
-
 	if (!check_status_str(arg))
 	{
-		printf("exit : %s numeric argument needed\n", arg);
-		return (1);
+		printf("exit: %s: numeric argument required\n", arg);
+		return (2);
 	}
-	exit_status = ft_atoi(arg);
-	return (calculate_exit_status(exit_status));
+	return (calculate_exit_status(ft_atoi(arg)));
 }
 
-//too_many_args_error
-int	handle_too_many_args_error(void)
+int	get_default_exit_status(t_arg *arg)
 {
-	printf("exit: too many arguments\n");
-	return (1);
+	if (arg)
+		return (ft_atoi(arg->arg));
+	else
+		return (0);
 }
 
 //exit_shell
@@ -65,15 +63,22 @@ int	exit_command(t_arg *args)
 	t_arg	*arg;
 
 	arg = args->next;
+	if (arg)
+	{
+		exit_status = convert_and_validate_exit_status(arg->arg);
+		if (!check_status_str(arg->arg))
+		{
+			free_list_arg(arg);
+			return (exit(exit_status), exit_status);
+		}
+	}
 	if (arg && arg->next)
 	{
-		exit_status = 1;
-		return (handle_too_many_args_error());
+		printf("exit: too many arguments\n");
+		free_list_arg(arg);
+		return (1);
 	}
-	if (arg)
-		exit_status = convert_and_validate_exit_status(arg->arg);
-	else
-		exit_status = 0;
+	exit_status = get_default_exit_status(arg);
 	free_list_arg(arg);
 	return (exit(exit_status), exit_status);
 }

@@ -25,8 +25,8 @@ int	env_command(t_env *env)
 	current_var = env;
 	while (current_var != NULL)
 	{
-		if (current_var->is_visible == 0)
-			printf("%s=\"%s\"\n", current_var->key, current_var->value);
+		if (current_var->hidden == 0)
+			printf("%s=%s\n", current_var->key, current_var->value);
 		current_var = current_var->next;
 	}
 	free_env_list(current_var);

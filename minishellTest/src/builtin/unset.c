@@ -47,8 +47,7 @@ int	unset_key_in_list(t_env **env_list, const char *key)
 	current = find_env_var_to_unset(env_list, key, &previous);
 	if (current == NULL)
 	{
-		printf("unset: %s: no such variable", key);
-		perror("\n");
+		printf("unset: %s: no such variable\n", key);
 		return (1);
 	}
 	remove_env_var(env_list, current, previous);
@@ -63,7 +62,7 @@ int	unset_command(t_arg *args, t_env **env_list)
 	if (current == NULL)
 	{
 		perror("unset: not enough arguments\n");
-		return (1);
+		return (0);
 	}
 	if (!check_key(current->arg))
 		return (is_key_invalid(current->arg));
