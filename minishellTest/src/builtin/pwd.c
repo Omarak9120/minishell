@@ -12,10 +12,37 @@
 
 #include "../../includes/minishell.h"
 
-//print_current_directory
+int	pwd_help(t_env *env_list)
+{
+	int		nbr;
+	char	*pwd;
+	int		i;
+
+	if (!env_list)
+		return (1);
+	nbr = env_list->two_point;
+	if (nbr < 0)
+		nbr = 0;
+	pwd = get_env(env_list, "PWD");
+	if (!pwd)
+	{
+		printf("Error: PWD not found in environment variables.\n");
+		return (1);
+	}
+	printf("%s", pwd);
+	i = 0;
+	while (i < nbr)
+	{
+		printf("/..");
+		i++;
+	}
+	printf("\n");
+	return (1);
+}
+
 int	pwd_command(t_env *env_list)
 {
-	static char	cwd[1024];
+	char	cwd[1024];
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
@@ -24,17 +51,11 @@ int	pwd_command(t_env *env_list)
 	}
 	else
 	{
-		int nbr = env_list->two_point;
-		char *pwd;
-		int i = 0;
-		pwd = get_env(env_list, "PWD");
-		printf("%s", pwd);
-		while (i < nbr)
+		if (!env_list)
 		{
-			printf("/..");
-			i++;
+			printf("Error: Environment list is NULL.\n");
+			return (1);
 		}
-		printf("\n");
-		return (1);
+		return (pwd_help(env_list));
 	}
 }
