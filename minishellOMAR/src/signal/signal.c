@@ -32,16 +32,15 @@ char	*getinfo(t_data *data)
 	//  - Status in bold YELLOW
 	//  - Final arrow in GREEN
 	
-	// info = ft_strjoingnl(info, CYAN "[ " RESET);
-	// info = ft_strjoingnl(info, RED_BRIGHT);
-	// info = ft_strjoingnl(info, (pwd ? pwd : "(no PWD)"));
-	// info = ft_strjoingnl(info, CYAN " : " RESET);
-	// info = ft_strjoingnl(info, YELLOW_BRIGHT);
-	// info = ft_strjoingnl(info, sig);
-	// info = ft_strjoingnl(info, RESET);
-	// info = ft_strjoingnl(info, CYAN " ] " RESET);
-	// info = ft_strjoingnl(info, GREEN ">> " RESET);
- info = ft_strjoin(info," minishell>>");
+	info = ft_strjoingnl(info, CYAN "[ " RESET);
+	info = ft_strjoingnl(info, RED_BRIGHT);
+	info = ft_strjoingnl(info, (pwd ? pwd : "(no PWD)"));
+	info = ft_strjoingnl(info, CYAN " : " RESET);
+	info = ft_strjoingnl(info, YELLOW_BRIGHT);
+	info = ft_strjoingnl(info, sig);
+	info = ft_strjoingnl(info, RESET);
+	info = ft_strjoingnl(info, CYAN " ] " RESET);
+	info = ft_strjoingnl(info, GREEN ">> " RESET);
 	free(sig);
 	free(pwd);
 	return (info);

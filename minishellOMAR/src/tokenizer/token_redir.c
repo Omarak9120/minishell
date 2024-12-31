@@ -1,16 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_utils3.c                                 :+:      :+:    :+:   */
+/*   token_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odib <odib@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/05 02:27:18 by odib              #+#    #+#             */
-/*   Updated: 2024/09/05 02:29:47 by odib             ###   ########.fr       */
+/*   Created: 2024/12/25 16:26:45 by oabdelka          #+#    #+#             */
+/*   Updated: 2024/12/25 16:26:47 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	tk_heredocument(char *input, t_tk *tk, t_data *data)
+{
+	if (input[tk->i] == '<' && input[tk->i + 1] == '<')
+	{
+		append(&data->cmdchain, "<<", TOKEN_HEREDOC_EOF);
+		tk->i++;
+		tk->last_was_space = 0;
+		return (1);
+	}
+	return (0);
+}
+int	tk_outappend(char *input, t_tk *tk, t_data *data)
+{
+	if (input[tk->i] == '>' && input[tk->i + 1] == '>')
+	{
+		append(&data->cmdchain, ">>", TOKEN_OUT_A_FILE);
+		tk->i++;
+		tk->last_was_space = 0;
+		return (1);
+	}
+	return (0);
+}
 
 void	tk_appendfo(char *input, t_tk *tk, t_data *data)
 {
@@ -47,35 +70,4 @@ void	tk_redir(char *input, t_tk *tk, t_data *data)
 		append(&data->cmdchain, " ", TOKEN_SPACE);
 		tk->last_was_space = 0;
 	}
-}
-
-void	tk_default(char *input, t_tk *tk, t_data *data)
-{
-	if (tk->last_was_space)
-	{
-		tk->buffer[0] = input[tk->i];
-		tk->buffer[1] = '\0';
-		append(&data->cmdchain, tk->buffer, get_delimiter_type(tk->buffer));
-	}
-	else
-	{
-		tk->buffer[tk->buf_i++] = input[tk->i];
-	}
-	tk->last_was_space = (input[tk->i] == ' ');
-}
-
-void	tk_bufposo(char *input, t_tk *tk, t_data *data)
-{
-	if (tk->buf_i > 0)
-	{
-		tk->buffer[tk->buf_i] = '\0';
-		if (!tk->foundcmd)
-		{
-			append(&data->cmdchain, tk->buffer, TOKEN_COMMAND);
-			tk->foundcmd = 1;
-		}
-		else
-			append(&data->cmdchain, tk->buffer, TOKEN_WORD);
-	}
-	(void)input;
 }
