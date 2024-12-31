@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmourtab <zakariamourtaban@gmail.com>      +#+  +:+       +#+        */
+/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 00:00:34 by zmourtab          #+#    #+#             */
-/*   Updated: 2024/09/04 18:00:11 by zmourtab         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:49:44 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ char	*getinfo(t_data *data)
 	//  - Status in bold YELLOW
 	//  - Final arrow in GREEN
 	
-	info = ft_strjoingnl(info, CYAN "[ " RESET);
-	info = ft_strjoingnl(info, RED_BRIGHT);
-	info = ft_strjoingnl(info, (pwd ? pwd : "(no PWD)"));
-	info = ft_strjoingnl(info, CYAN " : " RESET);
-	info = ft_strjoingnl(info, YELLOW_BRIGHT);
-	info = ft_strjoingnl(info, sig);
-	info = ft_strjoingnl(info, RESET);
-	info = ft_strjoingnl(info, CYAN " ] " RESET);
-	info = ft_strjoingnl(info, GREEN ">> " RESET);
-
+	// info = ft_strjoingnl(info, CYAN "[ " RESET);
+	// info = ft_strjoingnl(info, RED_BRIGHT);
+	// info = ft_strjoingnl(info, (pwd ? pwd : "(no PWD)"));
+	// info = ft_strjoingnl(info, CYAN " : " RESET);
+	// info = ft_strjoingnl(info, YELLOW_BRIGHT);
+	// info = ft_strjoingnl(info, sig);
+	// info = ft_strjoingnl(info, RESET);
+	// info = ft_strjoingnl(info, CYAN " ] " RESET);
+	// info = ft_strjoingnl(info, GREEN ">> " RESET);
+ info = ft_strjoin(info," minishell>>");
 	free(sig);
 	free(pwd);
 	return (info);

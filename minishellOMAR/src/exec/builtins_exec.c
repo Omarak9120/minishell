@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec4.c                                            :+:      :+:    :+:   */
+/*   builtins_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odib <odib@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 06:20:30 by odib              #+#    #+#             */
-/*   Updated: 2024/09/06 06:31:09 by odib             ###   ########.fr       */
+/*   Updated: 2024/12/31 11:06:38 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	execcd(t_command *command, t_data *data)
 
 int	execpwd(t_command *command, t_data *data)
 {
-	data->cmd.status = pwd_command();
+	data->cmd.status = pwd_command(data->env_list);
 	return (data->cmd.status);
 	(void)command;
 }

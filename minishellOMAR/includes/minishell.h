@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 22:15:38 by zmourtab          #+#    #+#             */
-/*   Updated: 2024/12/25 14:09:59 by oabdelka         ###   ########.fr       */
+/*   Updated: 2024/12/31 11:17:02 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_env
 	char				*value;
 	int					hidden;
 	struct s_env		*next;
+	int 				two_point;
 }						t_env;
 
 typedef struct s_arg
@@ -135,7 +136,7 @@ typedef struct s_ex
 extern int				g_signalint;
 
 void					ft_split_env(char *envp_str, char **key, char **value);
-int						pwd_command(void);
+int						pwd_command(t_env *env_list);
 int						exit_command(t_arg *args);
 void					print_sorted_env_list(t_env *head);
 void					concatenvtoken(t_data *data);

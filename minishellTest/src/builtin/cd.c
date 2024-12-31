@@ -78,14 +78,17 @@ int	cd_to_path(char *path, t_env *env_list)
 	if (chdir(path) != 0)
 	{
 		perror("cd: error changing directory");
+		env_list->two_point += 1;
 		return (1);
 	}
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 	{
 		perror("cd: error getting current directory");
+		env_list->two_point += 1;
 		return (1);
 	}
+	env_list->two_point = 0;
 	set_env(&env_list, "OLDPWD", current_pwd, 0);
 	set_env(&env_list, "PWD", new_pwd, 0);
 	free(new_pwd);

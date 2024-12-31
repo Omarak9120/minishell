@@ -13,15 +13,28 @@
 #include "../../includes/minishell.h"
 
 //print_current_directory
-int	pwd_command(void)
+int	pwd_command(t_env *env_list)
 {
 	static char	cwd[1024];
 
-	if (getcwd(cwd, sizeof(cwd)) == NULL)
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		perror("Error retrieving current directory");
+		printf("%s\n", cwd);
+		return (0);
+	}
+	else
+	{
+		int nbr = env_list->two_point;
+		char *pwd;
+		int i = 0;
+		pwd = get_env(env_list, "PWD");
+		printf("%s", pwd);
+		while (i < nbr)
+		{
+			printf("/..");
+			i++;
+		}
+		printf("\n");
 		return (1);
 	}
-	printf("%s\n", cwd);
-	return (0);
 }

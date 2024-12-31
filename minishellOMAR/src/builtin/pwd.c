@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odib <odib@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 12:09:41 by odib              #+#    #+#             */
-/*   Updated: 2024/09/03 00:18:07 by odib             ###   ########.fr       */
+/*   Updated: 2024/12/31 11:31:21 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	pwd_command(void)
+int	pwd_command(t_env *env_list)
 {
 	static char	cwd[1024];
 
@@ -23,7 +23,17 @@ int	pwd_command(void)
 	}
 	else
 	{
-		perror("getcwd() error");
+		int nbr = env_list->two_point;
+		char *pwd;
+		int i = 0;
+		pwd = get_env(env_list, "PWD");
+		printf("%s", pwd);
+		while (i < nbr)
+		{
+			printf("/..");
+			i++;
+		}
+		printf("\n");
 		return (1);
 	}
 }

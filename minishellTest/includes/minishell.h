@@ -72,6 +72,7 @@ typedef struct s_env
 	char				*value;
 	int					hidden;
 	struct s_env		*next;
+	int 				two_point;
 }						t_env;
 
 typedef struct s_arg
@@ -155,7 +156,7 @@ int						set_env(t_env **head, const char *key, const char *value,
 							int hidden);
 
 /* ------------------------- Built-in Commands ------------------------------- */
-int						pwd_command(void);
+int						pwd_command(t_env *env_list);
 int						exit_command(t_arg *args);
 int						echo_command(t_arg *args);
 int						env_command(t_env *env_list);
