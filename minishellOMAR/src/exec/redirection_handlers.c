@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec3.c                                            :+:      :+:    :+:   */
+/*   redirection_handlers.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odib <odib@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 06:07:05 by odib              #+#    #+#             */
-/*   Updated: 2024/09/06 06:25:40 by odib             ###   ########.fr       */
+/*   Updated: 2025/01/01 15:07:29 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,12 @@ void	inheredoc(t_hd *hd)
 }
 
 void	infile(t_hd *hd)
-{
+{	
 	if (ft_strchr(hd->tmp->content, '\'') != NULL)
 		hd->hasquote = 1;
+	char *old_content = hd->tmp->content;
 	hd->tmp->content = heredocrmquote(hd->tmp->content);
+	free(old_content);
 	hd->input = NULL;
 	hd->buffer = NULL;
 	while (1)
@@ -103,6 +105,8 @@ void	infile(t_hd *hd)
 		hd->buffer = ft_strjoingnl(hd->buffer, "\n");
 		free(hd->input);
 	}
+	free(hd->tmp->content);
+    hd->tmp->content = NULL;
 }
 
 void	writefile(t_hd *hd, t_data *data)
