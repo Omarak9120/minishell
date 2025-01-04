@@ -232,7 +232,7 @@ int						checkfileoutappend(t_tokens *token);
 int						checkfileout(t_tokens *token);
 int						checkfilein(t_tokens *token);
 int						is_command(t_tokens *token);
-int						isdirectory(t_tokens *token);
+// int						isdirectory(t_tokens *token);
 int						contains_dot_or_slash(const char *str);
 void					printerrnocmd(t_tokens *token, t_data *data);
 void					printerrnodir(t_tokens *token, t_data *data);

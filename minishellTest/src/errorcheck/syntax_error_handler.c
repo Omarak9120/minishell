@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utills_error2.c                                    :+:      :+:    :+:   */
+/*   syntax_error_handler.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmourtab <zakariamourtaban@gmail.com>      +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 02:05:01 by odib              #+#    #+#             */
-/*   Updated: 2024/09/04 23:09:43 by zmourtab         ###   ########.fr       */
+/*   Updated: 2025/01/04 17:08:34 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ int	is_command(t_tokens *token)
 			X_OK) == 0);
 }
 
-int	isdirectory(t_tokens *token)
-{
-	DIR	*dir;
+// int	isdirectory(t_tokens *token)
+// {
+// 	DIR	*dir;
 
-	printf("%s\n", token->content);
-	dir = opendir(token->content);
-	if (dir && (ft_strcmp(token->content, "/") || ft_strcmp(token->content,
-				".")))
-	{
-		token->id = TOKEN_DIRECTORY;
-		closedir(dir);
-		return (1);
-	}
-	return (0);
-}
+// 	printf("%s\n", token->content);
+// 	dir = opendir(token->content);
+// 	if (dir && (ft_strcmp(token->content, "/") || ft_strcmp(token->content,
+// 				".")))
+// 	{
+// 		token->id = TOKEN_DIRECTORY;
+// 		closedir(dir);
+// 		return (1);
+// 	}
+// 	return (0);
+// }
