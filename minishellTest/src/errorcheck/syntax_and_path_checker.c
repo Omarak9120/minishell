@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errorcheck.c                                       :+:      :+:    :+:   */
+/*   syntax_and_path_checker.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odib <odib@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 04:33:02 by odib              #+#    #+#             */
-/*   Updated: 2024/09/06 04:34:32 by odib             ###   ########.fr       */
+/*   Updated: 2025/01/04 14:34:48 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	check_path(t_tokens *token, t_data *data)
 {
-	struct stat	statbuf;
-	char		*str;
+	struct	stat statbuf;
+	char	*resolved; // Resolved path from get_path
 
 	if (strcmp(token->content, "..") == 0)
 	{
@@ -25,30 +25,29 @@ int	check_path(t_tokens *token, t_data *data)
 	if (strcmp(token->content, ".") == 0)
 	{
 		printf("bash: .: filename argument required\n");
+		data->cmd.status = 2;
+		token->error = 1;
 		return (1);
 	}
 	if (is_builtin_command(token->content))
 		return (0);
-	str = get_path((char *)token->content, data->env_list);
-	if (access(str, X_OK) != 0 && !contains_dot_or_slash(token->content)
-		&& !is_builtin_command(str))
+	resolved = get_path(token->content, data->env_list);//$PATH
+	if (resolved)
 	{
-		printerrnocmd(token, data);
-		return (free(str), 1);
+		if (access(resolved, X_OK) == 0)//valid and executable
+		{
+			return (free(resolved), 0);
+		}
+		printerrnofdir(token, data);//No such file or directory
+		return (free(resolved), 1);
 	}
-	else if (stat(token->content, &statbuf) == 0 && S_ISDIR(statbuf.st_mode)
-		&& !is_builtin_command(str))
+	if (stat(token->content, &statbuf) == 0 && S_ISDIR(statbuf.st_mode))
 	{
-		printerrnodir(token, data);
-		return (free(str), 1);
+		printerrnodir(token, data);//is a directory
+		return (1);
 	}
-	else if (access(str, X_OK) != 0)
-	{
-		printerrnofdir(token, data);
-		return (free(str), 1);
-	}
-	free(str);
-	return (0);
+	printerrnocmd(token, data);//"command not found"
+	return (1);
 }
 
 t_tokens	*getnextcommand(t_tokens *tmp)

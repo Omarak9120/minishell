@@ -6,87 +6,49 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 04:33:02 by odib              #+#    #+#             */
-/*   Updated: 2025/01/04 14:26:21 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/04 14:35:24 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-// int	check_path(t_tokens *token, t_data *data)
-// {
-// 	struct stat	statbuf;
-// 	char		*str;
-
-// 	if (strcmp(token->content, "..") == 0)
-// 	{
-// 		printerrnocmd(token, data);
-// 		return (1);
-// 	}
-// 	if (strcmp(token->content, ".") == 0)
-// 	{
-// 		printf("bash: .: filename argument required\n");
-// 		return (1);
-// 	}
-// 	if (is_builtin_command(token->content))
-// 		return (0);
-// 	str = get_path((char *)token->content, data->env_list);//$PATH
-// 	if (access(str, X_OK) != 0 && !contains_dot_or_slash(token->content)// not executable or doesn’t exist at that path
-// 		&& !is_builtin_command(str))
-// 	{
-// 		printerrnocmd(token, data);
-// 		return (free(str), 1);
-// 	}//													file is a directory
-// 	else if (stat(token->content, &statbuf) == 0 && S_ISDIR(statbuf.st_mode)//the file/directory exists
-// 		&& !is_builtin_command(str))
-// 	{
-// 		printerrnodir(token, data);
-// 		return (free(str), 1);
-// 	}
-// 	else if (access(str, X_OK) != 0)
-// 	{
-// 		printerrnofdir(token, data);
-// 		return (free(str), 1);
-// 	}
-// 	free(str);
-// 	return (0);
-// }
-
 int	check_path(t_tokens *token, t_data *data)
 {
-    struct stat statbuf;
-    char        *resolved; // Resolved path from get_path
+	struct stat	statbuf;
+	char		*str;
 
-    if (strcmp(token->content, "..") == 0)
-    {
-        printerrnocmd(token, data);
-        return (1);
-    }
-    if (strcmp(token->content, ".") == 0)
-    {
-        printf("bash: .: filename argument required\n");
-        data->cmd.status = 2;
-        token->error = 1;
-        return (1);
-    }
-    if (is_builtin_command(token->content))
-        return (0);
-    resolved = get_path(token->content, data->env_list);//$PATH
-    if (resolved)
-    {
-        if (access(resolved, X_OK) == 0)//valid and executable
-        {
-			return (free(resolved), 0);
-        }
-        printerrnofdir(token, data);//No such file or directory
-		return (free(resolved), 1);
-    }
-    if (stat(token->content, &statbuf) == 0 && S_ISDIR(statbuf.st_mode))
-    {
-        printerrnodir(token, data);//is a directory
-        return (1);
-    }
-    printerrnocmd(token, data);//"command not found"
-    return (1);
+	if (strcmp(token->content, "..") == 0)
+	{
+		printerrnocmd(token, data);
+		return (1);
+	}
+	if (strcmp(token->content, ".") == 0)
+	{
+		printf("bash: .: filename argument required\n");
+		return (1);
+	}
+	if (is_builtin_command(token->content))
+		return (0);
+	str = get_path((char *)token->content, data->env_list);//$PATH
+	if (access(str, X_OK) != 0 && !contains_dot_or_slash(token->content)// not executable or doesn’t exist at that path
+		&& !is_builtin_command(str))
+	{
+		printerrnocmd(token, data);
+		return (free(str), 1);
+	}//													file is a directory
+	else if (stat(token->content, &statbuf) == 0 && S_ISDIR(statbuf.st_mode)//the file/directory exists
+		&& !is_builtin_command(str))
+	{
+		printerrnodir(token, data);
+		return (free(str), 1);
+	}
+	else if (access(str, X_OK) != 0)
+	{
+		printerrnofdir(token, data);
+		return (free(str), 1);
+	}
+	free(str);
+	return (0);
 }
 
 t_tokens	*getnextcommand(t_tokens *tmp)
