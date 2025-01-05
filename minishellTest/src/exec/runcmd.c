@@ -112,6 +112,7 @@ void	initcmd(char *input, char **env, t_data *data)
 	if (ft_strlen(input) == 0)
 		return ;
 	tokenizer(input, data);
+	// t_command *cmd_list = parse_tokens(data->cmdchain);
 	fixuptoken(data);
 	parseheredoc(data);
 	concatenvtoken(data);

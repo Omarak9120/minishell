@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:55:39 by odib              #+#    #+#             */
-/*   Updated: 2025/01/05 16:27:47 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/05 17:48:02 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,16 @@ void	append_command_node(t_command **cmd_list, t_command *new_cmd)
 		temp->next = new_cmd;
 	}
 }
-/*see if the command is valid*/
-int	hasaccess(t_tokens *token, t_data *data)
-{
-	if (!ft_strcmp(token->content, "/"))
-		return (1);
-	if (!ft_strcmp(token->content, "."))
-		return (1);
-	if (access(get_path(token->content, data->env_list), X_OK))
-		return (1);
-	printf("bash: %s: commandsda not found\n", token->content);
-	data->cmd.status = 127;
-	return (0);
-}
+// /*see if the command is valid*/
+// int	hasaccess(t_tokens *token, t_data *data)
+// {
+// 	if (!ft_strcmp(token->content, "/"))
+// 		return (1);
+// 	if (!ft_strcmp(token->content, "."))
+// 		return (1);
+// 	if (access(get_path(token->content, data->env_list), X_OK))
+// 		return (1);
+// 	printf("bash: %s: commandsda not found\n", token->content);
+// 	data->cmd.status = 127;
+// 	return (0);
+// }
