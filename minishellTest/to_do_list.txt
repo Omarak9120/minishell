@@ -1,4 +1,4 @@
-1) '' and ""
+1) '' and "" ---------------x
 
 ## jamil
 1) cmd : echo \n anything
@@ -10,3 +10,6 @@ there's extra space in the beginning
    cmd : e"cho hi"
 we get empty line , we must have command not found
 5) env DONTEXIST
+
+
+6 ) cmd : sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
