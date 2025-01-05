@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 02:05:01 by odib              #+#    #+#             */
-/*   Updated: 2025/01/04 17:08:34 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/05 12:05:58 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ void	printerror(t_tokens *token)
 
 int	is_command(t_tokens *token)
 {
+	//exists in the filesystem.
 	return (access(token->content, F_OK) == 0 && access(token->content,
-			X_OK) == 0);
+			X_OK) == 0);//file/path is executable
 }
 
 // int	isdirectory(t_tokens *token)

@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:27:12 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/01/04 17:35:10 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:27:24 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,15 +163,16 @@ void	append(t_tokens **cmds, char *data, int type)
 {
 	t_tokens	*tmp;
 	t_tokens	*new_node;
-	char* 		dup_data= NULL;
-	new_node = NULL;
+	// char* 		dup_data= NULL;
+	// new_node = NULL;
 	if ((!ft_strcmp(data, "\'\'") || !ft_strcmp(data, "\"\""))
 		&& ft_strlen(data) == 2)
 		{
- 		    dup_data = ft_strdup("");
-    		if (!dup_data)
-        		return;
-    		data = dup_data;
+ 		    // dup_data = ft_strdup("");
+    		// if (!dup_data)
+        	// 	return;
+    		// data = dup_data;
+			return;
 		}
 		// printf("Command %s not found\n",data);
 		// return;
@@ -182,22 +183,22 @@ void	append(t_tokens **cmds, char *data, int type)
 		new_node->previous = newnode("START", TOKEN_START);
 		new_node->error = 0;
 		*cmds = new_node;
-		if (dup_data)
-			{
-    			free(dup_data);
-    			dup_data = NULL;
-			}
+		// if (dup_data)
+		// 	{
+    	// 		free(dup_data);
+    	// 		dup_data = NULL;
+		// 	}
 		return ;
 	}
 	tmp = *cmds;
 	while (tmp->next != NULL)
 		tmp = tmp->next;
 	append2(&tmp, data, type);
-	if (dup_data)
-			{
-    			free(dup_data);
-    			dup_data = NULL;
-			}
+	// if (dup_data)
+	// 		{
+    // 			free(dup_data);
+    // 			dup_data = NULL;
+	// 		}
 }
 
 t_tokens	*newnode(char *data, int type)

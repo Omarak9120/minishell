@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 04:33:02 by odib              #+#    #+#             */
-/*   Updated: 2025/01/04 16:00:46 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/05 12:01:59 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ int	check_path(t_tokens *token, t_data *data)
 	struct	stat statbuf;
 	char	*resolved; // Resolved path from get_path
 
-	if (strcmp(token->content, "..") == 0)
-	{
-		printerrnocmd(token, data);
-		return (1);
-	}
+	
+	// if (strcmp(token->content, "..") == 0)
+	// {
+	// 	printerrnocmd(token, data);
+	// 	return (1);
+	// }
 	if (strcmp(token->content, ".") == 0)
 	{
 		printf("bash: .: filename argument required\n");
@@ -32,6 +33,7 @@ int	check_path(t_tokens *token, t_data *data)
 	if (is_builtin_command(token->content))
 		return (0);
 	resolved = get_path(token->content, data->env_list);//$PATH
+	
 	if (resolved)
 	{
 		if (access(resolved, X_OK) == 0)//valid and executable

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_error1.c                                     :+:      :+:    :+:   */
+/*   syntax_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmourtab <zakariamourtaban@gmail.com>      +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 02:01:47 by odib              #+#    #+#             */
-/*   Updated: 2024/09/05 14:20:44 by zmourtab         ###   ########.fr       */
+/*   Updated: 2025/01/05 12:53:40 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,42 @@ t_tokens	*getnext(t_tokens *token)
 	return (NULL);
 }
 
-int	checkpipe(t_tokens *token)
+// int	checkpipe(t_tokens *token)
+// {
+// 	if (!getnext(token->next) || (getnext(token->next)->id != TOKEN_WORD
+// 			&& getnext(token->next)->id != TOKEN_COMMAND)
+// 		|| !getprev(token->previous)
+// 		|| (getprev(token->previous)->id != TOKEN_WORD
+// 			&& getprev(token->previous)->id != TOKEN_COMMAND))
+// 	{
+// 		if (getprev(token->previous))
+// 			getprev(token->previous)->error = 1;
+// 		if (getnext(token->next))
+// 			getnext(token->next)->error = 1;
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+
+int checkpipe(t_tokens *token)
 {
-	if (!getnext(token->next) || (getnext(token->next)->id != TOKEN_WORD
-			&& getnext(token->next)->id != TOKEN_COMMAND)
-		|| !getprev(token->previous)
-		|| (getprev(token->previous)->id != TOKEN_WORD
-			&& getprev(token->previous)->id != TOKEN_COMMAND))
-	{
-		if (getprev(token->previous))
-			getprev(token->previous)->error = 1;
-		if (getnext(token->next))
-			getnext(token->next)->error = 1;
-		return (1);
-	}
-	return (0);
+    t_tokens *next_non_space;
+    t_tokens *prev_non_space;
+
+	next_non_space = getnext(token->next);
+	prev_non_space = getprev(token->previous);
+    if (!next_non_space 
+        || (next_non_space->id != TOKEN_WORD && next_non_space->id != TOKEN_COMMAND)
+        || !prev_non_space 
+        || (prev_non_space->id != TOKEN_WORD && prev_non_space->id != TOKEN_COMMAND))
+    {
+        if (prev_non_space)
+            prev_non_space->error = 1;
+        if (next_non_space)
+            next_non_space->error = 1;
+        return (1);
+    }
+    return (0);
 }
 
 int	checkfileoutappend(t_tokens *token)
