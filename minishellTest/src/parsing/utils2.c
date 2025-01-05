@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odib <odib@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 13:58:09 by odib              #+#    #+#             */
-/*   Updated: 2024/09/05 01:57:20 by odib             ###   ########.fr       */
+/*   Updated: 2025/01/05 16:27:32 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	handle_word_command_token(t_tokens *tmp, t_command **current_cmd)
 	}
 	add_argument(*current_cmd, tmp->content);
 }
-
+/*finish the current command and start a new one*/
 void	handle_pipe_token(t_command **cmd_list, t_command **current_cmd)
 {
 	if (*current_cmd)
