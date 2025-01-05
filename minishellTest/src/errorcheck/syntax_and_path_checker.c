@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 04:33:02 by odib              #+#    #+#             */
-/*   Updated: 2025/01/05 12:01:59 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:21:04 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_tokens	*getnextcommand(t_tokens *tmp)
 void	handleerr(t_data *data, t_tokens **tmp, t_tokens **tmpprint)
 {
 	data->cmd.status = 2;
-	printf("%d\n", (*tmp)->error);
+	// printf("%d\n", (*tmp)->error);
 	printerror(*tmpprint);
 	(*tmp)->error = 1;
 	*tmp = getnextcommand(*tmp);
