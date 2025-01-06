@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_management.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zmourtab <zakariamourtaban@gmail.com>      +#+  +:+       +#+        */
+/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 06:10:13 by odib              #+#    #+#             */
-/*   Updated: 2024/09/05 20:33:06 by zmourtab         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:32:29 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,22 @@ void	free_list(t_env *head)
 	}
 }
 
-void	print_list(t_env *env_head)
-{
-	t_env	*current_env;
-	char	*current_value;
+// void	print_list(t_env *env_head)
+// {
+// 	t_env	*current_env;
+// 	char	*current_value;
 
-	current_env = env_head;
-	while (current_env)
-	{
-		printf("Key: %s\n", current_env->key);
-		current_value = current_env->value;
-		printf("Values: ");
-		printf("%s", current_value);
-		printf("\n\n");
-		current_env = current_env->next;
-	}
-}
+// 	current_env = env_head;
+// 	while (current_env)
+// 	{
+// 		printf("Key: %s\n", current_env->key);
+// 		current_value = current_env->value;
+// 		printf("Values: ");
+// 		printf("%s", current_value);
+// 		printf("\n\n");
+// 		current_env = current_env->next;
+// 	}
+// }
 
 // int	unset_env(t_env **head, const char *key)
 // {

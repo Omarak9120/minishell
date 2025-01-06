@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_env_$.c                                        :+:      :+:    :+:   */
+/*   dollar_sign_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odib <odib@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 23:30:14 by odib              #+#    #+#             */
-/*   Updated: 2024/09/06 04:25:21 by odib             ###   ########.fr       */
+/*   Updated: 2025/01/06 14:48:53 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ void	handle_normal_variable(char *input, int *i, char **result, t_env *env)
 	else
 		*result = ft_strjoingnl(*result, "$");
 }
-// *result = ft_strjoingnl(*result, env_value);
-// else
-// 	*result = ft_strdup(env_value);
 
 void	handle_two_dollar(char **result, int *i)
 {

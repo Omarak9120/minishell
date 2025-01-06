@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_helpers.c                                      :+:      :+:    :+:   */
+/*   proc_status_reader.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odib <odib@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 11:15:36 by odib              #+#    #+#             */
-/*   Updated: 2024/09/06 06:49:12 by odib             ###   ########.fr       */
+/*   Updated: 2025/01/06 16:33:17 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*read_pid_line(int fd)
-{
-	static char	buffer[256];
-	ssize_t		bytes_read;
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// char	*read_pid_line(int fd)
+// {
+// 	static char	buffer[256];
+// 	ssize_t		bytes_read;
 
-	bytes_read = read(fd, buffer, sizeof(buffer) - 1);
-	if (bytes_read <= 0)
-		return (NULL);
-	buffer[bytes_read] = '\0';
-	return (strstr(buffer, "Pid:"));
-}
+// 	bytes_read = read(fd, buffer, sizeof(buffer) - 1);
+// 	if (bytes_read <= 0)
+// 		return (NULL);
+// 	buffer[bytes_read] = '\0';
+// 	return (strstr(buffer, "Pid:"));
+// }
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ssize_t	read_status_file(char *buffer, size_t size)
 {

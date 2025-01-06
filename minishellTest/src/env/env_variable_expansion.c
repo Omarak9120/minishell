@@ -1,26 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   concatenv.c                                        :+:      :+:    :+:   */
+/*   env_variable_expansion.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odib <odib@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mjamil <mjamil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:42:27 by zmourtab          #+#    #+#             */
-/*   Updated: 2024/09/06 04:29:25 by odib             ###   ########.fr       */
+/*   Updated: 2025/01/06 16:45:15 by mjamil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	find_char_index(char *string, char c)
-{
-	int	i;
+// int	find_char_index(char *string, char c)
+// {
+// 	int	i;
 
-	i = 0;
-	while (string[i] != c && string[i] != '\0')
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (string[i] != c && string[i] != '\0')
+// 		i++;
+// 	return (i);
+// }
+
+// char	*concatenv(char *input, t_data *data)
+// {
+// 	char	*out;
+// 	char	*temp_out;
+
+// 	out = ft_strdup(input);
+// 	while (dollarcount(out) != 0)
+// 	{
+// 		temp_out = out;
+// 		out = concatenvloop(out, data);
+// 		free(temp_out);
+// 		printf("out:%s\n", out);
+// 	}
+// 	return (out);
+// }
 
 char	*envvaluestr(char *key, t_data *data)
 {
@@ -47,22 +63,6 @@ char	*envvaluestr(char *key, t_data *data)
 	}
 	free(key);
 	return (valuestr);
-}
-
-char	*concatenv(char *input, t_data *data)
-{
-	char	*out;
-	char	*temp_out;
-
-	out = ft_strdup(input);
-	while (dollarcount(out) != 0)
-	{
-		temp_out = out;
-		out = concatenvloop(out, data);
-		free(temp_out);
-		printf("out:%s\n", out);
-	}
-	return (out);
 }
 
 int	isexpandable(char *input)
