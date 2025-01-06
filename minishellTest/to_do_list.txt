@@ -13,3 +13,6 @@ we get empty line , we must have command not found
 
 
 6 ) cmd : sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+
+
+7) what cat -e do and wc -l
