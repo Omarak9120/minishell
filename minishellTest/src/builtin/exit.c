@@ -63,22 +63,34 @@ int	exit_command(t_arg *args)
 	t_arg	*arg;
 
 	arg = args->next;
+
+	// Case 1: Check if the first argument is non-numeric
 	if (arg)
 	{
-		exit_status = convert_and_validate_exit_status(arg->arg);
-		if (!check_status_str(arg->arg))
+		if (!check_status_str(arg->arg)) // First argument is non-numeric
 		{
-			free_list_arg(arg);
-			return (exit(exit_status), exit_status);
+			printf("exit\n");
+			fprintf(stderr, "exit: %s: numeric argument required\n", arg->arg);
+			exit(2);
 		}
-	}
-	if (arg && arg->next)
-	{
-		printf("exit: too many arguments\n");
+
+		// Case 2: Check if there are more than one argument after a valid number
+		if (arg->next)
+		{
+			printf("exit: too many arguments\n");
+			return (1); // Do not exit the shell
+		}
+
+		// Case 3: Valid single numeric argument
+		exit_status = convert_and_validate_exit_status(arg->arg);
 		free_list_arg(arg);
-		return (1);
+		printf("exit\n");
+		exit(exit_status);
 	}
+
+	// Case 4: No arguments - default exit status
 	exit_status = get_default_exit_status(arg);
 	free_list_arg(arg);
-	return (exit(exit_status), exit_status);
+	printf("exit\n");
+	exit(exit_status);
 }
