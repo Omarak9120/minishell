@@ -1,16 +1,19 @@
 #include "../../includes/minishell.h"
 
+
+
 char	*getinfo(t_data *data)
 {
 	char	*info;
-	char	*sig;
-	char	*pwd;
+	(void)data;
+	// char	*sig;
+	// char	*pwd;
 
-	pwd = get_env(data->env_list, "PWD");
-	sig = ft_itoa(data->cmd.status);
+	// pwd = get_env(data->env_list, "PWD");
+	// sig = ft_itoa(data->cmd.status);
 
 	// Start with an empty string
-	info = ft_strdup("");
+	info = ft_strdup(GREEN_BRIGHT ">>" RESET);
 	if (!info)
 		return (NULL);
 
@@ -20,51 +23,19 @@ char	*getinfo(t_data *data)
 	//  - Status in bold YELLOW
 	//  - Final arrow in GREEN
 	
-	info = ft_strjoingnl(info, CYAN "[ " RESET);
-	info = ft_strjoingnl(info, RED_BRIGHT);
-	info = ft_strjoingnl(info, (pwd ? pwd : "(no PWD)"));
-	info = ft_strjoingnl(info, CYAN " : " RESET);
-	info = ft_strjoingnl(info, YELLOW_BRIGHT);
-	info = ft_strjoingnl(info, sig);
-	info = ft_strjoingnl(info, RESET);
-	info = ft_strjoingnl(info, CYAN " ] " RESET);
-	info = ft_strjoingnl(info, GREEN ">> " RESET);
-	free(sig);
-	free(pwd);
+	// info = ft_strjoingnl(info, CYAN "[ " RESET);
+	// info = ft_strjoingnl(info, RED_BRIGHT);
+	// info = ft_strjoingnl(info, (pwd ? pwd : "(no PWD)"));
+	// info = ft_strjoingnl(info, CYAN " : " RESET);
+	// info = ft_strjoingnl(info, YELLOW_BRIGHT);
+	// info = ft_strjoingnl(info, sig);
+	// info = ft_strjoingnl(info, RESET);
+	// info = ft_strjoingnl(info, CYAN " ] " RESET);
+	// info = ft_strjoingnl(info, GREEN ">> " RESET);
+	// free(sig);
+	// free(pwd);
 	return (info);
 }
-// char	*getinfo(t_data *data)
-// {
-// 	char	*info;
-// 	char	*sig;
-// 	char	*pwd;
-
-// 	pwd = get_env(data->env_list, "PWD");
-// 	sig = ft_itoa(data->cmd.status);
-
-// 	info = ft_strdup("");
-// 	if (!info)
-// 		return (NULL);
-// 	/*
-// 	 * Example prompt design:
-// 	 *  [ /current/path : 0 ] ⫤ 
-// 	 *    - "/current/path" in BLUE_BRIGHT
-// 	 *    - Status in BG_RED_BRIGHT
-// 	 *    - Then the green arrow
-// 	 */
-// 	info = ft_strjoingnl(info, BLUE_BRIGHT "[ " RESET);
-// 	info = ft_strjoingnl(info, (pwd ? pwd : "unknown_dir"));
-// 	info = ft_strjoingnl(info, BLUE_BRIGHT " : " RESET);
-// 	info = ft_strjoingnl(info, BG_RED_BRIGHT);
-// 	info = ft_strjoingnl(info, sig);
-// 	info = ft_strjoingnl(info, RESET);
-// 	info = ft_strjoingnl(info, BLUE_BRIGHT " ]" RESET " ");
-// 	info = ft_strjoingnl(info, GREEN ">> " RESET);
-
-// 	free(sig);
-// 	free(pwd);
-// 	return (info);
-// }
 
 void	interactivemode(t_data *data, char **input)
 {
