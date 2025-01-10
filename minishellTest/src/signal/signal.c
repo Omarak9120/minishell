@@ -13,7 +13,7 @@ char	*getinfo(t_data *data)
 	// sig = ft_itoa(data->cmd.status);
 
 	// Start with an empty string
-	info = ft_strdup(GREEN_BRIGHT ">>" RESET);
+	info = ft_strdup("Minishell-->> ");
 	if (!info)
 		return (NULL);
 
