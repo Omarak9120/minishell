@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:16:02 by josfelip          #+#    #+#             */
-/*   Updated: 2025/01/25 15:41:11 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:14:56 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	mini_strchr_index(char *str, char c)
 	}
 	return (-1);
 }
-
+/*[ "Hi", "$USER" -> "omar", "123" ] "Hiomar123" */
 char	*mini_sub_token_join(t_sub_token *sub_token_lst)
 {
 	char	*sub_token;

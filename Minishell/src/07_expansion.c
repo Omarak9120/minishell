@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   07_expansion.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfantoni <gfantoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:56:46 by josfelip          #+#    #+#             */
-/*   Updated: 2024/06/19 18:00:30 by gfantoni         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:02:24 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ char	*mini_search_and_replace(t_mini *mini, char *sub_token)
 	if (mini_has_invalid_char(sub_token))
 		return (mini_expand_with_invalid(mini, sub_token));
 	current = mini->env_list;
-	sub_token++;
+	sub_token++;//Skip the $
 	new_sub_token = NULL;
-	while (current)
+	while (current)//Loop over mini->env_list (KEY=VALUE) to find a key that matches sub_token
 	{
 		if (!ft_strncmp(current->key, sub_token, ft_strlen(sub_token)))
 		{
@@ -85,8 +85,8 @@ char	*mini_search_and_replace(t_mini *mini, char *sub_token)
 	}
 	return (new_sub_token);
 }
-
-int	mini_has_invalid_char(char *sub_token)
+/*[0-9A-Za-z_????]*/
+int		mini_has_invalid_char(char *sub_token)
 {
 	int	i;
 
