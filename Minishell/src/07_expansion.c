@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:56:46 by josfelip          #+#    #+#             */
-/*   Updated: 2025/01/28 15:02:24 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:17:19 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*mini_search_and_replace(t_mini *mini, char *sub_token)
 	}
 	return (new_sub_token);
 }
-/*[0-9A-Za-z_????]*/
+/* after the $ sign [0-9A-Za-z_????]*/
 int		mini_has_invalid_char(char *sub_token)
 {
 	int	i;
