@@ -3,4 +3,4 @@ prompt > ^C
 prompt > ^C
 prompt > ^C
 prompt > exit
-make && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp -q ./minishell
+make && valgrind --leak-check=full --show-leak-kinds=all -q ./minishell

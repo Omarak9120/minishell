@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: josfelip <josfelip@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/01/26 11:03:46 by josfelip          #+#    #+#              #
-#    Updated: 2024/06/19 12:02:24 by josfelip         ###   ########.fr        #
+#    Created: 2025/01/28 13:53:30 by oabdelka          #+#    #+#              #
+#    Updated: 2025/01/28 13:53:33 by oabdelka         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
