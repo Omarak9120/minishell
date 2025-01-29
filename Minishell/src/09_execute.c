@@ -6,13 +6,12 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:51:29 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/01/29 16:20:42 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:53:14 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 /**
- * High-Level Steps in mini_execute:
  *
  * 1) Build cmd_exec:
  *    Convert your parsed tokens into arrays of strings 
@@ -42,6 +41,11 @@ void	mini_execute(t_mini *mini)
 	mini_remake_environ(mini);
 	mini_execve(mini);
 }
+/*
+ *   Converts the parsed tokens for each command into an array of strings 
+ *   (cmd_exec). Skips redirection operators and file names so the executable 
+ *   only receives actual arguments.
+ */
 
 void	mini_build_cmd_exec(t_mini *mini)
 {
@@ -62,6 +66,11 @@ void	mini_build_cmd_exec(t_mini *mini)
 		cmd_exec_node = cmd_exec_node->next;
 	}
 }
+/*
+ *   Counts how many tokens for a given command are actual arguments (vs. 
+ *   redirection symbols or files). This determines how large the cmd_exec 
+ *   array should be.
+ */
 
 void	mini_count_cmd_exec_words(t_token *token_node, t_cmd *cmd_exec_node)
 {
@@ -83,6 +92,11 @@ void	mini_count_cmd_exec_words(t_token *token_node, t_cmd *cmd_exec_node)
 	}
 	cmd_exec_node->nbr_of_words = i;
 }
+/**
+ *   Allocates a char** for cmd_exec and fills it with each 
+ *   non-redirection token. These tokens become the arguments that 
+ *   will be passed to the executable (cmd_exec[0], cmd_exec[1], etc.).
+ */
 
 void	mini_unite_cmd_exec_words(t_token *token_node, t_cmd *cmd_exec_node)
 {
