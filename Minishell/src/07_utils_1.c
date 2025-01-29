@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 09:16:02 by josfelip          #+#    #+#             */
-/*   Updated: 2025/01/28 15:14:56 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/29 14:13:59 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	mini_strchr_index(char *str, char c)
 	return (-1);
 }
 /*[ "Hi", "$USER" -> "omar", "123" ] "Hiomar123" */
+
 char	*mini_sub_token_join(t_sub_token *sub_token_lst)
 {
 	char	*sub_token;
@@ -76,6 +77,15 @@ char	*mini_sub_token_join(t_sub_token *sub_token_lst)
 	}
 	return (str);
 }
+/**
+ * Expands the special parameter `$?` by converting `mini->status`
+ * (the exit code of the last command) into a string. If `$?` is
+ * followed by more characters, it concatenates them to the status.
+ *
+ * Example:
+ *   - If `mini->status == 2` and sub_token is "$?abc", the result
+ *     becomes "2abc".
+ *   - If sub_token is just "$?", the result is "2".*/
 
 char	*mini_get_dollar_sign(t_mini *mini, char *sub_token)
 {
