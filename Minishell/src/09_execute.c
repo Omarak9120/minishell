@@ -6,11 +6,33 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:51:29 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/01/29 15:51:33 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:20:42 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+/**
+ * High-Level Steps in mini_execute:
+ *
+ * 1) Build cmd_exec:
+ *    Convert your parsed tokens into arrays of strings 
+ *    (e.g. cmd_exec = {"/bin/echo", "hello", NULL}).
+ *
+ * 2) Get cmd_exec_path:
+ *    Find the path to each command (e.g. /bin/echo).
+ *
+ * 3) Open pipes:
+ *    If you have multiple commands in a pipeline, set up the necessary 
+ *    pipe file descriptors.
+ *
+ * 4) Remake Environ:
+ *    Rebuild mini->mini_environ from your env_list so execve 
+ *    has the correct environment.
+ *
+ * 5) Execute:
+ *    Fork and execve each command with its redirections, 
+ *    environment, pipes, etc.
+ */
 
 void	mini_execute(t_mini *mini)
 {
@@ -99,3 +121,48 @@ void	mini_match_cmd_exec_word(char *token, t_cmd *cmd_exec_node, int i)
 	ft_collect_mem(current_word);
 	cmd_exec_node->cmd_exec[i] = current_word;
 }
+
+/*
+echo hello world > out.txt
+
+[Token #1] -> "echo" (WORD)
+   next
+[Token #2] -> "hello" (WORD)
+   next
+[Token #3] -> "world" (WORD)
+   next
+[Token #4] -> ">" (OPERATOR: OUT_REDIRECT)
+   next
+[Token #5] -> "out.txt" (WORD)
+   next
+NULL
+
+
+mini->commands[0] -> token list for command 0
+mini->commands[1] -> token list for command 1
+mini->commands[2] -> token list for command 2
+...
+
+typedef struct s_cmd {
+    int     input_fd;   -> 0 or a file descriptor
+    int     output_fd;  -> 1 or a file descriptor
+    char    **cmd_exec; -> e.g. ["echo", "hello", "world", NULL]
+    char    *cmd_path;  -> e.g. "/bin/echo"
+    struct s_cmd *next; -> pointer to next command in the pipeline
+    ...
+} t_cmd;
+
+
+mini->cmd_exec_list -> [Cmd Node #1]
+                           input_fd  = 0
+                           output_fd = 3   (file descriptor pointing to "out.txt")
+                           cmd_exec  = ["echo", "hello", "world", NULL]
+                           cmd_path  = "/bin/echo"
+                           next      = NULL
+
+
+if we have | :
+
+[Cmd Node #1] -- (next) --> [Cmd Node #2] -- (next) --> [Cmd Node #3] -- (next) --> NULL
+
+*/
