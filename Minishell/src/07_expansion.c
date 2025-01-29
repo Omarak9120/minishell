@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 16:56:46 by josfelip          #+#    #+#             */
-/*   Updated: 2025/01/28 17:17:19 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/29 13:50:16 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ char	*mini_search_and_replace(t_mini *mini, char *sub_token)
 
 	if (sub_token[1] == '?')
 		return (mini_get_dollar_sign(mini, sub_token));
+	// if (sub_token[1] == '@' || sub_token[1] == '*')
+	// {
+	// 	char* omar = ft_strdup("");
+	// 	ft_collect_mem(omar);
+	// 	return (omar);}
 	if (mini_has_invalid_char(sub_token))
 		return (mini_expand_with_invalid(mini, sub_token));
 	current = mini->env_list;
@@ -104,3 +109,35 @@ int		mini_has_invalid_char(char *sub_token)
 	}
 	return (0);
 }
+/*
+  if (isdigit(sub_token[1]))
+        return (expand_digit_param(mini, sub_token));
+
+  char *expand_digit_param(t_mini *mini, char *sub_token)
+{
+    // sub_token looks like "$123" or "$1abc" etc.
+    char *p = sub_token + 1; // skip '$'
+
+    // Extract the FIRST digit as the param number:
+    int param_num = (*p - '0'); 
+    p++; // move past that one digit
+
+    // Expand that param
+    char *expanded = get_positional_param(mini, param_num); 
+    // e.g., if param_num=1 => returns the string in $1, or "" if unset
+
+    // leftover digits (and letters) are appended literally
+    // e.g. if sub_token was "$123" => we've used '1', leftover is "23"
+    char *result = ft_strjoin_expansion(expanded, p);
+    ft_collect_mem(result);
+    return result;
+}
+   char *get_positional_param(t_mini *mini, int param_num)
+{
+    // If you don't store shell arguments, always return empty:
+    // or use your actual logic if you do store them.
+    char *empty = ft_strdup("");
+    ft_collect_mem(empty);
+    return empty;
+}
+*/
