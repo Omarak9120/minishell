@@ -6,19 +6,21 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 11:50:41 by gfantoni          #+#    #+#             */
-/*   Updated: 2025/01/28 17:24:23 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/29 14:22:33 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*If the second character itself is invalid, don't expand at all
+/*If the second character itself is invalid, don't expand at all like "$1abc"
+"$VAR!rest" split into str_before_invalid → "$VAR" str_after_invalid → "!rest"
 "str_after_invalid" => everything AFTER the invalid character
 the valid portion up to the invalid char
 Expand the valid part (like "$VAR") normally
 Concatenate the expanded valid portion with whatever's left after the invalid char
 Collect the newly allocated string in your trash collector
  */ 
+
 char	*mini_expand_with_invalid(t_mini *mini, char *sub_token)
 {
 	char	*str_joined;
@@ -46,6 +48,8 @@ int	mini_is_invalid_char(char c)
 		return (1);
 	return (0);
 }
+/*If sub_token = "$VAR!rest", after skipping valid V,A,R,
+ it sees ! is invalid and breaks. Then copies "!rest" into str_after.*/
 
 char	*mini_str_after_invalid_char(char *sub_token)
 {
