@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/02 14:27:24 by gfantoni          #+#    #+#             */
-/*   Updated: 2025/01/28 12:56:40 by oabdelka         ###   ########.fr       */
+/*   Created: 2025/01/30 15:19:50 by oabdelka          #+#    #+#             */
+/*   Updated: 2025/01/30 17:31:20 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ void	mini_get_cmd_exec_path(t_mini *mini)
 		cmd_exec_node = cmd_exec_node->next;
 	}
 }
+
+/*cmd_exec[0] = "echo" ---> "/bin/echo"*/
+/*"/usr/local/bin:/usr/bin:/bin"
+["/usr/local/bin", "/usr/bin", "/bin", NULL]*/
 
 char	*mini_get_cmd_path(t_mini *mini, t_cmd *cmd_exec_node)
 {
