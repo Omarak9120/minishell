@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   95_builtin_cd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josfelip <josfelip@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 14:34:02 by josfelip          #+#    #+#             */
-/*   Updated: 2024/06/17 12:21:06 by josfelip         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:30:27 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ int	mini_cd(t_token *arg, t_dict **dict)
 			directory = getenv("OLDPWD");
 			print = 1;
 		}
+		else if (!ft_strncmp(arg->token, "~", ft_strlen(arg->token)))
+		{
+			directory = getenv("HOME");
+			}
 		else
 			directory = arg->token;
 	}
