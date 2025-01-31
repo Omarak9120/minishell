@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   12_mini_execve.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josfelip <josfelip@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 13:23:06 by gfantoni          #+#    #+#             */
-/*   Updated: 2024/06/19 11:26:40 by josfelip         ###   ########.fr       */
+/*   Updated: 2025/01/31 13:35:23 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <errno.h>
 #include "../include/builtins.h"
+
+/*	 1) Convert its cmd_exec array to a token list (mini_exec_interface).
+ *   2) Check if it's a builtin (mini_is_builtin).
+ *   3) If there's only one command and it's builtin, execute in the parent 
+ *      (mini_exec_builtin); otherwise, fork and run in a child (mini_exec_fork).
+ *   After all commands are launched, close any remaining file descriptors 
+ *   and wait for the child processes (mini_wait_childs), which updates $?.*/
 
 void	mini_execve(t_mini *mini)
 {

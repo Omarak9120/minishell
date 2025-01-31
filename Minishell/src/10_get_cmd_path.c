@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:19:50 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/01/30 17:31:20 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:00:40 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,16 @@ void	mini_get_cmd_exec_path(t_mini *mini)
 
 /*cmd_exec[0] = "echo" ---> "/bin/echo"*/
 /*"/usr/local/bin:/usr/bin:/bin"
-["/usr/local/bin", "/usr/bin", "/bin", NULL]*/
+["/usr/local/bin", "/usr/bin", "/bin", NULL]
+ *   Given a command node (with cmd_exec[0] as the command),
+ *   decides how to resolve it to a full path. If the command
+ *   starts with "./" or is empty, returns it unchanged. Otherwise,
+ *   searches through the PATH environment variable directories:
+ *   - Splits PATH by ':'.
+ *   - Joins each directory with the command name.
+ *   - If a valid executable is found (access == 0), returns that path.
+ *   If nothing is found, returns the command name as-is.
+ */
 
 char	*mini_get_cmd_path(t_mini *mini, t_cmd *cmd_exec_node)
 {

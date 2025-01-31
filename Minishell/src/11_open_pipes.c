@@ -6,11 +6,17 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 17:50:22 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/01/30 17:50:25 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:13:00 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*ls -l | grep minishell | wc -l
+Command #1: cmd_exec = {"ls", "-l", NULL}
+Command #2: cmd_exec = {"grep", "minishell", NULL}
+Command #3: cmd_exec = {"wc", "-l", NULL}
+later in the execve we do the dup2()*/
 
 void	mini_open_pipes(t_mini *mini)
 {
