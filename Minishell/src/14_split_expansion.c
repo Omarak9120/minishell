@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 13:56:57 by gfantoni          #+#    #+#             */
-/*   Updated: 2025/01/31 15:27:01 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:12:56 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 void	mini_find_space(t_mini *mini, int i);
 void	mini_split_and_link(t_token *token_node);
 
-void	mini_split_expansion_in_nodes(t_mini *mini)
-{
-	int		i;
-	t_token	*cmd;
+// void	mini_split_expansion_in_nodes(t_mini *mini)
+// {
+// 	int		i;
+// 	t_token	*cmd;
 
-	i = 0;
-	cmd = mini->commands[i];
-	while (cmd)
-	{
-		mini_find_space(mini, i);
-		i++;
-		cmd = mini->commands[i];
-	}
-}
+// 	i = 0;
+// 	cmd = mini->commands[i];
+// 	while (cmd)
+// 	{
+// 		mini_find_space(mini, i);
+// 		i++;
+// 		cmd = mini->commands[i];
+// 	}
+// }
 
 void	mini_find_space(t_mini *mini, int i)
 {
@@ -45,6 +45,13 @@ void	mini_find_space(t_mini *mini, int i)
 		token_node = token_node->next;
 	}
 }
+/**
+ *   Takes a single token containing a space (e.g. "hello world") and splits it 
+ *   into separate tokens ("hello", "world"). The first piece replaces the original
+ *   token->token, and subsequent pieces become new t_token nodes inserted right 
+ *   after the current token. Finally, re-links the saved 'next' pointer to keep 
+ *   the original list continuity.
+ */
 
 void	mini_split_and_link(t_token *token_node)
 {

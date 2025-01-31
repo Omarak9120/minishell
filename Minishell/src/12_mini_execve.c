@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 13:23:06 by gfantoni          #+#    #+#             */
-/*   Updated: 2025/01/31 13:35:23 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:20:20 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@ void	mini_execve(t_mini *mini)
 	mini_close_all_fd(mini);
 	mini_wait_childs(mini);
 }
+/**
+ *   Forks a new process for the given command node. In the parent, 
+ *   sets SIGINT to be ignored so Ctrl+C won't kill the shell but 
+ *   only the child if needed. The child process is handed off to 
+ *   mini_execve_child.
+ */
 
 void	mini_exec_fork(t_mini *mini,
 	t_cmd *cmd_exec_node, t_token *token_node)
@@ -56,6 +62,14 @@ void	mini_exec_fork(t_mini *mini,
 	if (cmd_exec_node->pid == 0)
 		mini_execve_child(mini, cmd_exec_node, token_node);
 }
+/**
+ *   The child process logic after fork. Restores default signal handling 
+ *   (so Ctrl+C can terminate the child), closes irrelevant pipes, and 
+ *   duplicates file descriptors for redirection/piping (mini_manage_execve_fd).
+ *   Then checks if it's a builtin (mini_cmd_selection) or an external command 
+ *   (execve). If execve fails, handle "command not found". Frees all allocated 
+ *   memory and exits with mini->status.
+ */
 
 void	mini_execve_child(t_mini *mini,
 	t_cmd *cmd_exec_node, t_token *token_node)
@@ -76,6 +90,12 @@ void	mini_execve_child(t_mini *mini,
 	ft_free_trashman_env(ft_get_mem_address_env());
 	exit(mini->status);
 }
+/**
+ *   Waits on every child process (t_cmd->pid). 
+ *   For each completed child, retrieves its exit code or signal-based 
+ *   termination with waitpid, then updates mini->status via 
+ *   mini_get_status (so $? is accurate).
+ */
 
 void	mini_wait_childs(t_mini *mini)
 {
@@ -91,6 +111,12 @@ void	mini_wait_childs(t_mini *mini)
 		cmd_exec_node = cmd_exec_node->next;
 	}
 }
+/**
+ *   Interprets the wait status to set mini->status. If the child 
+ *   exited normally, mini->status = its exit code (WEXITSTATUS). 
+ *   If it was killed by a signal, print a newline and set 
+ *   mini->status to 130 (SIGINT) or 131 (SIGQUIT), etc.
+ */
 
 void	mini_get_status(t_mini *mini, int status)
 {

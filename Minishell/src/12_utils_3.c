@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   12_utils_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josfelip <josfelip@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:49:08 by gfantoni          #+#    #+#             */
-/*   Updated: 2024/06/19 16:51:34 by josfelip         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:45:29 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/builtins.h"
+
+/**
+ *   Executes a builtin in the parent process if it's the only command 
+ *   (no pipes). Backs up STDIN/STDOUT, redirects using the command's 
+ *   fd if necessary, calls the builtin function, then restores STDIN/STDOUT.
+ */
 
 void	mini_exec_builtin(t_token *token_lst,
 		t_mini *mini, t_cmd *cmd_exec_node)
@@ -30,6 +36,7 @@ void	mini_exec_builtin(t_token *token_lst,
 	mini_call_to_builtin(mini, cmd, arg);
 	mini_restore_builtin_fd(&stdin_backup, &stdout_backup);
 }
+/* Checks if there is only one command in the pipeline*/
 
 int	mini_is_simple_cmd(t_cmd *cmd_exec_node)
 {
@@ -37,6 +44,12 @@ int	mini_is_simple_cmd(t_cmd *cmd_exec_node)
 		return (0);
 	return (1);
 }
+/**
+ *   Converts an array of strings (cmd_exec) back into a token list. 
+ *   Used so we can reuse token-based functions like mini_is_builtin 
+ *   or mini_cmd_selection. Each string in cmd_exec is wrapped in a 
+ *   t_token node with state=0.
+ */
 
 t_token	*mini_exec_interface(char **cmd_exec)
 {
@@ -49,6 +62,7 @@ t_token	*mini_exec_interface(char **cmd_exec)
 		mini_token_lstadd_back(&token_lst, mini_token_lstnew(cmd_exec[i++], 0));
 	return (token_lst);
 }
+ /*Used to decide if we should run the command as a builtin or external binary*/
 
 int	mini_is_builtin(t_token *token_lst)
 {
@@ -75,6 +89,9 @@ int	mini_is_builtin(t_token *token_lst)
 		is_builtin = 1;
 	return (is_builtin);
 }
+/*if builtin call the functions and set the status as return
+Returns 1 if a builtin was executed, or 0 if 
+the command is not a builtin.*/
 
 int	mini_cmd_selection(t_token *token_lst, t_mini *mini)
 {

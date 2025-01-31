@@ -1,17 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   12_utils_1.c                                       :+:      :+:    :+:   */
+/*   12_utils_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfantoni <gfantoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 11:02:29 by josfelip          #+#    #+#             */
-/*   Updated: 2024/06/17 13:53:31 by gfantoni         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:36:12 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/builtins.h"
+
+/**
+ *   Closes any input_fd, output_fd, read_pipe, or write_pipe for each command 
+ *   node in the cmd_exec_list if they're not in the standard defaults 
+ *   (0 for input, 1 for output, -1 for pipes).
+ */
 
 void	mini_close_all_fd(t_mini *mini)
 {
@@ -31,6 +37,11 @@ void	mini_close_all_fd(t_mini *mini)
 		cmd_exec_node = cmd_exec_node->next;
 	}
 }
+/**
+ *   Closes all file descriptors (input_fd, output_fd, read_pipe, write_pipe)
+ *   for a single command node, if they're open. Typically used when exiting 
+ *   early due to redirection issues or cleaning up child processes.
+ */
 
 void	mini_close_node_fd(t_cmd *cmd_exec_node)
 {
@@ -43,6 +54,9 @@ void	mini_close_node_fd(t_cmd *cmd_exec_node)
 	if (cmd_exec_node->write_pipe != -1)
 		close(cmd_exec_node->write_pipe);
 }
+/**
+ Specifically closes the read_pipe and write_pipe in a single command node.
+ */
 
 void	mini_close_pipe_node_fd(t_cmd *cmd_exec_node)
 {

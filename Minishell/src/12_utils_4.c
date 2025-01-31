@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   12_utils_4.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josfelip <josfelip@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 12:31:18 by gfantoni          #+#    #+#             */
-/*   Updated: 2024/06/19 16:47:54 by josfelip         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:46:16 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/builtins.h"
+
+/**
+ *   When executing a builtin in the parent or in a child,
+ *   this function calls the corresponding builtin function, 
+ *   storing the return status in mini->status.
+ */
 
 void	mini_call_to_builtin(t_mini *mini, char *cmd, t_token *arg)
 {

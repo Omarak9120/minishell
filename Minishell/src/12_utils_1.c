@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   12_utils_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfantoni <gfantoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:50:06 by gfantoni          #+#    #+#             */
-/*   Updated: 2024/06/18 15:37:08 by gfantoni         ###   ########.fr       */
+/*   Updated: 2025/01/31 16:32:41 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/builtins.h"
+
+/**
+ *   Manages the redirection/piping file descriptors for a command before execve.
+ *   If input_fd/output_fd are valid, dup2 them to STDIN/STDOUT. Also handles
+ *   the read/write pipes if they exist, closing unneeded pipes after duplication.
+ *   If any fd is -1, call mini_exit_if_fd_neg.
+ */
 
 static int	mini_is_path_unseted(t_mini *mini);
 
@@ -88,6 +95,10 @@ void	get_captalized_errors(t_mini *mini, t_cmd *cmd_exec_node)
 		cmd_exec_node->cmd_path, error_msg);
 	mini->status = status;
 }
+/**
+ *   Checks if the PATH variable is present in mini->env_list. If PATH is 
+ *   not found, returns 1 (true) indicating it's "unset"; otherwise 0.
+ */
 
 static int	mini_is_path_unseted(t_mini *mini)
 {
