@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josfelip <josfelip@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/09 12:06:48 by gfantoni          #+#    #+#             */
-/*   Updated: 2024/02/01 19:25:23 by josfelip         ###   ########.fr       */
+/*   Created: 2025/02/01 19:03:38 by oabdelka          #+#    #+#             */
+/*   Updated: 2025/02/01 19:03:40 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

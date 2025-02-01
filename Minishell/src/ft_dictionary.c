@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dictionary.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: josfelip <josfelip@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/11 14:26:06 by josfelip          #+#    #+#             */
-/*   Updated: 2024/06/19 17:04:08 by josfelip         ###   ########.fr       */
+/*   Created: 2025/02/01 19:10:50 by oabdelka          #+#    #+#             */
+/*   Updated: 2025/02/01 19:10:52 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

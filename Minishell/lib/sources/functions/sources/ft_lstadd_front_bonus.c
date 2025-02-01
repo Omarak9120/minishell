@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gfantoni <gfantoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 09:31:07 by gfantoni          #+#    #+#             */
-/*   Updated: 2024/01/29 09:58:19 by gfantoni         ###   ########.fr       */
+/*   Created: 2025/02/01 19:03:14 by oabdelka          #+#    #+#             */
+/*   Updated: 2025/02/01 19:03:15 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
