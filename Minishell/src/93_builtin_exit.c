@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:40:32 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 15:40:33 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 18:33:44 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	exit_clean(t_mini *mini, int status)
 	exit(status);
 }
 
-void	mini_exit(t_token *args, int last_status, t_mini *mini)
+int	mini_exit(t_token *args, int last_status, t_mini *mini)
 {
 	long	status;
 
@@ -87,8 +87,9 @@ void	mini_exit(t_token *args, int last_status, t_mini *mini)
 	{
 		ft_printf_fd(2, "minishell: exit: too many arguments\n");
 		mini->status = 1;
-		return;
+		return(1);
 	}
 	status = ft_atol(args->token);
 	exit_clean(mini, (unsigned char)(status % 256));
+	return (0);
 }
