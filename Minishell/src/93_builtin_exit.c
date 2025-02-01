@@ -5,96 +5,90 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 14:34:02 by josfelip          #+#    #+#             */
-/*   Updated: 2025/01/31 17:55:29 by oabdelka         ###   ########.fr       */
+/*   Created: 2025/02/01 15:40:32 by oabdelka          #+#    #+#             */
+/*   Updated: 2025/02/01 15:40:33 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/builtins.h"
 #include "../include/trashman.h"
 
-void	mini_exit(t_token *arg, int status_last_cmd)
-{
-	int	status;
+// void	mini_exit(t_token *arg, int status_last_cmd)
+// {
+// 	int	status;
 
-	status = status_last_cmd;
-	if (arg)
-		status = ft_atoi(arg->token);
+// 	status = status_last_cmd;
+// 	if (arg)
+// 		status = ft_atoi(arg->token);
+// 	ft_free_trashman(ft_get_mem_address());
+// 	ft_free_trashman_env(ft_get_mem_address_env());
+// 	exit(status);
+// }
+
+int	is_valid_number(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	if (!str[i])
+		return (0);
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+long	ft_atol(const char *str)
+{
+	long	num;
+	int		sign;
+
+	num = 0;
+	sign = 1;
+	while (*str == ' ' || (*str >= '\t' && *str <= '\r'))
+		str++;
+	if (*str == '-' || *str == '+')
+		sign = 1 - 2 * (*(str++) == '-');
+	while (ft_isdigit(*str))
+	{
+		num = num * 10 + (*str - '0');
+		str++;
+	}
+	return (num * sign);
+}
+
+void	exit_clean(t_mini *mini, int status)
+{
+	(void)mini;
 	ft_free_trashman(ft_get_mem_address());
 	ft_free_trashman_env(ft_get_mem_address_env());
 	exit(status);
 }
 
-// // Checks if 'str' is a valid integer (optional +/- sign). Returns 1 if numeric, else 0.
-// int	mini_is_numeric(const char *str)
-// {
-// 	int i;
+void	mini_exit(t_token *args, int last_status, t_mini *mini)
+{
+	long	status;
 
-// 	if (!str || !str[0])
-// 		return 0;
-// 	i = 0;
-// 	if (str[i] == '+' || str[i] == '-')
-// 		i++;
-// 	if (!str[i])
-// 		return 0;
-// 	while (str[i])
-// 	{
-// 		if (str[i] < '0' || str[i] > '9')
-// 			return 0;
-// 		i++;
-// 	}
-// 	return 1;
-// }
-
-// // Counts how many arguments are in the linked list 'arg'.
-// int	mini_count_args(t_token *arg)
-// {
-// 	int count = 0;
-// 	while (arg)
-// 	{
-// 		count++;
-// 		arg = arg->next;
-// 	}
-// 	return count;
-// }
-
-// // Frees all shell resources and exits with 'code'.
-// void	mini_free_all_and_exit(int code)
-// {
-// 	ft_free_trashman(ft_get_mem_address());
-// 	ft_free_trashman_env(ft_get_mem_address_env());
-// 	exit(code);
-// }
-
-// // Gets exit code from a single string argument. If non-numeric, returns -1.
-// int	mini_get_exit_code(char *arg)
-// {
-// 	if (!mini_is_numeric(arg))
-// 		return -1;
-// 	return ft_atoi(arg);
-// }
-
-// // The main exit function, handles all Bash-like cases.
-// void	mini_exit(t_token *arg, int last_status)
-// {
-// 	int argc;
-// 	int code;
-
-// 	ft_printf_fd(STDERR_FILENO, "exit\n");
-// 	argc = mini_count_args(arg);
-// 	if (argc > 1)
-// 	{
-// 		ft_printf_fd(STDERR_FILENO, "bash: exit: too many arguments\n");
-// 		return;
-// 	}
-// 	if (argc == 0)
-// 		mini_free_all_and_exit(last_status);
-// 	code = mini_get_exit_code(arg->token);
-// 	if (code < 0)
-// 	{
-// 		ft_printf_fd(STDERR_FILENO, 
-// 			"bash: exit: %s: numeric argument required\n", arg->token);
-// 		mini_free_all_and_exit(255);
-// 	}
-// 	mini_free_all_and_exit(code);
-// }
+	ft_printf_fd(1, "exit\n");
+	if (!args)
+		exit_clean(mini, last_status);
+	if (!is_valid_number(args->token))
+	{
+		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
+			args->token);
+		exit_clean(mini, 2);
+	}
+	if (args->next)
+	{
+		ft_printf_fd(2, "minishell: exit: too many arguments\n");
+		mini->status = 1;
+		return;
+	}
+	status = ft_atol(args->token);
+	exit_clean(mini, (unsigned char)(status % 256));
+}

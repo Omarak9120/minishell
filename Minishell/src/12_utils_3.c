@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:49:08 by gfantoni          #+#    #+#             */
-/*   Updated: 2025/01/31 16:45:29 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:12:57 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	mini_cmd_selection(t_token *token_lst, t_mini *mini)
 	else if (!ft_strncmp(cmd, "unset", ft_strlen(cmd) + 5))
 		mini->status = mini_unset(arg, &mini->env_list);
 	else if (!ft_strncmp(cmd, "exit", ft_strlen(cmd) + 4))
-		mini_exit(arg, mini->status);
+		mini_exit(arg, mini->status, mini);
 	else
 		executed = 0;
 	return (executed);
