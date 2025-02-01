@@ -6,11 +6,17 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:08:44 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:08:45 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 20:41:54 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/**
+ * Parses the `token_list` into separate commands based on pipes.
+ * It first counts the number of commands, allocates an array to hold them, 
+ * and then populates this array with token lists for each command.
+ */
 
 void	mini_parser(t_mini *mini)
 {
@@ -25,6 +31,11 @@ void	mini_parser(t_mini *mini)
 		mini_fill_cmd_array(mini);
 	}
 }
+/**
+ * Counts the number of pipes (`|`) in the `token_list`.
+ * This determines the number of commands in the input.
+ * Returns the number of pipes found.
+ */
 
 int	mini_count_nbr_pipes(t_token *token_list)
 {
@@ -41,6 +52,11 @@ int	mini_count_nbr_pipes(t_token *token_list)
 	}
 	return (nbr_pipes);
 }
+/**
+ * Fills the `mini->commands` array with token lists for each command.
+ * Splits the `token_list` into separate linked lists of tokens for each command,
+ * using the pipe (`|`) symbol as the delimiter.
+ */
 
 void	mini_fill_cmd_array(t_mini *mini)
 {
@@ -67,6 +83,11 @@ void	mini_fill_cmd_array(t_mini *mini)
 	}
 	mini->commands[i] = new;
 }
+/**
+ * Duplicates a `t_token` node, creating a new node with the same content.
+ * This ensures that modifications to one list do not affect the other.
+ * Returns the duplicated `t_token` node.
+ */
 
 t_token	*mini_t_token_dup(t_token *t)
 {
@@ -85,3 +106,20 @@ t_token	*mini_t_token_dup(t_token *t)
 	ft_collect_mem(new_node);
 	return (new_node);
 }
+/*
+Input: echo hello | grep h | wc -l
+commands[0]: Tokens for echo hello
+commands[1]: Tokens for grep h
+commands[2]: Tokens for wc -l
+
+For echo hello | grep h | wc -l, 
+the function would return 2.
+
+
+nput token_list (linked list): 
+echo -> hello -> | -> grep -> h -> | -> wc -> -l
+Output commands (array of linked lists):
+commands[0]: echo -> hello
+commands[1]: grep -> h
+commands[2]: wc -> -l
+*/
