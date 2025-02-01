@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:04 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:10:05 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:44:18 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	mini_handle_heredoc(t_mini *mini, t_token *token_node)
 	}
 }
 /*ctrl+D or "EOF = EOF"*/
+
 static int	mini_is_null_or_delimiter(char *line, char *word)
 {
 	if (line == NULL || !ft_strncmp(line, word,

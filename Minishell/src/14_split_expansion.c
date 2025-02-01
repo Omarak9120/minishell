@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:09:59 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:10:00 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:45:33 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ void	mini_find_space(t_mini *mini, int i)
 	}
 }
 /**
- *   Takes a single token containing a space (e.g. "hello world") and splits it 
- *   into separate tokens ("hello", "world"). The first piece replaces the original
+ *   Takes a single token containing a space
+ *   (e.g. "hello world") and splits it 
+ * into separate tokens ("hello", "world").The first piece replaces the original
  *   token->token, and subsequent pieces become new t_token nodes inserted right 
  *   after the current token. Finally, re-links the saved 'next' pointer to keep 
  *   the original list continuity.

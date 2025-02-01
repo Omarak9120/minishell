@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:08:12 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:08:15 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:39:51 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 Sets the token pointer to the substring you just cut out,
 assigns the correct gender/specie, and marks if it was quoted
 */
+
 t_token	*mini_token_lstnew(void *token, int state)
 {
 	t_token	*new_node;
@@ -56,6 +57,7 @@ void	mini_get_token_specie(int state, t_token *token)
 		token->specie = PIPE;
 }
 /*adds the newly created token to the end of your doubly linked list of tokens*/
+
 void	mini_token_lstadd_back(t_token **lst, t_token *new)
 {
 	t_token	*last_node;

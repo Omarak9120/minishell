@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:08:52 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:08:53 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:53:24 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,14 @@ char	*mini_sep_exp_join(t_mini *mini, char *token)
 	}
 	return (mini_sub_token_join(sub_token_lst));
 }
+/*// if (sub_token[1] == '@' || sub_token[1] == '*')
+	// {
+	// 	char* omar = ft_strdup("");
+	// 	ft_collect_mem(omar);
+	// 	return (omar);}
+	//Skip the $
+	//Loop over mini->env_list (KEY=VALUE) to find a key that matches sub_token
+	*/
 
 char	*mini_search_and_replace(t_mini *mini, char *sub_token)
 {
@@ -69,17 +77,12 @@ char	*mini_search_and_replace(t_mini *mini, char *sub_token)
 
 	if (sub_token[1] == '?')
 		return (mini_get_dollar_sign(mini, sub_token));
-	// if (sub_token[1] == '@' || sub_token[1] == '*')
-	// {
-	// 	char* omar = ft_strdup("");
-	// 	ft_collect_mem(omar);
-	// 	return (omar);}
 	if (mini_has_invalid_char(sub_token))
 		return (mini_expand_with_invalid(mini, sub_token));
 	current = mini->env_list;
-	sub_token++;//Skip the $
+	sub_token++;
 	new_sub_token = NULL;
-	while (current)//Loop over mini->env_list (KEY=VALUE) to find a key that matches sub_token
+	while (current)
 	{
 		if (!ft_strncmp(current->key, sub_token, ft_strlen(sub_token)))
 		{
@@ -91,7 +94,8 @@ char	*mini_search_and_replace(t_mini *mini, char *sub_token)
 	return (new_sub_token);
 }
 /* after the $ sign [0-9A-Za-z_????]*/
-int		mini_has_invalid_char(char *sub_token)
+
+int	mini_has_invalid_char(char *sub_token)
 {
 	int	i;
 

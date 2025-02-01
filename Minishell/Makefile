@@ -6,7 +6,7 @@
 #    By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/28 13:53:30 by oabdelka          #+#    #+#              #
-#    Updated: 2025/01/28 13:53:33 by oabdelka         ###   ########.fr        #
+#    Updated: 2025/02/01 20:01:18 by oabdelka         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,16 +50,18 @@ libft:
 	@make --directory=$(LIB_PATH) --no-print-directory
 
 debug:
-	@make WITH_DEBUG=TRUE --no-print-directory
+	@make WITH_DEBUG=TRUE --no-print-directory OMAR ABDELKADER - oabdelka!
 
 $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)
 
 $(NAME): $(OBJECTS) $(OBJ_PATH)main.o
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJECTS) $(OBJ_PATH)main.o -L $(LIB_PATH) -lft -lreadline
-	@echo $(CYAN)" ----------------------------------------------"$(COLOR_LIMITER)
-	@echo $(CYAN)"| MINISHELL executable was created successfully!! |"$(COLOR_LIMITER)
-	@echo $(CYAN)"----------------------------------------------"$(COLOR_LIMITER)
+	@echo $(CYAN)"--------------------------------------------------------"$(COLOR_LIMITER)
+	@echo $(CYAN)"|          OMAR ABDELKADER - oabdelka!                   |"$(COLOR_LIMITER)
+	@echo $(CYAN)"|                  42 Beirut                             |"$(COLOR_LIMITER)
+	@echo $(CYAN)"| 🎉 MINISHELL executable was created successfully! 🚀!! |"$(COLOR_LIMITER)
+	@echo $(CYAN)"--------------------------------------------------------"$(COLOR_LIMITER)
 	@echo " "
 
 $(OBJ_PATH)%.o: $(SOURCES_PATH)%.c $(HEADER)

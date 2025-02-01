@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:18 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:10:20 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:40:26 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	mini_cd(t_token *arg, t_dict **dict)
 		else if (!ft_strncmp(arg->token, "~", ft_strlen(arg->token)))
 		{
 			directory = getenv("HOME");
-			}
+		}
 		else
 			directory = arg->token;
 	}

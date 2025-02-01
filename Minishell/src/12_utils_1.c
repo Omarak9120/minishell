@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:09:26 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:09:28 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:48:17 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include "../include/builtins.h"
 
 /**
- *   Manages the redirection/piping file descriptors for a command before execve.
- *   If input_fd/output_fd are valid, dup2 them to STDIN/STDOUT. Also handles
- *   the read/write pipes if they exist, closing unneeded pipes after duplication.
- *   If any fd is -1, call mini_exit_if_fd_neg.
+ Manages the redirection/piping file descriptors for a command before execve.
+ If input_fd/output_fd are valid, dup2 them to STDIN/STDOUT. Also handles
+ the read/write pipes if they exist, closing unneeded pipes after duplication.
+ If any fd is -1, call mini_exit_if_fd_neg.
  */
 
 static int	mini_is_path_unseted(t_mini *mini);

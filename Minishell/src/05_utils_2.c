@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:08:07 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:08:09 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:39:30 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ dfa->i is the index where you reached the end state.
 + 1: The substring length includes the character at position dfa->i.
 - dfa->quote: If you ended inside a quoted segment.
 */
+
 void	mini_cut_string(t_mini *mini, t_dfa *dfa)
 {
 	dfa->value = ft_substr(mini->cmd_line, dfa->start,

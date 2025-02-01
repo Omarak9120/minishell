@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:09:53 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:09:55 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:46:05 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,8 @@ We build strings:
 "TERM=xterm-256color"
 
 Then we build an array of strings:
-mini->mini_environ = [ "PATH=/usr/bin:/bin", "HOME=/home/user", "TERM=xterm-256color", NULL ].
+mini->mini_environ = [ "PATH=/usr/bin:/bin",
+						 "HOME=/home/user", 
+						 "TERM=xterm-256color",
+						  NULL ].
 */

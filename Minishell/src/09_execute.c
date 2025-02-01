@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:51:29 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/01/29 18:53:14 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:48:56 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,15 +168,16 @@ typedef struct s_cmd {
 
 
 mini->cmd_exec_list -> [Cmd Node #1]
-                           input_fd  = 0
-                           output_fd = 3   (file descriptor pointing to "out.txt")
-                           cmd_exec  = ["echo", "hello", "world", NULL]
-                           cmd_path  = "/bin/echo"
-                           next      = NULL
+                        input_fd  = 0
+                        output_fd = 3   (file descriptor pointing to "out.txt")
+                        cmd_exec  = ["echo", "hello", "world", NULL]
+                        cmd_path  = "/bin/echo"
+                        next      = NULL
 
 
 if we have | :
 
-[Cmd Node #1] -- (next) --> [Cmd Node #2] -- (next) --> [Cmd Node #3] -- (next) --> NULL
+[Cmd Node #1] -- (next) --> [Cmd Node #2] -- (next) -->
+[Cmd Node #3] -- (next) --> NULL
 
 */

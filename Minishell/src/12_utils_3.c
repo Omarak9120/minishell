@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:09:44 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:09:45 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:47:55 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_token	*mini_exec_interface(char **cmd_exec)
 		mini_token_lstadd_back(&token_lst, mini_token_lstnew(cmd_exec[i++], 0));
 	return (token_lst);
 }
- /*Used to decide if we should run the command as a builtin or external binary*/
+/*Used to decide if we should run the command as a builtin or external binary*/
 
 int	mini_is_builtin(t_token *token_lst)
 {
