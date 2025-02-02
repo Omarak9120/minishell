@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:27:21 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:38:29 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 16:42:24 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 //Installs int_action for SIGINT
 */
 
-void	mini_ctrl_signal(t_mini *mini)
+void	ctrl_signal(t_mini *mini)
 {
 	struct sigaction	int_action;
 	struct sigaction	quit_action;

@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:53:44 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 16:41:12 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 16:42:50 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(void)
 	t_mini	*mini;
 
 	mini = get_address();
-	mini_ctrl_signal(mini);
+	ctrl_signal(mini);
 	mini_getenv(mini);
 	mini->status = 0;
 	while (42)

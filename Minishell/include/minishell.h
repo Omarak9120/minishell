@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:55:08 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 16:41:16 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 16:42:54 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void		mini_trashman_collector(t_list **list_memory, void *trash);
 // void		mini_safe_exit(t_mini *mini);
 
 // 02_ctrl_signal.c
-void		mini_ctrl_signal(t_mini *mini);
+void		ctrl_signal(t_mini *mini);
 void		sig_handler(int signum);
 void		sig_handler_heredoc(int signum);
 
