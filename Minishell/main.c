@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:53:44 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 16:42:50 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:02:17 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(void)
 		if (mini->cmd_line[0] == '\0')
 			continue ;
 		add_history(mini->cmd_line);
-		mini_tokenizer(mini);
+		tokenizer(mini);
 		if (!mini->syntax_error && mini->token_list)
 			mini_no_error_detect(mini);
 	}

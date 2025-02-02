@@ -6,13 +6,13 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:07:59 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:08:00 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:02:11 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	mini_tokenizer(t_mini *mini)
+void	tokenizer(t_mini *mini)
 {
 	t_dfa	dfa;
 
