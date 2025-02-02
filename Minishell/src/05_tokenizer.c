@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:07:59 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 17:03:04 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:04:23 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	mini_automaton(t_mini *mini, t_dfa *dfa)
 	{
 		if (dfa->state == 0)
 			dfa->start = dfa->i;
-		dfa->state = mini_get_next_state(dfa->state, \
+		dfa->state = get_next_state(dfa->state, \
 		mini_get_column(mini->cmd_line[dfa->i]));
 		if (mini_is_end_state(dfa->state) && dfa->state != NULL_CHAR)
 		{
@@ -63,7 +63,7 @@ void	mini_automaton(t_mini *mini, t_dfa *dfa)
 	}
 }
 
-int	mini_get_next_state(int state, int column)
+int	get_next_state(int state, int column)
 {
 	static int	truth_table[7][8] = {
 	{001, 002, 003, 004, 005, 006, 000, 666},

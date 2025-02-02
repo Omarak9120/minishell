@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:55:08 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 17:03:02 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:04:21 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int			ft_get_exit_status(int exit_status);
 void		tokenizer(t_mini *mini);
 void		init_dfa(t_dfa *dfa);
 void		mini_automaton(t_mini *mini, t_dfa *dfa);
-int			mini_get_next_state(int state, int column);
+int			get_next_state(int state, int column);
 int			mini_get_column(char c);
 
 // 05_utils_1.c
