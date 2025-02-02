@@ -6,11 +6,14 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:11:04 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 20:09:36 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 20:22:21 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/trashman.h"
+
+/*Why Static? The pointer persists between function calls,
+ ensuring all memory references remain accessible.*/
 
 t_list	**ft_get_mem_address(void)
 {

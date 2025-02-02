@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:59 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 20:09:33 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 20:27:24 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ t_list	**ft_get_mem_address_env(void)
 
 	return (&ptr);
 }
+/*Purpose: Adds a new memory allocation to the environment memory list.
+How It Works:
+Calls ft_lstadd_back() to append content to the memory tracking list.
+can be freed later*/
 
 void	ft_collect_mem_env(void *content)
 {
