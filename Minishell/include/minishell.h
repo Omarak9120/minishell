@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:55:08 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 16:06:00 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 16:38:59 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ typedef struct s_mini
 
 // 00_utils.c omar
 void		mini_ctrl_d_exit(void);
-t_mini		*get_mini_address(void);
+t_mini		*get_address(void);
 
 // 01_prompt.c
 void		mini_prompt(t_mini *mini);

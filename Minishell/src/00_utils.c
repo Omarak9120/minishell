@@ -6,13 +6,13 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:07:43 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:07:45 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 16:38:44 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_mini	*get_mini_address(void)
+t_mini	*get_address(void)
 {
 	static t_mini	mini;
 
