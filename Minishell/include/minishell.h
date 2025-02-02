@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:55:08 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 16:42:54 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 16:46:22 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void		mini_execute(t_mini *mini);
 // 03_utils
 char		*mini_get_path(char *envp[]);
 void		free_heap(t_list *lst_memory);
-void		mini_free_split(char **split);
+void		free_split(char **split);
 char		*mini_whereis(char *cmd, char *path);
 void		mini_trashman(t_list **lst_memory);
 

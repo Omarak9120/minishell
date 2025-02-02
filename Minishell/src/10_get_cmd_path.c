@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:19:50 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/01/31 12:00:40 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 16:46:27 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ char	*mini_get_cmd_path(t_mini *mini, t_cmd *cmd_exec_node)
 		free(tmp_struct.part_path);
 		if (access(tmp_struct.path, F_OK) == 0)
 		{
-			mini_free_split(tmp_struct.splited_path);
+			free_split(tmp_struct.splited_path);
 			return (tmp_struct.path);
 		}
 		i++;
 	}
-	mini_free_split(tmp_struct.splited_path);
+	free_split(tmp_struct.splited_path);
 	return (tmp_struct.cmd_name);
 }
 

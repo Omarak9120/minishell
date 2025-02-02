@@ -6,14 +6,14 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:07:54 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:07:56 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 16:46:18 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 /*freeing 2D arrays*/
 
-void	mini_free_split(char **split)
+void	free_split(char **split)
 {
 	int	i;
 
