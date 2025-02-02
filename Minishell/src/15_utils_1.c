@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:08 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:10:10 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:03:06 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	mini_hd_tokenizer(t_mini *hd)
 {
 	t_dfa	dfa;
 
-	mini_init_dfa(&dfa);
+	init_dfa(&dfa);
 	mini_automaton(hd, &dfa);
 }
 

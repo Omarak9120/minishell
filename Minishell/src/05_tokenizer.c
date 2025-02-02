@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:07:59 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 17:02:11 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:03:04 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	tokenizer(t_mini *mini)
 {
 	t_dfa	dfa;
 
-	mini_init_dfa(&dfa);
+	init_dfa(&dfa);
 	if (mini->cmd_line)
 	{
 		if (mini->cmd_line[0] == '\0')
@@ -28,7 +28,7 @@ void	tokenizer(t_mini *mini)
 	}
 }
 
-void	mini_init_dfa(t_dfa *dfa)
+void	init_dfa(t_dfa *dfa)
 {
 	dfa->value = NULL;
 	dfa->size = 0;
