@@ -36,6 +36,7 @@
 *.x86_64
 *.hex
 minishell*
+!minishell.h
 unit.tester
 
 # Debug files
