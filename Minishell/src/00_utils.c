@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:07:43 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 16:38:44 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 16:41:08 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ void	mini_init(t_mini *mini)
 	mini->hd_file_index = 0;
 }
 
-void	mini_trashman_collector(t_list **list_memory, void *trash)
-{
-	if (list_memory)
-		ft_lstadd_back(list_memory, ft_lstnew(trash));
-	else
-		*list_memory = ft_lstnew(trash);
-}
+// void	mini_trashman_collector(t_list **list_memory, void *trash)
+// {
+// 	if (list_memory)
+// 		ft_lstadd_back(list_memory, ft_lstnew(trash));
+// 	else
+// 		*list_memory = ft_lstnew(trash);
+// }
 
-void	mini_ctrl_d_exit(void)
+void	ctrl_d_exit(void)
 {
 	printf("exit\n");
 	clear_history();
