@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:50 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:10:52 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:31:17 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "../lib/includes/libft.h"
 #include "../include/libftplus.h"
 #include "../include/trashman.h"
+
+/*Called when export VAR=value*/
 
 void	ft_dict_insert(t_dict **dict, char **var)
 {

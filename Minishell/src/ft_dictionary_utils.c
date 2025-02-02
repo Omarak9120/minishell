@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:47 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:10:48 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:28:04 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ size_t	ft_max(size_t a, size_t b)
 		max = b;
 	return (max);
 }
+/*Purpose: Deletes an entry from the dictionary if the key matches name.
+Usage: Called in the unset command to remove an environment variable.*/
 
 int	ft_dictdel_entry(t_dict **dict, char *name)
 {

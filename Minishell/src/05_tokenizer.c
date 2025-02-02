@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:07:59 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 17:04:23 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:05:41 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	mini_automaton(t_mini *mini, t_dfa *dfa)
 			mini_syntonize_index(dfa);
 			if (mini_is_error_state(dfa->state))
 			{
-				mini_print_sintax_error_message(dfa->state);
+				print_sintax_error_message(dfa->state);
 				mini->status = 2;
 				mini->syntax_error = 1;
 				break ;

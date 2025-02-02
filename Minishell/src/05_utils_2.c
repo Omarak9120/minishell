@@ -6,13 +6,13 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:08:07 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:39:30 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:05:35 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	mini_print_sintax_error_message(int state)
+void	print_sintax_error_message(int state)
 {
 	if (state == 200)
 		ft_printf_fd(STDERR_FILENO, "minishell: syntax error: \

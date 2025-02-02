@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:30 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:10:31 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 19:21:30 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include "../include/dictionary.h"
 
 #define ERROR 200
+
+/*
+ * Validates if `str` is a correct environment variable identifier.
+ * If invalid, prints an error message.
+ */
 
 int	mini_valid_identifier(char *str, int state)
 {

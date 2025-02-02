@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 15:51:29 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:48:56 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:07:12 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	mini_execute(t_mini *mini)
 {
 	mini_build_cmd_exec(mini);
 	mini_get_cmd_exec_path(mini);
-	mini_open_pipes(mini);
+	open_pipes(mini);
 	mini_remake_environ(mini);
 	mini_execve(mini);
 }

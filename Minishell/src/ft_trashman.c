@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:11:04 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:11:06 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 20:09:36 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_list	**ft_get_mem_address(void)
 	return (&ptr);
 }
 
-/*Register it in the trash collector */
 void	ft_collect_mem(void *content)
 {
 	ft_lstadd_back(ft_get_mem_address(), ft_lstnew(content));

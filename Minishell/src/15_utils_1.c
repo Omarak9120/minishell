@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:08 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 17:03:06 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 19:58:17 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	*mini_hd_expansion(char *line)
 	exp_line = mini_join_exp_list(hd.commands[0]);
 	return (exp_line);
 }
+/*echo "Hello $USER"
+Tokens: ["Hello", "omar"] ➡ Output: "Hello omar"*/
 
 static char	*mini_join_exp_list(t_token *token_node)
 {

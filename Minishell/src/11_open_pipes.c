@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 17:50:22 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/01/31 12:13:00 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:07:05 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Command #2: cmd_exec = {"grep", "minishell", NULL}
 Command #3: cmd_exec = {"wc", "-l", NULL}
 later in the execve we do the dup2()*/
 
-void	mini_open_pipes(t_mini *mini)
+void	open_pipes(t_mini *mini)
 {
 	t_cmd	*cmd_exec_node;
 	int		r_and_w_pipe[2];

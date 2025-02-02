@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:38 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:10:39 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 19:21:58 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 #define NAME 100
 #define ERROR 200
 #define VALUE 300
+
+/**
+ * Parses `str` into a key-value pair and inserts it into `env_list`.
+ * Ensures the name is valid before insertion.
+ */
 
 int	mini_env_identifier(char *str, t_dict **env_list, int start, int state)
 {
@@ -69,3 +74,9 @@ int	mini_env_get_column(char c)
 		return (4);
 	return (0);
 }
+/*
+State			Invalid (0)	 Letter/_ (1)	Digit (2)		= (3)			End (4)
+0 (Start)		ERROR (200)	 Continue		ERROR (200)	  ERROR (200)		ERROR (200)
+1 (Valid Name)	ERROR (200)	 Continue	 	Continue	  NAME (100)	 	NAME (100)
+2 (After =)		VALUE (300)	 VALUE (300)	VALUE (300)	  VALUE (300)	VALUE (300)
+*/

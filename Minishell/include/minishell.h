@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:55:08 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 17:04:21 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/02 17:07:10 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int			mini_is_quote_state(int num);
 int			mini_is_error_state(int num);
 
 // 05_utils_2.c
-void		mini_print_sintax_error_message(int state);
+void		print_sintax_error_message(int state);
 void		mini_cut_string(t_mini *mini, t_dfa *dfa);
 void		mini_set_syntax_error(t_mini *mini);
 
@@ -274,7 +274,7 @@ char		*mini_get_cmd_path(t_mini *mini, t_cmd *cmd_exec_node);
 char		*mini_search_in_envlist(t_mini *mini, char *key);
 
 // 11_open_pipes.c
-void		mini_open_pipes(t_mini *mini);
+void		open_pipes(t_mini *mini);
 
 // 12_mini_execve.c
 void		mini_execve(t_mini *mini);
