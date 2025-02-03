@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:55:08 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 17:07:10 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:38:04 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,6 +314,7 @@ void		mini_restore_builtin_fd(int *stdin_backup, int *stdout_backup);
 
 // 13_mini_remake_environ.c
 void		mini_remake_environ(t_mini *mini);
+// void		update_shlvl(t_mini *mini);
 
 // 14_split_expansion.c
 // void		mini_split_expansion_in_nodes(t_mini *mini);

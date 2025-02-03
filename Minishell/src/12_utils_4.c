@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:09:49 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:09:50 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:50:39 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	mini_call_to_builtin(t_mini *mini, char *cmd, t_token *arg)
 	else if (!ft_strncmp(cmd, "unset", ft_strlen(cmd) + 5))
 		mini->status = mini_unset(arg, &mini->env_list);
 	else if (!ft_strncmp(cmd, "exit", ft_strlen(cmd) + 4))
+	{
 		mini_exit(arg, mini->status, mini);
+	}
 }
 
 void	mini_backup_builtin_stdin(int *stdin_backup, int *stdout_backup)

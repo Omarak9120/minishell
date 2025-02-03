@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:09:19 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:09:20 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:54:00 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,18 @@ void	mini_wait_childs(t_mini *mini)
 	cmd_exec_node = mini->cmd_exec_list;
 	while (cmd_exec_node)
 	{
-		waitpid(cmd_exec_node->pid, &status, 0);
-		mini_get_status(mini, status);
+		if (cmd_exec_node->pid > 0)
+		{
+			waitpid(cmd_exec_node->pid, &status, 0);
+			mini_get_status(mini, status);
+		}
 		cmd_exec_node = cmd_exec_node->next;
 	}
 }
 /**
- *   Interprets the wait status to set mini->status. If the child 
- *   exited normally, mini->status = its exit code (WEXITSTATUS). 
- *   If it was killed by a signal, print a newline and set 
+ *   Interprets the wait status to set mini->status. If the child
+ *   exited normally, mini->status = its exit code (WEXITSTATUS).
+ *   If it was killed by a signal, print a newline and set
  *   mini->status to 130 (SIGINT) or 131 (SIGQUIT), etc.
  */
 

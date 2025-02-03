@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:14 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 17:15:00 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:33:33 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,4 @@ int	mini_env(t_token *arg, t_dict **dict)
 	}
 	mini_printenv(*dict);
 	return (0);
-}
-*/
+}*/
