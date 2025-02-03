@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:09:53 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/03 15:52:45 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:06:54 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	mini_remake_environ(t_mini *mini)
 	int		i;
 
 	env_list = mini->env_list;
-	// update_shlvl(mini);
+	mini_update_shlvl(mini);
 	mini_environ = (char **)ft_calloc(sizeof(char *),
 			mini_get_env_list_size(env_list) + 1);
 	ft_collect_mem(mini_environ);
@@ -60,26 +60,34 @@ static int	mini_get_env_list_size(t_dict *env_list)
 	}
 	return (i);
 }
-// void update_shlvl(t_mini *mini)
-// {
-// 	char	*shlvl_str;
-// 	int	shlvl;
-// 	char	*new_shlvl;
-// 	char	*new_var[2];
-//
-// 	shlvl_str = ft_dict_get_value(mini->env_list, "SHLVL");
-//     if (shlvl_str)
-//         shlvl = ft_atoi(shlvl_str) + 1;
-//     else
-//         shlvl = 1;
-//     if (shlvl >= 1000)
-//         shlvl = 1; 
-//     new_shlvl = ft_itoa(shlvl);
-//     new_var[0] = "SHLVL";
-//     new_var[1] = new_shlvl;
-//     ft_dict_update(mini->env_list, new_var);
-//     free(new_shlvl);
-// }
+
+int	ft_is_tracked(void *ptr)
+{
+	t_list	*cur;
+
+	cur = *ft_get_mem_address_env();
+	while (cur)
+	{
+		if (cur->content == ptr)
+			return (1);
+		cur = cur->next;
+	}
+	return (0);
+}
+
+t_dict	*mini_get_env_node(t_mini *mini, char *key)
+{
+	t_dict	*cur;
+
+	cur = mini->env_list;
+	while (cur)
+	{
+		if (ft_strncmp(cur->key, key, ft_strlen(key)) == 0)
+			return (cur);
+		cur = cur->next;
+	}
+	return (NULL);
+}
 /*
 mini->mini_environ = [
     "PATH=/usr/bin:/bin", 

@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:50 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/03 14:39:52 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:55:32 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_dict_update(t_dict *dict, char **var)
 		if (!ft_strncmp(cur->key, var[0], ft_strlen(var[0])))
 		{
 			if (var[1])
-				cur->value = var[1];
+				cur->value = ft_strdup(var[1]);
 			return (1);
 		}
 		cur = cur->next;

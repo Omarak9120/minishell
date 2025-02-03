@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:09:59 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:45:33 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:02:53 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,6 @@
 
 void	mini_find_space(t_mini *mini, int i);
 void	mini_split_and_link(t_token *token_node);
-
-// void	mini_split_expansion_in_nodes(t_mini *mini)
-// {
-// 	int		i;
-// 	t_token	*cmd;
-
-// 	i = 0;
-// 	cmd = mini->commands[i];
-// 	while (cmd)
-// 	{
-// 		mini_find_space(mini, i);
-// 		i++;
-// 		cmd = mini->commands[i];
-// 	}
-// }
 
 void	mini_find_space(t_mini *mini, int i)
 {

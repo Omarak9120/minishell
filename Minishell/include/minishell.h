@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:55:08 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/03 15:38:04 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:14:44 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,10 +314,18 @@ void		mini_restore_builtin_fd(int *stdin_backup, int *stdout_backup);
 
 // 13_mini_remake_environ.c
 void		mini_remake_environ(t_mini *mini);
-// void		update_shlvl(t_mini *mini);
+void		mini_update_shlvl(t_mini *mini);
+t_dict		*mini_get_env_node(t_mini *mini, char *key);
+void		mini_env_add_back(t_dict **env_list, t_dict *new_node);
+int			ft_is_tracked(void *ptr);
+
+// 13_shlvl.c
+void		mini_update_shlvl(t_mini *mini);
+void		mini_create_shlvl(t_mini *mini);
+void		mini_increment_shlvl(t_dict *shlvl_node);
 
 // 14_split_expansion.c
-// void		mini_split_expansion_in_nodes(t_mini *mini);
+
 void		mini_find_space(t_mini *mini, int i);
 
 // 15_heredoc.c
