@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:08:44 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 20:41:54 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/04 17:41:43 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ For echo hello | grep h | wc -l,
 the function would return 2.
 
 
-nput token_list (linked list): 
+input token_list (linked list): 
 echo -> hello -> | -> grep -> h -> | -> wc -> -l
 Output commands (array of linked lists):
 commands[0]: echo -> hello
