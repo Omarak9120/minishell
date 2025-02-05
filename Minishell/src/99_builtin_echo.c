@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:10:42 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:10:44 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/05 18:21:03 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,16 @@ int	mini_echo(t_token *arg)
 	int	new_line;
 
 	new_line = 1;
-	if (arg && arg->token && arg->token[0] == '-')
+	while (arg && arg->token && arg->token[0] == '-')
 	{
 		new_line = mini_add_new_line(arg->token);
 		if (new_line == 0)
+		{
+			new_line = 0;
 			arg = arg->next;
+		}
+		else
+			break ;
 	}
 	while (arg)
 	{
