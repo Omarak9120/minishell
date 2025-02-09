@@ -28,7 +28,7 @@ char	*mini_hd_expansion(char *line)
 	mini_getenv(&hd);
 	mini_hd_tokenizer(&hd);
 	mini_hd_parser(&hd);
-	mini_expansion(&hd);
+	expansion(&hd);
 	exp_line = mini_join_exp_list(hd.commands[0]);
 	return (exp_line);
 }

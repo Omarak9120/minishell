@@ -57,11 +57,12 @@ $(OBJ_PATH):
 
 $(NAME): $(OBJECTS) $(OBJ_PATH)main.o
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJECTS) $(OBJ_PATH)main.o -L $(LIB_PATH) -lft -lreadline
-	@echo $(CYAN)"--------------------------------------------------------"$(COLOR_LIMITER)
+	@echo $(CYAN)" -------------------------------------------------------"$(COLOR_LIMITER)
 	@echo $(CYAN)"|          OMAR ABDELKADER - oabdelka!                   |"$(COLOR_LIMITER)
+	@echo $(CYAN)"|          KHALED SAYYOUR - ksayour!                     |"$(COLOR_LIMITER)
 	@echo $(CYAN)"|                  42 Beirut                             |"$(COLOR_LIMITER)
 	@echo $(CYAN)"| 🎉 MINISHELL executable was created successfully! 🚀!! |"$(COLOR_LIMITER)
-	@echo $(CYAN)"--------------------------------------------------------"$(COLOR_LIMITER)
+	@echo $(CYAN)" -------------------------------------------------------"$(COLOR_LIMITER)
 	@echo " "
 
 $(OBJ_PATH)%.o: $(SOURCES_PATH)%.c $(HEADER)

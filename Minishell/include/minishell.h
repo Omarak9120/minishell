@@ -141,7 +141,7 @@ void		sig_handler_heredoc(int signum);
 
 // 03_process_envp.c
 // void	mini_process_envp(t_mini *pipex, char *envp[]);
-void		mini_execute(t_mini *mini);
+void		execute(t_mini *mini);
 
 // 03_utils
 char		*mini_get_path(char *envp[]);
@@ -206,7 +206,7 @@ void		mini_init_hd_signal(t_mini *mini,
 void		mini_finish_hd_signal(int *stdin_backup, int *stdout_backup);
 
 // 06_parser.c
-void		mini_parser(t_mini *mini);
+void		parser(t_mini *mini);
 void		mini_fill_cmd_array(t_mini *mini);
 int			mini_count_nbr_pipes(t_token *token_list);
 t_token		*mini_t_token_dup(t_token *t);
@@ -216,7 +216,7 @@ void		debug_print_parse_list(t_token **head); // FOR DEBUG ONLY
 void		debug_print_array_list(t_mini *mini); // FOR DEBUG ONLY
 
 // 07_expansion.c
-void		mini_expansion(t_mini *mini);
+void		expansion(t_mini *mini);
 void		mini_token_expansion(t_mini *mini, int i);
 char		*mini_sep_exp_join(t_mini *mini, char *token);
 char		*mini_search_and_replace(t_mini *mini, char *sub_token);
@@ -247,7 +247,7 @@ t_sub_token	*mini_sub_token_lstlast(t_sub_token *lst);
 void		mini_sub_token_lstadd_back(t_sub_token **lst, t_sub_token *new);
 
 // 08_redirect.c
-void		mini_redirect(t_mini *mini);
+void		redirect(t_mini *mini);
 void		mini_find_redirect(t_mini *mini, int i);
 void		mini_handle_out_redir(t_cmd *cmd_node, char *file);
 void		mini_handle_in_redir(t_cmd *cmd_node, char *file);
@@ -260,7 +260,7 @@ void		mini_redir_lstadd_back(t_cmd **lst, t_cmd *new);
 t_cmd		*mini_redir_lstlast(t_cmd *lst);
 
 // 09_execute.c
-void		mini_execute(t_mini *mini);
+void		execute(t_mini *mini);
 void		mini_build_cmd_exec(t_mini *mini);
 void		mini_count_cmd_exec_words(t_token *token_node, \
 t_cmd *cmd_exec_node);
@@ -314,19 +314,19 @@ void		mini_restore_builtin_fd(int *stdin_backup, int *stdout_backup);
 
 // 13_mini_remake_environ.c
 void		mini_remake_environ(t_mini *mini);
-void		mini_update_shlvl(t_mini *mini);
-t_dict		*mini_get_env_node(t_mini *mini, char *key);
+void		update_shlvl(t_mini *mini);
+t_dict		*get_env_node(t_mini *mini, char *key);
 void		mini_env_add_back(t_dict **env_list, t_dict *new_node);
 int			ft_is_tracked(void *ptr);
 
 // 13_shlvl.c
-void		mini_update_shlvl(t_mini *mini);
+void		update_shlvl(t_mini *mini);
 void		mini_create_shlvl(t_mini *mini);
 void		mini_increment_shlvl(t_dict *shlvl_node);
 
 // 14_split_expansion.c
 
-void		mini_find_space(t_mini *mini, int i);
+void		find_space(t_mini *mini, int i);
 
 // 15_heredoc.c
 int			mini_is_valid_heredoc(t_token *token_node);

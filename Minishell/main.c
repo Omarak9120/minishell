@@ -12,8 +12,8 @@
 
 #include "./include/minishell.h"
 
-static void	mini_no_error_detect(t_mini *mini);
-static void	mini_recursive_init(t_mini *mini);
+static void	no_error_detect(t_mini *mini);
+static void	recursive_init(t_mini *mini);
 
 int	main(void)
 {
@@ -22,11 +22,11 @@ int	main(void)
 	mini = get_address();
 	ctrl_signal(mini);
 	mini_getenv(mini);
-	mini_update_shlvl(mini);
+	update_shlvl(mini);
 	mini->status = 0;
 	while (42)
 	{
-		mini_recursive_init(mini);
+		recursive_init(mini);
 		if (mini->cmd_line == NULL)
 		{
 			ctrl_d_exit();
@@ -37,21 +37,21 @@ int	main(void)
 		add_history(mini->cmd_line);
 		tokenizer(mini);
 		if (!mini->syntax_error && mini->token_list)
-			mini_no_error_detect(mini);
+			no_error_detect(mini);
 	}
 	ft_free_trashman(ft_get_mem_address());
 	ft_free_trashman_env(ft_get_mem_address_env());
 }
 
-void	mini_no_error_detect(t_mini *mini)
+void	no_error_detect(t_mini *mini)
 {
-	mini_parser(mini);
-	mini_expansion(mini);
-	mini_redirect(mini);
-	mini_execute(mini);
+	parser(mini);
+	expansion(mini);
+	redirect(mini);
+	execute(mini);
 }
 
-void	mini_recursive_init(t_mini *mini)
+void	recursive_init(t_mini *mini)
 {
 	mini_init(mini);
 	mini->int_action.sa_handler = sig_handler;

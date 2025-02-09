@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-void	mini_expansion(t_mini *mini)
+void	expansion(t_mini *mini)
 {
 	int		i;
 	t_token	*cmd;
@@ -37,7 +37,7 @@ void	mini_token_expansion(t_mini *mini, int i)
 		if (ft_strchr(token_node->token, '$') && !token_node->was_squoted)
 		{
 			token_node->token = mini_sep_exp_join(mini, token_node->token);
-			mini_find_space(mini, i);
+			find_space(mini, i);
 		}
 		token_node = token_node->next;
 	}

@@ -18,7 +18,7 @@
  * and then populates this array with token lists for each command.
  */
 
-void	mini_parser(t_mini *mini)
+void	parser(t_mini *mini)
 {
 	int		nbr_cmds;
 

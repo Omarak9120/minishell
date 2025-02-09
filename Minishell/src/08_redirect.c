@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-void	mini_redirect(t_mini *mini)
+void	redirect(t_mini *mini)
 {
 	int		i;
 	t_token	*token_node;

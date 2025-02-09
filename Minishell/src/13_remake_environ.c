@@ -30,7 +30,7 @@ void	mini_remake_environ(t_mini *mini)
 	int		i;
 
 	env_list = mini->env_list;
-	mini_update_shlvl(mini);
+	update_shlvl(mini);
 	mini_environ = (char **)ft_calloc(sizeof(char *),
 			mini_get_env_list_size(env_list) + 1);
 	ft_collect_mem(mini_environ);
@@ -75,7 +75,7 @@ int	ft_is_tracked(void *ptr)
 	return (0);
 }
 
-t_dict	*mini_get_env_node(t_mini *mini, char *key)
+t_dict	*get_env_node(t_mini *mini, char *key)
 {
 	t_dict	*cur;
 

@@ -12,14 +12,14 @@
 
 #include "../include/minishell.h"
 
-void	mini_update_shlvl(t_mini *mini)
+void	update_shlvl(t_mini *mini)
 {
 	static int	updated = 0;
 	t_dict		*shlvl_node;
 
 	if (updated)
 		return ;
-	shlvl_node = mini_get_env_node(mini, "SHLVL");
+	shlvl_node = get_env_node(mini, "SHLVL");
 	if (!shlvl_node)
 		mini_create_shlvl(mini);
 	else

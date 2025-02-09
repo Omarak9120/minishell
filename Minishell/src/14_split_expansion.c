@@ -12,10 +12,10 @@
 
 #include "../include/minishell.h"
 
-void	mini_find_space(t_mini *mini, int i);
-void	mini_split_and_link(t_token *token_node);
+void	find_space(t_mini *mini, int i);
+void	split_and_link(t_token *token_node);
 
-void	mini_find_space(t_mini *mini, int i)
+void	find_space(t_mini *mini, int i)
 {
 	t_token	*token_node;
 
@@ -24,8 +24,8 @@ void	mini_find_space(t_mini *mini, int i)
 	{
 		if (ft_strchr(token_node->token, ' '))
 		{
-			mini_split_and_link(token_node);
-			mini_find_space(mini, i);
+			split_and_link(token_node);
+			find_space(mini, i);
 		}
 		token_node = token_node->next;
 	}
@@ -39,7 +39,7 @@ void	mini_find_space(t_mini *mini, int i)
  *   the original list continuity.
  */
 
-void	mini_split_and_link(t_token *token_node)
+void	split_and_link(t_token *token_node)
 {
 	int		i;
 	t_token	*saved_next;

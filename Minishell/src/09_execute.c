@@ -33,7 +33,7 @@
  *    environment, pipes, etc.
  */
 
-void	mini_execute(t_mini *mini)
+void	execute(t_mini *mini)
 {
 	mini_build_cmd_exec(mini);
 	mini_get_cmd_exec_path(mini);
