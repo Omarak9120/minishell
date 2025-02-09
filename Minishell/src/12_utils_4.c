@@ -19,20 +19,20 @@
  *   storing the return status in mini->status.
  */
 
-void	mini_call_to_builtin(t_mini *mini, char *cmd, t_token *arg)
+void	call_to_builtin(t_mini *mini, char *cmd, t_token *arg)
 {
 	if (!ft_strncmp(cmd, "export", ft_strlen(cmd) + 6))
-		mini->status = mini_export(arg, &mini->env_list);
+		mini->status = export(arg, &mini->env_list);
 	else if (!ft_strncmp(cmd, "echo", ft_strlen(cmd) + 4))
 		mini->status = mini_echo(arg);
 	else if (!ft_strncmp(cmd, "pwd", ft_strlen(cmd) + 3))
-		mini->status = mini_pwd();
+		mini->status = pwd();
 	else if (!ft_strncmp(cmd, "cd", ft_strlen(cmd) + 2))
-		mini->status = mini_cd(arg, &mini->env_list);
+		mini->status = cd(arg, &mini->env_list);
 	else if (!ft_strncmp(cmd, "env", ft_strlen(cmd) + 3))
-		mini->status = mini_env(arg, &mini->env_list);
+		mini->status = env(arg, &mini->env_list);
 	else if (!ft_strncmp(cmd, "unset", ft_strlen(cmd) + 5))
-		mini->status = mini_unset(arg, &mini->env_list);
+		mini->status = unset(arg, &mini->env_list);
 	else if (!ft_strncmp(cmd, "exit", ft_strlen(cmd) + 4))
 	{
 		mini_exit(arg, mini->status, mini);

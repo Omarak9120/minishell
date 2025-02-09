@@ -29,7 +29,7 @@ int	main(void)
 		recursive_init(mini);
 		if (mini->cmd_line == NULL)
 		{
-			ctrl_d_exit();
+			ctrl_D_exit();
 			break ;
 		}
 		if (mini->cmd_line[0] == '\0')
@@ -39,8 +39,8 @@ int	main(void)
 		if (!mini->syntax_error && mini->token_list)
 			no_error_detect(mini);
 	}
-	ft_free_trashman(ft_get_mem_address());
-	ft_free_trashman_env(ft_get_mem_address_env());
+	ft_trashman(ft_get_mem_addresss());
+	ft_trashman_env(ft_get_mem_addresss_env());
 }
 
 void	no_error_detect(t_mini *mini)
@@ -53,7 +53,7 @@ void	no_error_detect(t_mini *mini)
 
 void	recursive_init(t_mini *mini)
 {
-	mini_init(mini);
+	init(mini);
 	mini->int_action.sa_handler = sig_handler;
 	sigaction(SIGINT, &mini->int_action, NULL);
 	mini->quit_action.sa_handler = SIG_IGN;

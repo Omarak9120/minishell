@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-void	mini_sub_tokenizier(char *str,
+void	sub_tokenizier(char *str,
 			t_sub_token **sub_token_lst, int start, int state)
 {
 	int		i;
@@ -25,7 +25,7 @@ void	mini_sub_tokenizier(char *str,
 	{
 		if (state == 0)
 			start = i;
-		state = mini_exp_get_next_state(state, mini_exp_get_column(str[i]));
+		state = exp_get_next_state(state, mini_exp_get_column(str[i]));
 		if (state >= 100 && state != NULL_CHAR)
 		{
 			if (is_one_back_state(state))
@@ -42,7 +42,7 @@ void	mini_sub_tokenizier(char *str,
 	}
 }
 
-int	mini_exp_get_next_state(int state, int column)
+int	exp_get_next_state(int state, int column)
 {
 	static int	truth_table[4][3] = {
 	{001, 003, 666},

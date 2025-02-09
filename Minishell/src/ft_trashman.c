@@ -15,7 +15,7 @@
 /*Why Static? The pointer persists between function calls,
  ensuring all memory references remain accessible.*/
 
-t_list	**ft_get_mem_address(void)
+t_list	**ft_get_mem_addresss(void)
 {
 	static t_list	*ptr;
 
@@ -24,10 +24,10 @@ t_list	**ft_get_mem_address(void)
 
 void	ft_collect_mem(void *content)
 {
-	ft_lstadd_back(ft_get_mem_address(), ft_lstnew(content));
+	ft_lstadd_back(ft_get_mem_addresss(), ft_lstnew(content));
 }
 
-void	ft_free_trashman(t_list **lst_memory)
+void	ft_trashman(t_list **lst_memory)
 {
 	t_list	*next;
 

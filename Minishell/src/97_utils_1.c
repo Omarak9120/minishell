@@ -20,14 +20,14 @@
  * If invalid, prints an error message.
  */
 
-int	mini_valid_identifier(char *str, int state)
+int	valid_identifier(char *str, int state)
 {
 	size_t	i;
 
 	i = -1;
 	while (++i < ft_strlen(str) + 1)
 	{
-		state = mini_env_get_next_state(state, mini_env_get_column(str[i]));
+		state = env_get_next_state(state, mini_env_get_column(str[i]));
 		if (state == ERROR)
 		{
 			ft_putstr_fd("bash: line 0: unset: `", STDERR_FILENO);

@@ -50,7 +50,7 @@ char	*mini_sep_exp_join(t_mini *mini, char *token)
 	char		*sub_token;
 
 	sub_token_lst = NULL;
-	mini_sub_tokenizier(token, &sub_token_lst, 0, 0);
+	sub_tokenizier(token, &sub_token_lst, 0, 0);
 	current = sub_token_lst;
 	while (current)
 	{

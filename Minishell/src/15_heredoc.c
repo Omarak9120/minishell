@@ -65,7 +65,7 @@ static void	mini_handle_null_or_delimiter(char *line, char *word,
 	if (line == NULL)
 	{
 		if (status != 130)
-			ft_printf_fd(STDERR_FILENO, "minishell: warning: here-document\
+			ft_printf_fd(STDERR_FILENO, "minishell: warning:  here-document\
 delimited by end-of-file (wanted `%s\')\n", word);
 		free(line);
 		close(hd_file_fd);

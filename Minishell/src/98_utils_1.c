@@ -23,7 +23,7 @@
  * Ensures the name is valid before insertion.
  */
 
-int	mini_env_identifier(char *str, t_dict **env_list, int start, int state)
+int	env_identifier(char *str, t_dict **env_list, int start, int state)
 {
 	char	*new_entry[2];
 	size_t	i;
@@ -32,7 +32,7 @@ int	mini_env_identifier(char *str, t_dict **env_list, int start, int state)
 	i = -1;
 	while (++i < ft_strlen(str) + 1)
 	{
-		state = mini_env_get_next_state(state, mini_env_get_column(str[i]));
+		state = env_get_next_state(state, mini_env_get_column(str[i]));
 		if (state == NAME)
 		{
 			new_entry[0] = ft_substr_mem(str, start, i - start);
@@ -51,7 +51,7 @@ int	mini_env_identifier(char *str, t_dict **env_list, int start, int state)
 	return (0);
 }
 
-int	mini_env_get_next_state(int state, int column)
+int	env_get_next_state(int state, int column)
 {
 	static int	truth_table[3][5] = {
 	{200, 001, 200, 200, 200},

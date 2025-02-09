@@ -19,7 +19,7 @@ t_mini	*get_address(void)
 	return (&mini);
 }
 
-void	mini_init(t_mini *mini)
+void	init(t_mini *mini)
 {
 	mini->path = NULL;
 	mini->lst_memory = NULL;
@@ -40,7 +40,7 @@ void	mini_init(t_mini *mini)
 // 		*list_memory = ft_lstnew(trash);
 // }
 
-void	ctrl_d_exit(void)
+void	ctrl_D_exit(void)
 {
 	printf("exit\n");
 	clear_history();

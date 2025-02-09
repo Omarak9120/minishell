@@ -21,7 +21,7 @@
 
 static int	mini_get_env_list_size(t_dict *env_list);
 
-void	mini_remake_environ(t_mini *mini)
+void	remake_environ(t_mini *mini)
 {
 	t_dict	*env_list;
 	char	**mini_environ;
@@ -65,7 +65,7 @@ int	ft_is_tracked(void *ptr)
 {
 	t_list	*cur;
 
-	cur = *ft_get_mem_address_env();
+	cur = *ft_get_mem_addresss_env();
 	while (cur)
 	{
 		if (cur->content == ptr)

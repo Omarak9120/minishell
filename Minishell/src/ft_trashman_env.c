@@ -15,7 +15,7 @@
 #include "../include/libftplus.h"
 #include "../include/trashman.h"
 
-t_list	**ft_get_mem_address_env(void)
+t_list	**ft_get_mem_addresss_env(void)
 {
 	static t_list	*ptr;
 
@@ -28,10 +28,10 @@ can be freed later*/
 
 void	ft_collect_mem_env(void *content)
 {
-	ft_lstadd_back(ft_get_mem_address_env(), ft_lstnew(content));
+	ft_lstadd_back(ft_get_mem_addresss_env(), ft_lstnew(content));
 }
 
-void	ft_free_trashman_env(t_list **lst_memory)
+void	ft_trashman_env(t_list **lst_memory)
 {
 	t_list	*next;
 

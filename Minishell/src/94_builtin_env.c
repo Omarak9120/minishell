@@ -14,7 +14,7 @@
 
 static void	mini_printenv(t_dict *dict);
 
-int	mini_env(t_token *arg, t_dict **dict)
+int	env(t_token *arg, t_dict **dict)
 {
 	if (!arg)
 		mini_printenv(*dict);
@@ -34,7 +34,7 @@ static void	mini_printenv(t_dict *dict)
 	}
 }
 /*
-int	mini_env(t_token *arg, t_dict **dict)
+int	env(t_token *arg, t_dict **dict)
 {
 	if (arg)
 	{

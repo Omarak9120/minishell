@@ -53,8 +53,8 @@ void	mini_manage_execve_fd(t_cmd *cmd_exec_node)
 void	mini_exit_if_fd_neg(t_cmd *cmd_exec_node)
 {
 	mini_close_node_fd(cmd_exec_node);
-	ft_free_trashman(ft_get_mem_address());
-	ft_free_trashman_env(ft_get_mem_address_env());
+	ft_trashman(ft_get_mem_addresss());
+	ft_trashman_env(ft_get_mem_addresss_env());
 	exit(1);
 }
 

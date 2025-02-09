@@ -13,11 +13,11 @@
 #include "../include/minishell.h"
 #include "../include/dictionary.h"
 
-int	mini_unset(t_token *arg, t_dict **dict)
+int	unset(t_token *arg, t_dict **dict)
 {
 	if (!arg)
 		return (0);
-	if (mini_valid_identifier(arg->token, 0))
+	if (valid_identifier(arg->token, 0))
 		return (1);
 	ft_dictdel_entry(dict, arg->token);
 	return (0);

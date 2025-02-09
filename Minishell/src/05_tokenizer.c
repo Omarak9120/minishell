@@ -21,7 +21,7 @@ void	tokenizer(t_mini *mini)
 	{
 		if (mini->cmd_line[0] == '\0')
 			return ;
-		mini_automaton(mini, &dfa);
+		automaton(mini, &dfa);
 		if (!mini->syntax_error)
 			mini_check_sintax(mini, mini->token_list);
 		mini_handle_export_arg(mini);
@@ -38,7 +38,7 @@ void	init_dfa(t_dfa *dfa)
 	dfa->i = 0;
 }
 
-void	mini_automaton(t_mini *mini, t_dfa *dfa)
+void	automaton(t_mini *mini, t_dfa *dfa)
 {
 	dfa->size = ft_strlen(mini->cmd_line) + 1;
 	while (dfa->i < dfa->size)
@@ -46,11 +46,11 @@ void	mini_automaton(t_mini *mini, t_dfa *dfa)
 		if (dfa->state == 0)
 			dfa->start = dfa->i;
 		dfa->state = get_next_state(dfa->state, \
-		mini_get_column(mini->cmd_line[dfa->i]));
-		if (mini_is_end_state(dfa->state) && dfa->state != NULL_CHAR)
+		get_column(mini->cmd_line[dfa->i]));
+		if (is_end_state(dfa->state) && dfa->state != NULL_CHAR)
 		{
-			mini_syntonize_index(dfa);
-			if (mini_is_error_state(dfa->state))
+			syntonize_index(dfa);
+			if (is_error_state(dfa->state))
 			{
 				print_sintax_error_message(dfa->state);
 				mini->status = 2;
@@ -78,7 +78,7 @@ int	get_next_state(int state, int column)
 	return (truth_table[state][column]);
 }
 
-int	mini_get_column(char c)
+int	get_column(char c)
 {
 	if (c == '>')
 		return (1);

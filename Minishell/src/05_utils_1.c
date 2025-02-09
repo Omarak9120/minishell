@@ -12,14 +12,14 @@
 
 #include "../include/minishell.h"
 
-int	mini_is_end_state(int num)
+int	is_end_state(int num)
 {
 	if (num >= 100)
 		return (1);
 	return (0);
 }
 
-void	mini_syntonize_index(t_dfa *dfa)
+void	syntonize_index(t_dfa *dfa)
 {
 	if (mini_is_back_state(dfa->state))
 		dfa->i--;
@@ -44,7 +44,7 @@ int	mini_is_quote_state(int num)
 	return (0);
 }
 
-int	mini_is_error_state(int num)
+int	is_error_state(int num)
 {
 	if (num >= 200)
 		return (1);

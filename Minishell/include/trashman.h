@@ -15,8 +15,8 @@
 
 # include "../lib/includes/libft.h"
 
-t_list	**ft_get_mem_address(void);
+t_list	**ft_get_mem_addresss(void);
 void	ft_collect_mem(void *content);
-void	ft_free_trashman(t_list **lst_memory);
+void	ft_trashman(t_list **lst_memory);
 
 #endif

@@ -33,7 +33,7 @@ void	mini_exec_builtin(t_token *token_lst,
 	mini_set_builtin_fd(cmd_exec_node);
 	cmd = token_lst->token;
 	arg = token_lst->next;
-	mini_call_to_builtin(mini, cmd, arg);
+	call_to_builtin(mini, cmd, arg);
 	mini_restore_builtin_fd(&stdin_backup, &stdout_backup);
 }
 /* Checks if there is only one command in the pipeline*/
@@ -103,17 +103,17 @@ int	mini_cmd_selection(t_token *token_lst, t_mini *mini)
 	arg = token_lst->next;
 	executed = 1;
 	if (!ft_strncmp(cmd, "export", ft_strlen(cmd) + 6))
-		mini->status = mini_export(arg, &mini->env_list);
+		mini->status = export(arg, &mini->env_list);
 	else if (!ft_strncmp(cmd, "echo", ft_strlen(cmd) + 4))
 		mini->status = mini_echo(arg);
 	else if (!ft_strncmp(cmd, "pwd", ft_strlen(cmd) + 3))
-		mini->status = mini_pwd();
+		mini->status = pwd();
 	else if (!ft_strncmp(cmd, "cd", ft_strlen(cmd) + 2))
-		mini->status = mini_cd(arg, &mini->env_list);
+		mini->status = cd(arg, &mini->env_list);
 	else if (!ft_strncmp(cmd, "env", ft_strlen(cmd) + 3))
-		mini->status = mini_env(arg, &mini->env_list);
+		mini->status = env(arg, &mini->env_list);
 	else if (!ft_strncmp(cmd, "unset", ft_strlen(cmd) + 5))
-		mini->status = mini_unset(arg, &mini->env_list);
+		mini->status = unset(arg, &mini->env_list);
 	else if (!ft_strncmp(cmd, "exit", ft_strlen(cmd) + 4))
 		mini_exit(arg, mini->status, mini);
 	else

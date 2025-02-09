@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-static void	mini_init_hd(t_mini *hd, char *line);
+static void	init_heredoc(t_mini *hd, char *line);
 static void	mini_hd_tokenizer(t_mini *hd);
 static void	mini_hd_parser(t_mini *hd);
 static char	*mini_join_exp_list(t_token *token_node);
@@ -24,7 +24,7 @@ char	*mini_hd_expansion(char *line)
 
 	if (!ft_strchr(line, '$'))
 		return (line);
-	mini_init_hd(&hd, line);
+	init_heredoc(&hd, line);
 	mini_getenv(&hd);
 	mini_hd_tokenizer(&hd);
 	mini_hd_parser(&hd);
@@ -55,7 +55,7 @@ static char	*mini_join_exp_list(t_token *token_node)
 	return (str);
 }
 
-static void	mini_init_hd(t_mini *hd, char *line)
+static void	init_heredoc(t_mini *hd, char *line)
 {
 	hd->path = NULL;
 	hd->lst_memory = NULL;
@@ -75,7 +75,7 @@ static void	mini_hd_tokenizer(t_mini *hd)
 	t_dfa	dfa;
 
 	init_dfa(&dfa);
-	mini_automaton(hd, &dfa);
+	automaton(hd, &dfa);
 }
 
 static void	mini_hd_parser(t_mini *hd)

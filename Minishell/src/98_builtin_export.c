@@ -13,7 +13,7 @@
 #include "../include/minishell.h"
 #include "../include/dictionary.h"
 
-int	mini_export(t_token *arg, t_dict **env_list)
+int	export(t_token *arg, t_dict **env_list)
 {
 	int		exit_status;
 	int		tmp;
@@ -25,7 +25,7 @@ int	mini_export(t_token *arg, t_dict **env_list)
 		ft_dict_print(ft_dictsort(*env_list));
 	while (cur)
 	{
-		tmp = mini_env_identifier(cur->token, env_list, 0, 0);
+		tmp = env_identifier(cur->token, env_list, 0, 0);
 		if (tmp)
 			exit_status = tmp;
 		cur = cur->next;

@@ -37,8 +37,8 @@ void	execute(t_mini *mini)
 {
 	mini_build_cmd_exec(mini);
 	mini_get_cmd_exec_path(mini);
-	open_pipes(mini);
-	mini_remake_environ(mini);
+	setup_command_pipes(mini);
+	remake_environ(mini);
 	mini_execve(mini);
 }
 /*

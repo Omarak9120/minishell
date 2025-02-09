@@ -18,7 +18,7 @@ Command #2: cmd_exec = {"grep", "minishell", NULL}
 Command #3: cmd_exec = {"wc", "-l", NULL}
 later in the execve we do the dup2()*/
 
-void	open_pipes(t_mini *mini)
+void	setup_command_pipes(t_mini *mini)
 {
 	t_cmd	*cmd_exec_node;
 	int		r_and_w_pipe[2];

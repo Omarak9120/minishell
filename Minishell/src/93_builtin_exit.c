@@ -13,15 +13,15 @@
 #include "../include/builtins.h"
 #include "../include/trashman.h"
 
-// void	mini_exit(t_token *arg, int status_last_cmd)
+// void	exit(t_token *arg, int status_last_cmd)
 // {
 // 	int	status;
 
 // 	status = status_last_cmd;
 // 	if (arg)
 // 		status = ft_atoi(arg->token);
-// 	ft_free_trashman(ft_get_mem_address());
-// 	ft_free_trashman_env(ft_get_mem_address_env());
+// 	ft_trashman(ft_get_mem_address());
+// 	ft_trashman_env(ft_get_mem_addresss_env());
 // 	exit(status);
 // }
 
@@ -62,11 +62,11 @@ long	ft_atol(const char *str)
 	return (num * sign);
 }
 
-void	exit_clean(t_mini *mini, int status)
+void	clean_exit(t_mini *mini, int status)
 {
 	(void)mini;
-	ft_free_trashman(ft_get_mem_address());
-	ft_free_trashman_env(ft_get_mem_address_env());
+	ft_trashman(ft_get_mem_addresss());
+	ft_trashman_env(ft_get_mem_addresss_env());
 	exit(status);
 }
 
@@ -76,20 +76,20 @@ int	mini_exit(t_token *args, int last_status, t_mini *mini)
 
 	ft_printf_fd(1, "exit\n");
 	if (!args)
-		exit_clean(mini, last_status);
+		clean_exit(mini, last_status);
 	if (!is_valid_number(args->token))
 	{
-		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
+		ft_printf_fd(2, "minishell: exit: %s: numeric argument  required\n",
 			args->token);
-		exit_clean(mini, 2);
+		clean_exit(mini, 2);
 	}
 	if (args->next)
 	{
-		ft_printf_fd(2, "minishell: exit: too many arguments\n");
+		ft_printf_fd(2, "minishell: exit:  too many arguments\n");
 		mini->status = 1;
 		return (1);
 	}
 	status = ft_atol(args->token);
-	exit_clean(mini, (unsigned char)(status % 256));
+	clean_exit(mini, (unsigned char)(status % 256));
 	return (0);
 }

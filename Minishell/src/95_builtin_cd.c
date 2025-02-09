@@ -15,7 +15,7 @@
 
 static int	mini_chdir_and_env_sync(t_dict *dict, char *directory, int print);
 
-int	mini_cd(t_token *arg, t_dict **dict)
+int	cd(t_token *arg, t_dict **dict)
 {
 	char	*directory;
 	int		print;

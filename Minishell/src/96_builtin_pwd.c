@@ -13,7 +13,7 @@
 #include "../include/minishell.h"
 #include "../include/dictionary.h"
 
-int	mini_pwd(void)
+int	pwd(void)
 {
 	char	*cwd;
 

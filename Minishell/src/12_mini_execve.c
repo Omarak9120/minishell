@@ -15,7 +15,7 @@
 #include "../include/builtins.h"
 
 /*	 1) Convert its cmd_exec array to a token list (mini_exec_interface).
- *   2) Check if it's a builtin (mini_is_builtin).
+ *   2) Check if it's a builtin (mini_mini_is_builtin).
  *   3) If there's only one command and it's builtin, execute in the parent 
  *      (mini_exec_builtin); otherwise, fork and run in a child (mini_exec_fork).
  *   After all commands are launched, close any remaining file descriptors 
@@ -86,8 +86,8 @@ void	mini_execve_child(t_mini *mini,
 			cmd_exec_node->cmd_exec, mini->mini_environ);
 		command_not_found_handler(mini, cmd_exec_node);
 	}
-	ft_free_trashman(ft_get_mem_address());
-	ft_free_trashman_env(ft_get_mem_address_env());
+	ft_trashman(ft_get_mem_addresss());
+	ft_trashman_env(ft_get_mem_addresss_env());
 	exit(mini->status);
 }
 /**

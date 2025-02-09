@@ -123,14 +123,14 @@ typedef struct s_mini
 }				t_mini;
 
 // 00_utils.c omar
-void		ctrl_d_exit(void);
+void		ctrl_D_exit(void);
 t_mini		*get_address(void);
 
 // 01_prompt.c
 void		mini_prompt(t_mini *mini);
 
 // 01_utils.c
-void		mini_init(t_mini *pipex);
+void		init(t_mini *pipex);
 void		mini_trashman_collector(t_list **list_memory, void *trash);
 // void		mini_safe_exit(t_mini *mini);
 
@@ -158,16 +158,16 @@ int			ft_get_exit_status(int exit_status);
 // 05_tokenizer.c
 void		tokenizer(t_mini *mini);
 void		init_dfa(t_dfa *dfa);
-void		mini_automaton(t_mini *mini, t_dfa *dfa);
+void		automaton(t_mini *mini, t_dfa *dfa);
 int			get_next_state(int state, int column);
-int			mini_get_column(char c);
+int			get_column(char c);
 
 // 05_utils_1.c
-int			mini_is_end_state(int num);
-void		mini_syntonize_index(t_dfa *dfa);
+int			is_end_state(int num);
+void		syntonize_index(t_dfa *dfa);
 int			mini_is_back_state(int num);
 int			mini_is_quote_state(int num);
-int			mini_is_error_state(int num);
+int			is_error_state(int num);
 
 // 05_utils_2.c
 void		print_sintax_error_message(int state);
@@ -234,9 +234,9 @@ int			mini_strchr_index(char *str, char c);
 char		*mini_sub_token_join(t_sub_token *sub_token_lst);
 
 // 07_utils_2.c
-void		mini_sub_tokenizier(char *str, \
+void		sub_tokenizier(char *str, \
 t_sub_token **sub_token_lst, int start, int state);
-int			mini_exp_get_next_state(int state, int column);
+int			exp_get_next_state(int state, int column);
 int			mini_exp_get_column(char c);
 int			is_one_back_state(int state);
 int			is_two_back_state(int state);
@@ -274,7 +274,7 @@ char		*mini_get_cmd_path(t_mini *mini, t_cmd *cmd_exec_node);
 char		*mini_search_in_envlist(t_mini *mini, char *key);
 
 // 11_open_pipes.c
-void		open_pipes(t_mini *mini);
+void		setup_command_pipes(t_mini *mini);
 
 // 12_mini_execve.c
 void		mini_execve(t_mini *mini);
@@ -307,13 +307,13 @@ int			mini_is_builtin(t_token *token_lst);
 int			mini_cmd_selection(t_token *token_lst, t_mini *mini);
 
 // 12_utils_4.c
-void		mini_call_to_builtin(t_mini *mini, char *cmd, t_token *arg);
+void		call_to_builtin(t_mini *mini, char *cmd, t_token *arg);
 void		mini_backup_builtin_stdin(int *stdin_backup, int *stdout_backup);
 void		mini_set_builtin_fd(t_cmd *cmd_exec_node);
 void		mini_restore_builtin_fd(int *stdin_backup, int *stdout_backup);
 
-// 13_mini_remake_environ.c
-void		mini_remake_environ(t_mini *mini);
+// 13_remake_environ.c
+void		remake_environ(t_mini *mini);
 void		update_shlvl(t_mini *mini);
 t_dict		*get_env_node(t_mini *mini, char *key);
 void		mini_env_add_back(t_dict **env_list, t_dict *new_node);
@@ -336,21 +336,21 @@ void		mini_handle_heredoc(t_mini *mini, t_token *token_node);
 char		*mini_hd_expansion(char *line);
 
 // 95_builtin_cd.c
-int			mini_cd(t_token *arg, t_dict **env_list);
+int			cd(t_token *arg, t_dict **env_list);
 
 // 97_builtin_unset.c
-int			mini_unset(t_token *arg, t_dict **env_list);
+int			unset(t_token *arg, t_dict **env_list);
 
 // 97_utils_1.c
-int			mini_valid_identifier(char *str, int state);
+int			valid_identifier(char *str, int state);
 
 // 98_builtin_export.c
-int			mini_export(t_token *arg, t_dict **env_list);
+int			export(t_token *arg, t_dict **env_list);
 
 // 98_utils_1.c
-int			mini_env_identifier(char *str, t_dict **env_list, \
+int			env_identifier(char *str, t_dict **env_list, \
 int start, int state);
-int			mini_env_get_next_state(int state, int column);
+int			env_get_next_state(int state, int column);
 int			mini_env_get_column(char c);
 
 // 99_builtin_echo.c
