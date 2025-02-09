@@ -165,8 +165,8 @@ int			get_column(char c);
 // 05_utils_1.c
 int			is_end_state(int num);
 void		syntonize_index(t_dfa *dfa);
-int			mini_is_back_state(int num);
-int			mini_is_quote_state(int num);
+int			is_back_state(int num);
+int			is_quote_state(int num);
 int			is_error_state(int num);
 
 // 05_utils_2.c
