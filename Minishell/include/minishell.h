@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:55:08 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/03 20:14:44 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:57:20 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct s_mini
 }				t_mini;
 
 // 00_utils.c omar
-void		ctrl_D_exit(void);
+void		ctrl_d_exit(void);
 t_mini		*get_address(void);
 
 // 01_prompt.c
@@ -220,6 +220,7 @@ void		expansion(t_mini *mini);
 void		mini_token_expansion(t_mini *mini, int i);
 char		*mini_sep_exp_join(t_mini *mini, char *token);
 char		*mini_search_and_replace(t_mini *mini, char *sub_token);
+int			ft_strcmp(const char *s1, const char *s2);
 char		*mini_get_dollar_sign(t_mini *mini, char *sub_token);
 int			mini_has_invalid_char(char *sub_token);
 char		*mini_expand_with_invalid(t_mini *mini, char *sub_token);

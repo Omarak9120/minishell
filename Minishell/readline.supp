@@ -2,5 +2,9 @@
    ignore_libreadline_memory_errors
    Memcheck:Leak
    ...
+   fun:*alloc
+   obj:*/libreadline.so.*
+   obj:*/libreadline.so.*
+   obj:*/libreadline.so.*
    obj:*/libreadline.so.*
 }

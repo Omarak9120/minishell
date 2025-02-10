@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 17:50:22 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 17:07:05 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:49:50 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,3 +32,9 @@ void	setup_command_pipes(t_mini *mini)
 		cmd_exec_node = cmd_exec_node->next;
 	}
 }
+/*
+	Command			write_pipe (stdout)		read_pipe (stdin)
+	ls -l			Pipe (fd1)				STDIN (default)
+	grep minishell	Pipe (fd2)				Pipe (fd1)
+	wc -l			STDOUT (default)		Pipe (fd2)
+*/

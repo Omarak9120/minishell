@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:53:44 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/03 16:44:23 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:58:18 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(void)
 		recursive_init(mini);
 		if (mini->cmd_line == NULL)
 		{
-			ctrl_D_exit();
+			ctrl_d_exit();
 			break ;
 		}
 		if (mini->cmd_line[0] == '\0')

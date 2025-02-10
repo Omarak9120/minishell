@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:07:43 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/02 16:41:08 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:03:01 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,18 @@ void	init(t_mini *mini)
 // 		*list_memory = ft_lstnew(trash);
 // }
 
-void	ctrl_D_exit(void)
+void	ctrl_d_exit(void)
 {
 	printf("exit\n");
 	clear_history();
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }

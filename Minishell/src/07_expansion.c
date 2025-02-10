@@ -6,7 +6,7 @@
 /*   By: oabdelka <oabdelka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 19:08:52 by oabdelka          #+#    #+#             */
-/*   Updated: 2025/02/01 19:53:24 by oabdelka         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:03:17 by oabdelka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	mini_token_expansion(t_mini *mini, int i)
 		}
 		token_node = token_node->next;
 	}
-}
+}	
 
 char	*mini_sep_exp_join(t_mini *mini, char *token)
 {
@@ -84,7 +84,7 @@ char	*mini_search_and_replace(t_mini *mini, char *sub_token)
 	new_sub_token = NULL;
 	while (current)
 	{
-		if (!ft_strncmp(current->key, sub_token, ft_strlen(sub_token)))
+		if (ft_strcmp(current->key, sub_token) == 0)
 		{
 			new_sub_token = current->value;
 			break ;
