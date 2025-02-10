@@ -86,6 +86,3 @@ git fetch --prune && git branch -d $(git branch --merged | grep -v 'main')<br>
 Take a copy of the readline.supp file put it in your minishell and run the next command -><br>
 <br>
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp ./minishell<br>
-
-## Correction
-![Correction Minishell](https://github.com/Hqndler/42-minishell/assets/69089935/e63ad3c7-67f8-4260-8e60-c79b60b2a303)
